@@ -9,13 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".pages.mainpage.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".pages.dialogactivitytest.DialogActivityTestActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".widget.dialogactivity.DialogActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".pages.dialogactivitytest.DialogActivityTestService"/>
+
     </application>
 
 </manifest>
