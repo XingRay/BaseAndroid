@@ -46,7 +46,7 @@ public class DialogActivityManager {
      * @param height     弹窗的高度
      * @param adapter    适配器
      */
-    public void showDialog(Context context, boolean cancelable, long priority, int width, int height, DialogAdapter adapter) {
+    public DialogOperator showDialog(Context context, boolean cancelable, long priority, int width, int height, DialogAdapter adapter) {
         if (adapter == null) {
             throw new IllegalArgumentException("adapter can not be null");
         }
@@ -55,18 +55,19 @@ public class DialogActivityManager {
         mAdapters.put(eventId, adapter);
 
         DialogActivity.showDialog(context, eventId, cancelable, priority, width, height);
+        return adapter;
     }
 
-    public void showDialog(Context context, boolean cancelable, long priority, DialogAdapter adapter) {
-        showDialog(context, cancelable, priority, 160, 280, adapter);
+    public DialogOperator showDialog(Context context, boolean cancelable, long priority, DialogAdapter adapter) {
+        return showDialog(context, cancelable, priority, 160, 280, adapter);
     }
 
-    public void showDialog(Context context, boolean cancelable, DialogAdapter adapter) {
-        showDialog(context, cancelable, 0, adapter);
+    public DialogOperator showDialog(Context context, boolean cancelable, DialogAdapter adapter) {
+        return showDialog(context, cancelable, 0, adapter);
     }
 
-    public void showDialog(Context context, DialogAdapter adapter) {
-        showDialog(context, false, adapter);
+    public DialogOperator showDialog(Context context, DialogAdapter adapter) {
+        return showDialog(context, false, adapter);
     }
 
     /**
@@ -75,7 +76,7 @@ public class DialogActivityManager {
      * @param eventId
      * @return
      */
-    public DialogAdapter getAdapter(long eventId) {
+    DialogAdapter getAdapter(long eventId) {
         return mAdapters.get(eventId);
     }
 
@@ -84,7 +85,7 @@ public class DialogActivityManager {
      *
      * @param eventId
      */
-    public void removeAdapter(long eventId) {
+    void removeAdapter(long eventId) {
         mAdapters.remove(eventId);
     }
 

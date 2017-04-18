@@ -73,6 +73,7 @@ public class DialogActivityFragment extends DialogFragment {
         mEventId = arguments.getLong(EVENT_ID);
         boolean cancelable = arguments.getBoolean(CANCELABLE, false);
         mAdapter = DialogActivityManager.getInstance().getAdapter(mEventId);
+        mAdapter.dialogFragment(this);
         setCancelable(cancelable);
     }
 

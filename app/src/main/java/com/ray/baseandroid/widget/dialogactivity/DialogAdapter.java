@@ -12,13 +12,15 @@ import android.view.View;
  * Description : DialogAdapter适配器,用于提供视图展示的参数和事件回调
  */
 
-public class DialogAdapter {
+public class DialogAdapter implements DialogOperator {
 
     private int mLayoutId;
     private ViewBinder mViewBinder;
+    private DialogFragment mFragment;
+    private boolean mAutoDismiss;
 
     public DialogAdapter() {
-
+        mAutoDismiss = true;
     }
 
     public DialogAdapter layoutId(int layoutId) {
@@ -26,7 +28,7 @@ public class DialogAdapter {
         return this;
     }
 
-    int getLayoutId() {
+    protected int getLayoutId() {
         return mLayoutId;
     }
 
@@ -35,8 +37,22 @@ public class DialogAdapter {
         return this;
     }
 
-    void bindView(View rootView, DialogFragment fragment) {
+    protected void bindView(View rootView, DialogFragment fragment) {
         mViewBinder.bindView(rootView, fragment);
+    }
+
+    DialogAdapter dialogFragment(DialogFragment fragment) {
+        mFragment = fragment;
+        return this;
+    }
+
+    DialogAdapter autoDismiss(boolean autoDismiss) {
+        mAutoDismiss = autoDismiss;
+        return this;
+    }
+
+    protected boolean isAutoDismiss() {
+        return mAutoDismiss;
     }
 
     /**
@@ -50,9 +66,10 @@ public class DialogAdapter {
          * @param fragment
          */
         protected abstract void bindView(View rootView, DialogFragment fragment);
+    }
 
-        public static <T> T findView(View view, int resId) {
-            return (T) view.findViewById(resId);
-        }
+    @Override
+    public void dismiss() {
+        mFragment.dismiss();
     }
 }
