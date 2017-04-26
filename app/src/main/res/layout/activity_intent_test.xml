@@ -12,13 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test01"
-        android:textSize="20sp"/>
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/tv_test02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test02"
-        android:textSize="20sp"/>
+        android:textSize="20dp"/>
 
 </LinearLayout>

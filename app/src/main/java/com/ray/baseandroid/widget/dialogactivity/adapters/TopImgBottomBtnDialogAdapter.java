@@ -3,10 +3,10 @@ package com.ray.baseandroid.widget.dialogactivity.adapters;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 
-import com.hecom.R;
-import com.hecom.util.ViewUtil;
-import com.hecom.widget.dialogactivity.DialogAdapter;
-import com.hecom.widget.dialogactivity.listener.ClickListener;
+import com.ray.baseandroid.R;
+import com.ray.baseandroid.widget.dialogactivity.DialogAdapter;
+import com.ray.baseandroid.widget.dialogactivity.listener.ClickListener;
+
 
 /**
  * Author      : leixing

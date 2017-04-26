@@ -7,21 +7,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.ray.baseandroid.R;
-import com.ray.baseandroid.base.BaseActivity;
-import com.ray.baseandroid.pages.dialogactivitytest.DialogActivityTestActivity;
-import com.ray.baseandroid.pages.mainpage.entity.Function;
-import com.ray.baseandroid.widget.recyclerview.ViewHolder;
-import com.ray.baseandroid.widget.recyclerview.WrapRecyclerView;
-import com.ray.baseandroid.widget.recyclerview.adapter.Adapter;
-import com.ray.baseandroid.widget.recyclerview.decoration.DrawableDividerItemDecoration;
-import com.ray.baseandroid.widget.recyclerview.listener.OnItemClickListener;
+import com.ray.mytest.R;
+import com.ray.mytest.base.BaseActivity;
+import com.ray.mytest.dialogactivitytest.DialogActivityTestActivity;
+import com.ray.mytest.dim.DimActivity;
+import com.ray.mytest.inputtest.InputTestActivity;
+import com.ray.mytest.intenttest.IntentTestActivity;
+import com.ray.mytest.mainPage.data.entity.Function;
+import com.ray.mytest.oom.OOMTestActivity;
+import com.ray.mytest.widget.recyclerview.ViewHolder;
+import com.ray.mytest.widget.recyclerview.WrapRecyclerView;
+import com.ray.mytest.widget.recyclerview.adapter.Adapter;
+import com.ray.mytest.widget.recyclerview.decoration.DrawableDividerItemDecoration;
+import com.ray.mytest.widget.recyclerview.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
+
     private List<Function> mFunctions;
     private Activity mActivity;
     private Context mContext;
@@ -29,7 +34,11 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     private WrapRecyclerView rvList;
 
     private static final List<Function> functions = Arrays.asList(
-            new Function("dialog activity test", DialogActivityTestActivity.class)
+            new Function("intent test", IntentTestActivity.class),
+            new Function("dialog activity test", DialogActivityTestActivity.class),
+            new Function("oom test", OOMTestActivity.class),
+            new Function("dim activity", DimActivity.class),
+            new Function("input test", InputTestActivity.class)
     );
 
     public static void start(Context context) {
@@ -52,7 +61,6 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         rvList = (WrapRecyclerView) findViewById(R.id.rv_list);
         rvList.setAdapter(mFunctionAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
-        // TODO: 2017-04-17 用ResUtil替换
         rvList.addItemDecoration(new DrawableDividerItemDecoration(mContext.getResources().getDrawable(R.drawable.drawable_line)));
 
         mFunctionAdapter.setOnItemClickListener(this);

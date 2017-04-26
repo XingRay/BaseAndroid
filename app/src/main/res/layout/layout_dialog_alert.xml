@@ -29,6 +29,5 @@
         android:padding="10dp"
         android:text="确定"
         android:textColor="#333333"
-        android:textSize="20sp"
-        tools:ignore="HardcodedText"/>
+        android:textSize="20sp"/>
 </LinearLayout>

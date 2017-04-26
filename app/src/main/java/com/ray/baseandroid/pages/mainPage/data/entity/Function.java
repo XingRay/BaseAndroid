@@ -1,4 +1,4 @@
-package com.ray.baseandroid.pages.mainpage.entity;
+package com.ray.baseandroid.pages.mainpage.data.entity;
 
 import android.app.Activity;
 import android.content.Intent;
