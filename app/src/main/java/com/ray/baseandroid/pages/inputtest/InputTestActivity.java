@@ -1,7 +1,8 @@
 package com.ray.baseandroid.pages.inputtest;
 
-import com.ray.mytest.R;
-import com.ray.mytest.base.BaseActivity;
+
+import com.ray.baseandroid.R;
+import com.ray.baseandroid.base.BaseActivity;
 
 /**
  * Author      : leixing

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_root"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="#eee">
@@ -13,8 +13,8 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:padding="10dp"
-        android:text="text"
         android:textColor="#333"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        tools:text="text"/>
 
 </RelativeLayout>

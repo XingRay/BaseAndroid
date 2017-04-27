@@ -16,7 +16,7 @@ import java.util.Set;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : 抽象的窗口宿主类Activity
+ * Description : xxx
  */
 
 public class CollectionUtil {

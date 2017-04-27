@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ray.mytest.R;
-import com.ray.mytest.base.BaseActivity;
-import com.ray.mytest.intenttest.data.Follower;
-import com.ray.mytest.intenttest.data.Person;
+import com.ray.baseandroid.R;
+import com.ray.baseandroid.base.BaseActivity;
+import com.ray.baseandroid.pages.intenttest.data.Follower;
+import com.ray.baseandroid.pages.intenttest.data.Person;
 
 import java.util.ArrayList;
 import java.util.List;

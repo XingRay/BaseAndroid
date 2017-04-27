@@ -4,6 +4,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 
 import com.ray.baseandroid.R;
+import com.ray.baseandroid.util.ViewUtil;
 import com.ray.baseandroid.widget.dialogactivity.DialogAdapter;
 import com.ray.baseandroid.widget.dialogactivity.listener.ClickListener;
 

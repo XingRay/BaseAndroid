@@ -28,6 +28,32 @@
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name="com.ray.baseandroid.pages.dim.DimActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.ray.baseandroid.pages.inputtest.InputTestActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.ray.baseandroid.pages.oom.OOMTestActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.ray.baseandroid.pages.intenttest.IntentTestActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.ray.baseandroid.pages.intenttest.IntentReceiverActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+        "
+
         <service android:name=".pages.dialogactivitytest.DialogActivityTestService"/>
 
     </application>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
+import com.ray.baseandroid.util.ViewUtil;
 import com.ray.baseandroid.widget.dialogactivity.DialogActivityManager;
 import com.ray.baseandroid.widget.dialogactivity.DialogAdapter;
 
@@ -57,7 +58,7 @@ public class DialogActivityTestService extends Service {
                         .viewBinder(new DialogAdapter.ViewBinder() {
                             @Override
                             protected void bindView(View rootView, final DialogFragment fragment) {
-                                TextView tvMsg = findView(rootView, R.id.tv_msg);
+                                TextView tvMsg = ViewUtil.findView(rootView, R.id.tv_msg);
                                 tvMsg.setText("test01 in service");
 
                                 TextView tvConfirm = (TextView) rootView.findViewById(R.id.tv_confirm);

@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-
 import com.ray.baseandroid.base.observable.ObservableView;
 import com.ray.baseandroid.base.observable.ViewObserver;
 
@@ -16,9 +15,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * 安全的 Presenter 基类，如果页面被銷毀，则getView()返回的VIEW 方法调用不执行
- * Created by laotian on 16-9-17.
+ * Author      : leixing
+ * Date        : 2017-04-14
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public abstract class BasePresenter<VIEW extends ObservableView> implements ViewObserver {
 
     private VIEW proxyView;
@@ -27,9 +31,11 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
     private ProxyViewHandler proxyViewHandler;
 
     private Activity activity;
+    private Handler mUIHandler;
 
     public BasePresenter(VIEW view) {
         setView(view);
+        mUIHandler = new Handler(Looper.getMainLooper());
     }
 
     /**
@@ -79,7 +85,7 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
      */
     protected void runOnUiThread(Runnable command, boolean justRunWhenViewValid) {
         if (justRunWhenViewValid && !isViewValid()) return;
-        new Handler(Looper.getMainLooper()).post(command);
+        mUIHandler.post(command);
     }
 
     /**
