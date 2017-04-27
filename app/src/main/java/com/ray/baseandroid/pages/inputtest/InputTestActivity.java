@@ -1,8 +1,17 @@
 package com.ray.baseandroid.pages.inputtest;
 
 
+import android.widget.TextView;
+
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.base.BaseActivity;
+import com.ray.baseandroid.detector.keyboard.KeyBoardStateDetector;
+import com.ray.baseandroid.detector.keyboard.KeyBoardStateListener;
+import com.ray.baseandroid.util.TraceUtil;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Author      : leixing
@@ -13,19 +22,39 @@ import com.ray.baseandroid.base.BaseActivity;
  * Description : xxx
  */
 
-public class InputTestActivity extends BaseActivity {
+public class InputTestActivity extends BaseActivity implements KeyBoardStateListener {
+    @BindView(R.id.tv_text)
+    TextView tvText;
+    private KeyBoardStateDetector mKeyBoardStateDetector;
+
     @Override
     protected void initVariables() {
-        setContentView(R.layout.activity_input_test);
+        mKeyBoardStateDetector = new KeyBoardStateDetector();
     }
 
     @Override
     protected void initView() {
-
+        setContentView(R.layout.activity_input_test);
+        ButterKnife.bind(this);
     }
 
     @Override
     protected void loadData() {
+        mKeyBoardStateDetector.detect(this, this);
+    }
 
+    @Override
+    public void onKeyBoardPopup() {
+        TraceUtil.log();
+    }
+
+    @Override
+    public void onKeyBoardDismiss() {
+        TraceUtil.log();
+    }
+
+    @OnClick(R.id.tv_text)
+    public void onViewClicked() {
+        TraceUtil.log();
     }
 }

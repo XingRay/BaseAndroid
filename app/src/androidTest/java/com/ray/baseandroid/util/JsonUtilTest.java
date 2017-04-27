@@ -1,11 +1,6 @@
-package com.ray.baseandroid;
+package com.ray.baseandroid.util;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-
-import com.ray.baseandroid.util.JsonUtil;
-import com.ray.baseandroid.util.TraceUtil;
 
 import org.json.JSONArray;
 import org.junit.Test;
@@ -17,20 +12,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Instrumentation test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Author      : leixing
+ * Date        : 2017-04-27
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    @Test
-    public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("com.ray.baseandroid", appContext.getPackageName());
-    }
-
+public class JsonUtilTest {
     class TestEntity {
         String name;
         String code;
@@ -44,7 +34,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void useToJSONArray() throws Exception {
+    public void toJSONArray() throws Exception {
         List<TestEntity> entities = new ArrayList<>();
         entities.add(new TestEntity("aaa", "111", 111));
         entities.add(new TestEntity("bbb", "222", 222));
@@ -53,6 +43,7 @@ public class ExampleInstrumentedTest {
         JSONArray jsonArray = JsonUtil.toJSONArray(entities);
         TraceUtil.log(jsonArray);
 
+        System.out.println(jsonArray.toString());
         assertEquals(1, 1);
     }
 }

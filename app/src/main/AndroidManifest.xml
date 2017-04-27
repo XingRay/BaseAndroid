@@ -35,8 +35,7 @@
 
         <activity
             android:name="com.ray.baseandroid.pages.inputtest.InputTestActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustResize"/>
 
         <activity
             android:name="com.ray.baseandroid.pages.oom.OOMTestActivity"
@@ -52,7 +51,6 @@
             android:name="com.ray.baseandroid.pages.intenttest.IntentReceiverActivity"
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>
-        "
 
         <service android:name=".pages.dialogactivitytest.DialogActivityTestService"/>
 

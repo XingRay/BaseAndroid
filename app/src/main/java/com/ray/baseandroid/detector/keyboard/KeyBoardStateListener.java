@@ -10,7 +10,13 @@ package com.ray.baseandroid.detector.keyboard;
  */
 
 public interface KeyBoardStateListener {
+    /**
+     * 键盘弹起
+     */
     void onKeyBoardPopup();
 
+    /**
+     * 键盘消失
+     */
     void onKeyBoardDismiss();
 }
