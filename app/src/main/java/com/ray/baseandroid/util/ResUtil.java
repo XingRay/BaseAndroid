@@ -5,8 +5,14 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
 /**
- * Created by libo on 16/8/22.
+ * Author      : leixing
+ * Date        : 2017-04-28
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class ResUtil {
     /**
      * 获取字符串资源
@@ -14,7 +20,7 @@ public class ResUtil {
      * @param id
      * @return
      */
-    public static String getStringRes(Context context, int id) {
+    public static String getString(Context context, int id) {
         return context.getResources().getString(id);
     }
 
@@ -24,7 +30,7 @@ public class ResUtil {
      * @param id
      * @return
      */
-    public static String getStringRes(Context context, int id, Object... formatArgs) {
+    public static String getString(Context context, int id, Object... formatArgs) {
         return context.getResources().getString(id, formatArgs);
     }
 
@@ -33,8 +39,8 @@ public class ResUtil {
      *
      * @return
      */
-    public static String getFormatStringRes(Context context, int srcid, int replaceid) {
-        return String.format(getStringRes(context, srcid), getStringRes(context, replaceid));
+    public static String getFormatedString(Context context, int srcid, int replaceid) {
+        return String.format(getString(context, srcid), getString(context, replaceid));
     }
 
     /**
@@ -42,14 +48,14 @@ public class ResUtil {
      *
      * @return
      */
-    public static String getAppendStringRes(Context context, int... resids) {
+    public static String getAppendString(Context context, int... resids) {
         if (resids == null || resids.length <= 0) {
             return "";
         }
         StringBuilder sb = new StringBuilder();
         int len = resids.length;
         for (int i = 0; i < len; i++) {
-            sb.append(getStringRes(context, resids[i]));
+            sb.append(getString(context, resids[i]));
         }
         return sb.toString();
     }
