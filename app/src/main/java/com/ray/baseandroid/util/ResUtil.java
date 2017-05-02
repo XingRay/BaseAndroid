@@ -39,8 +39,8 @@ public class ResUtil {
      *
      * @return
      */
-    public static String getFormatedString(Context context, int srcid, int replaceid) {
-        return String.format(getString(context, srcid), getString(context, replaceid));
+    public static String getFormatedString(Context context, int srcId, int replaceId) {
+        return String.format(getString(context, srcId), getString(context, replaceId));
     }
 
     /**
@@ -48,14 +48,14 @@ public class ResUtil {
      *
      * @return
      */
-    public static String getAppendString(Context context, int... resids) {
-        if (resids == null || resids.length <= 0) {
+    public static String getAppendString(Context context, int... resId) {
+        if (resId == null || resId.length <= 0) {
             return "";
         }
         StringBuilder sb = new StringBuilder();
-        int len = resids.length;
+        int len = resId.length;
         for (int i = 0; i < len; i++) {
-            sb.append(getString(context, resids[i]));
+            sb.append(getString(context, resId[i]));
         }
         return sb.toString();
     }

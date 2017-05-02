@@ -8,10 +8,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * toast的类型 需要时可扩展多个方法
- *
- * @author HEcom
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class ToastUtil {
     private static Toast mToast;
 

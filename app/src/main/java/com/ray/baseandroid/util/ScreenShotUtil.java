@@ -14,8 +14,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Created by chenming on 15-11-11.
+ * Author      : leixing
+ * Date        : 2017-04-28
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class ScreenShotUtil {
     /**
      * 获取指定Activity的截屏，保存到png文件

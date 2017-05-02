@@ -14,9 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * 用于操作view的util
- * Created by leixing on 2016/7/26.
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class ViewUtil {
     /**
      * util不能创建对象

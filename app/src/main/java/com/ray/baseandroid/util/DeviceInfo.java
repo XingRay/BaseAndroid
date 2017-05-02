@@ -33,6 +33,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
+/**
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
+ */
+
+
 @SuppressLint("NewApi")
 public class DeviceInfo {
     private static final String SP_TRAFFIC = "Traffic";

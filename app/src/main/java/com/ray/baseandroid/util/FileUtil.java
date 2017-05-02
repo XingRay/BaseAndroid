@@ -10,9 +10,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
-/***
- * 文件（拷贝）相关的工具类
+/**
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class FileUtil {
 
     // 目标路径创建文件夹

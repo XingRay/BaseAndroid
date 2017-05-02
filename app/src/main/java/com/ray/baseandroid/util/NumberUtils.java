@@ -8,8 +8,14 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 
 /**
- * 数字计算工具类
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class NumberUtils {
     private static final String TAG = NumberUtils.class.getSimpleName();
 

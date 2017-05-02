@@ -21,8 +21,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用于计算Y轴上存在多少列的
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
  */
+
 public class MathHelper {
     /** A value that is used a null value. */
     public static final double NULL_VALUE = Double.MAX_VALUE;

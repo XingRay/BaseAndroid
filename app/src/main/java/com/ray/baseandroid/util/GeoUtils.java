@@ -1,20 +1,14 @@
 package com.ray.baseandroid.util;
 
 /**
- * CopyRight (C) All rights reserved.
+ * Author      : leixing
+ * Date        : 2017-04-26
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
  * <p>
- * <p>
- * <p>
- * Author
- * <p>
- * Project Name: 获取两点经纬度距离
- *
- * @version 1.0 2009-09-07
- *          <p>
- *          <p>
- *          Base on : JDK1.5
- *          <p>
+ * Description : xxx
  */
+
 public class GeoUtils {
     private static final double PI = 3.14159265358979324;
 
