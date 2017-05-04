@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.util.CollectionUtil;
 import com.ray.baseandroid.util.ViewUtil;
@@ -31,14 +30,13 @@ import java.util.List;
  */
 
 public class DropDownMenu extends FrameLayout {
+    private static final int ANIMATION_DURATION = 300;
     private final Context mContext;
     private final DropDownMenu mView;
-    private LinearLayout llMenuContainer;
-    private MenuActionListener mListener;
     int mMenuNormalColor = Color.parseColor("#333333");
     int mMenuHighlightColor = Color.parseColor("#e15151");
-
-    private static final int ANIMATION_DURATION = 300;
+    private LinearLayout llMenuContainer;
+    private MenuActionListener mListener;
     private TranslateAnimation showTranslateAnimation;
     private TranslateAnimation dismissTranslateAnimation;
     private AlphaAnimation showAlphaAnimation;
@@ -183,7 +181,7 @@ public class DropDownMenu extends FrameLayout {
         llMenuContainer.removeAllViews();
         mMenus.clear();
 
-        if (!CollectionUtil.isEmpty(menus)) {
+        if (!(menus == null || menus.isEmpty())) {
             for (int i = 0; i < menus.size(); i++) {
                 TextView vMenu = buildMenu(menus.get(i));
                 final int position = i;
@@ -275,6 +273,31 @@ public class DropDownMenu extends FrameLayout {
     }
 
     /**
+     * 菜单的状态
+     */
+    private enum Status {
+        /**
+         * 初始状态
+         */
+        INIT,
+
+        /**
+         * 正在打开
+         */
+        OPENING,
+
+        /**
+         * 正在展示
+         */
+        SHOWING,
+
+        /**
+         * 正在收起
+         */
+        DISMISSING
+    }
+
+    /**
      * 弹出选项单的点击事件
      */
     public interface MenuActionListener {
@@ -309,30 +332,5 @@ public class DropDownMenu extends FrameLayout {
          * 在选项单的隐藏动画执行后调用
          */
         void onMenuDismissEnd();
-    }
-
-    /**
-     * 菜单的状态
-     */
-    private enum Status {
-        /**
-         * 初始状态
-         */
-        INIT,
-
-        /**
-         * 正在打开
-         */
-        OPENING,
-
-        /**
-         * 正在展示
-         */
-        SHOWING,
-
-        /**
-         * 正在收起
-         */
-        DISMISSING
     }
 }

@@ -22,13 +22,13 @@ public class JsonUtil {
      * 转换为JSONArray
      *
      * @param collect 转换的集合
-     * @return
+     * @return 返回转换的JSONArray
      */
     // TODO: 2017-04-27 FIXME
     public static JSONArray toJSONArray(Collection collect) {
         JSONArray jsonArray = new JSONArray();
 
-        if (CollectionUtil.isEmpty(collect)) {
+        if (collect == null || collect.isEmpty()) {
             return jsonArray;
         }
 

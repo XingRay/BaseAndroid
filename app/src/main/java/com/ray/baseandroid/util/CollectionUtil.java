@@ -23,14 +23,14 @@ public class CollectionUtil {
     /**
      * 判断集合、map、数组是否为空
      *
-     * @return
+     * @return 集合是否为空
      */
-    public static boolean isEmpty(Collection collection) {
-        return collection == null || collection.isEmpty() || collection.size() == 0;
+    public static <T extends Collection<?>> boolean isEmpty(T collection) {
+        return collection == null || collection.isEmpty();
     }
 
-    public static boolean isEmpty(Map map) {
-        return map == null || map.isEmpty() || map.size() == 0;
+    public static <T extends Map<?, ?>> boolean isEmpty(T map) {
+        return map == null || map.isEmpty();
     }
 
     public static <T> boolean isEmpty(T[] array) {
@@ -118,7 +118,7 @@ public class CollectionUtil {
      * 获取集合/map/数组的大小
      *
      * @param collection 集合
-     * @return
+     * @return 集合的大小
      */
     public static int getSize(Collection collection) {
         return isEmpty(collection) ? 0 : collection.size();
@@ -167,10 +167,10 @@ public class CollectionUtil {
     /**
      * 能否指定位置获取非空元素
      *
-     * @param array
-     * @param position
-     * @param <T>
-     * @return
+     * @param array    数组
+     * @param position 获取元素的位置
+     * @param <T>      泛型参数
+     * @return 获取到的元素值
      */
     public static <T> boolean canGetElem(T[] array, int position) {
         return !isEmpty(array) && position >= 0 && position < array.length && array[position] != null;
@@ -226,10 +226,10 @@ public class CollectionUtil {
     /**
      * 安全的从指定位置获取元素，无法取到则返回空
      *
-     * @param list
-     * @param position
-     * @param <T>
-     * @return
+     * @param list     列表
+     * @param position 位置
+     * @param <T>      泛型参数
+     * @return 获取到的元素的值，没有获取则返回{@code null}
      */
     public static <T> T safetyGet(List<T> list, int position) {
         T t = null;
@@ -252,10 +252,10 @@ public class CollectionUtil {
     /**
      * 查找元素在数组中的下标, 如果数组为空或者没有找到元素则返回-1
      *
-     * @param e
-     * @param array
-     * @param <E>
-     * @return
+     * @param e     元素的值
+     * @param array 数组
+     * @param <E>   泛型参数
+     * @return 元素在数组中的位置，没有找到则返回{@code -1}
      */
     public static <E> int getIndexInArray(E e, E[] array) {
         if (e == null || isEmpty(array)) {
@@ -274,10 +274,10 @@ public class CollectionUtil {
     /**
      * 从数组中获取元素, 如果数组为空或者下标越界则返回空
      *
-     * @param index
-     * @param array
-     * @param <E>
-     * @return
+     * @param index 下标
+     * @param array 数组
+     * @param <E>   泛型参数
+     * @return 获取到的元素的值
      */
     public static <E> E getElementInArray(int index, E[] array) {
         if (array == null || isEmpty(array)) {
@@ -290,9 +290,9 @@ public class CollectionUtil {
     /**
      * 从已有的list中抽取出一个没有重复元素的新的List
      *
-     * @param list
-     * @param <E>
-     * @return
+     * @param list 列表
+     * @param <E>  泛型参数
+     * @return 去重后的元素
      */
     public static <E> List<E> getDistinctList(Collection<E> list) {
         ArrayList<E> newList = new ArrayList<>();
@@ -320,10 +320,10 @@ public class CollectionUtil {
      * move(items, 9, 0)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
      * move(items, 4, 4)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
      *
-     * @param items
-     * @param fromIndex
-     * @param toIndex
-     * @param <T>
+     * @param items     待移动的列表
+     * @param fromIndex 待移动的元素的下标
+     * @param toIndex   元素移动后的下标
+     * @param <T>       元素的类型参数
      */
     public static <T> void move(List<T> items, int fromIndex, int toIndex) {
         if (!isValidIndex(items, fromIndex)) {
@@ -352,10 +352,10 @@ public class CollectionUtil {
     /**
      * 合并两个List
      *
-     * @param list1
-     * @param list2
-     * @param <T>
-     * @return
+     * @param list1 列表1
+     * @param list2 列表2
+     * @param <T>   列表的泛型参数
+     * @return 两个列表合并的新的列表
      */
     public static <T> List<T> merge(Collection<T> list1, Collection<T> list2) {
         ArrayList<T> list = new ArrayList<>();
@@ -389,12 +389,12 @@ public class CollectionUtil {
     /**
      * 按照指定的条件，从数组中寻找满足条件的元素的下标，找不到则返回-1
      *
-     * @param source
-     * @param condition
-     * @param judge
-     * @param <T>
-     * @param <C>
-     * @return
+     * @param source    数组源
+     * @param condition 匹配的条件
+     * @param judge     判断是否匹配的回调
+     * @param <T>       数组的类型参数
+     * @param <C>       匹配条件的类型参数
+     * @return 匹配元素的下标，没有匹配的元素返回{@code -1}
      */
     public static <T, C> int getIndex(T[] source, C condition, TargetJudge<T, C> judge) {
         return getIndex(source, 0, condition, judge);
@@ -403,13 +403,13 @@ public class CollectionUtil {
     /**
      * 按照指定的条件，从指定的起始位置开始从数组中寻找满足条件的元素的下标，找不到则返回-1
      *
-     * @param source
-     * @param firstIndex
-     * @param condition
-     * @param judge
-     * @param <T>
-     * @param <C>
-     * @return
+     * @param source     数组源
+     * @param firstIndex 进行匹配的初始位置
+     * @param condition  匹配的条件
+     * @param judge      判断是否匹配的回调
+     * @param <T>        数组的类型参数
+     * @param <C>        匹配条件的类型参数
+     * @return 匹配元素的下标，没有匹配的元素返回{@code -1}
      */
     public static <T, C> int getIndex(T[] source, int firstIndex, C condition, TargetJudge<T, C> judge) {
         if (isEmpty(source) || firstIndex >= source.length || condition == null) {
@@ -433,12 +433,12 @@ public class CollectionUtil {
     /**
      * 按照指定的条件，从列表中寻找满足条件的元素的下标，找不到则返回-1
      *
-     * @param source
-     * @param condition
-     * @param judge
-     * @param <T>
-     * @param <C>
-     * @return
+     * @param source    数据源列表
+     * @param condition 条件参数
+     * @param judge     判断匹配的回调
+     * @param <T>       数据源的参数类型
+     * @param <C>       匹配条件的参数类型
+     * @return 第一个匹配元素的下标
      */
     public static <T, C> int getIndex(List<T> source, C condition, TargetJudge<T, C> judge) {
         return getIndex(source, 0, condition, judge);
@@ -447,13 +447,13 @@ public class CollectionUtil {
     /**
      * 按照指定的条件，从指定的起始位置开始从列表中寻找满足条件的元素的下标，找不到则返回-1
      *
-     * @param source
-     * @param firstIndex
-     * @param condition
-     * @param judge
-     * @param <T>
-     * @param <C>
-     * @return
+     * @param source     数据源列表
+     * @param firstIndex 第一次进行匹配的元素的下标
+     * @param condition  匹配的条件
+     * @param judge      判断匹配的条件
+     * @param <T>        列表参数的类型
+     * @param <C>        匹配条件的类型
+     * @return 第一个匹配元素的下标
      */
     public static <T, C> int getIndex(List<T> source, int firstIndex, C condition, TargetJudge<T, C> judge) {
         if (isEmpty(source) || firstIndex >= source.size() || condition == null) {
@@ -477,10 +477,10 @@ public class CollectionUtil {
      * 判断两个集合所包含的元素是否一样
      * A包含B B包含A 则 A==B
      *
-     * @param set1
-     * @param set2
-     * @param <T>
-     * @return
+     * @param set1 集合1
+     * @param set2 集合2
+     * @param <T>  集合类型参数
+     * @return 两个集合的元素是否相同
      */
     public static <T> boolean equals(Set<T> set1, Set<T> set2) {
         if (set1 == set2) {
@@ -519,27 +519,13 @@ public class CollectionUtil {
     }
 
     /**
-     * 判断遍历到的元素是否匹配条件的接口
-     */
-    public interface TargetJudge<E, C> {
-        /**
-         * 该元素是否与指定的条件匹配
-         *
-         * @param elem
-         * @param condition
-         * @return
-         */
-        boolean isFound(E elem, C condition);
-    }
-
-    /**
-     * 过滤list中的重复元素，并且保持原有的顺序不变
+     * 过滤list中的重复Key值的元素，并且保持原有的顺序不变
      *
-     * @param list
-     * @param keyGetter
-     * @param <T>
-     * @param <K>
-     * @return
+     * @param list      列表
+     * @param keyGetter key获取器
+     * @param <T>       元素类型参数
+     * @param <K>       Key的类型参数
+     * @return 没有重复Key值的列表
      */
     public static <T, K> List<T> distinct(List<T> list, KeyGetter<T, K> keyGetter) {
         List<T> distinct = new ArrayList<>();
@@ -550,6 +536,10 @@ public class CollectionUtil {
 
         Set<K> set = new HashSet<>();
         for (T t : list) {
+            if (t == null) {
+                continue;
+            }
+
             K key = keyGetter.getKey(t);
             if (key == null) {
                 continue;
@@ -562,19 +552,19 @@ public class CollectionUtil {
             set.add(key);
             distinct.add(t);
         }
-
+        set.clear();
         return distinct;
     }
 
     /**
      * 从大集合中获取包含指定主键的子集
      *
-     * @param list
-     * @param collection
-     * @param keyGetter
-     * @param <T>
-     * @param <K>
-     * @return
+     * @param list       列表
+     * @param collection 键值的集合
+     * @param keyGetter  键值获取器
+     * @param <T>        列表元素的类型参数
+     * @param <K>        键值的类型参数
+     * @return 子集
      */
     public static <T, K> List<T> subCollectionInclude(List<T> list, Collection<K> collection, KeyGetter<T, K> keyGetter) {
         List<T> subList = new ArrayList<>();
@@ -602,12 +592,12 @@ public class CollectionUtil {
     /**
      * 从大集合中获取不包含指定主键的子集
      *
-     * @param list
-     * @param collection
-     * @param keyGetter
-     * @param <T>
-     * @param <K>
-     * @return
+     * @param list       列表
+     * @param collection 键值集合
+     * @param keyGetter  键值获取器
+     * @param <T>        元素类型参数
+     * @param <K>        键值类型参数
+     * @return 子集
      */
     public static <T, K> List<T> subCollectionExclude(List<T> list, Collection<K> collection, KeyGetter<T, K> keyGetter) {
         List<T> subList = new ArrayList<>();
@@ -637,11 +627,12 @@ public class CollectionUtil {
     /**
      * 对集合中的每个元素遍历并进行操作
      *
-     * @param collection
-     * @param operation
-     * @param <T>
+     * @param collection 集合
+     * @param operator   操作器
+     * @param <T>        集合元素的参数类型
+     * @param <C>        集合类型
      */
-    public static <T> void handle(Collection<T> collection, Operation<T> operation) {
+    public static <T, C extends Collection<T>> void handle(C collection, Operator<T> operator) {
         if (isEmpty(collection)) {
             return;
         }
@@ -653,18 +644,18 @@ public class CollectionUtil {
                 continue;
             }
 
-            operation.operate(t, index);
+            operator.operate(t, index);
         }
     }
 
     /**
      * 对列表中的每个元素遍历并进行操作
      *
-     * @param list
-     * @param operation
-     * @param <T>
+     * @param list     列表
+     * @param operator 操作器
+     * @param <T>      元素类型
      */
-    public static <T> void handle(List<T> list, Operation<T> operation) {
+    public static <T> void handle(List<T> list, Operator<T> operator) {
         if (isEmpty(list)) {
             return;
         }
@@ -675,18 +666,18 @@ public class CollectionUtil {
                 continue;
             }
 
-            operation.operate(t, index);
+            operator.operate(t, index);
         }
     }
 
     /**
      * 从集合中抽取指定的Key的集合
      *
-     * @param collection
-     * @param keyGetter
-     * @param <T>
-     * @param <K>
-     * @return
+     * @param collection 集合
+     * @param keyGetter  键值获取器
+     * @param <T>        集合元素类型参数
+     * @param <K>        键值类型参数
+     * @return 键值的集合
      */
     public static <T, K> Set<K> getKeySet(Collection<T> collection, KeyGetter<T, K> keyGetter) {
         HashSet<K> keySet = new HashSet<>();
@@ -743,14 +734,6 @@ public class CollectionUtil {
         return keyList;
     }
 
-    public interface Operation<T> {
-        void operate(T t, int index);
-    }
-
-    public interface KeyGetter<T, K> {
-        K getKey(T t);
-    }
-
     /**
      * 对集合进行统计，取出满足筛选条件的子集
      *
@@ -777,20 +760,6 @@ public class CollectionUtil {
         }
 
         return list;
-    }
-
-    public interface Filter<T> {
-        boolean isFit(T t);
-    }
-
-    /**
-     * 查找器接口
-     *
-     * @param <T>
-     * @param <K>
-     */
-    public interface Finder<T, K> {
-        boolean isFound(T t, K k);
     }
 
     public static <T, K> T find(Collection<T> collection, K key, Finder<T, K> finder) {
@@ -896,40 +865,6 @@ public class CollectionUtil {
         return getSizePair(arrays).getMax();
     }
 
-    public static class Pair {
-        private int max;
-        private int min;
-
-        public Pair(int max, int min) {
-            this.max = max;
-            this.min = min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
-
-        @Override
-        public String toString() {
-            return "Pair{" +
-                    "max=" + max +
-                    ", min=" + min +
-                    '}';
-        }
-    }
-
     /**
      * 获取
      *
@@ -970,10 +905,6 @@ public class CollectionUtil {
         return commonElement;
     }
 
-    public interface CloneFactory<T> {
-        T clone(T t);
-    }
-
     public static <T> List<T> clone(List<T> src, CloneFactory<T> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("factory can not be null");
@@ -998,5 +929,79 @@ public class CollectionUtil {
         }
 
         return cloneList;
+    }
+
+    /**
+     * 判断遍历到的元素是否匹配条件的接口
+     */
+    public interface TargetJudge<E, C> {
+        /**
+         * 该元素是否与指定的条件匹配
+         *
+         * @param elem      元素
+         * @param condition 匹配条件
+         * @return 是否找到匹配的元素
+         */
+        boolean isFound(E elem, C condition);
+    }
+
+    public interface Operator<T> {
+        void operate(T t, int index);
+    }
+
+    public interface KeyGetter<T, K> {
+        K getKey(T t);
+    }
+
+    public interface Filter<T> {
+        boolean isFit(T t);
+    }
+
+    /**
+     * 查找器接口
+     *
+     * @param <T>
+     * @param <K>
+     */
+    public interface Finder<T, K> {
+        boolean isFound(T t, K k);
+    }
+
+    public interface CloneFactory<T> {
+        T clone(T t);
+    }
+
+    public static class Pair {
+        private int max;
+        private int min;
+
+        public Pair(int max, int min) {
+            this.max = max;
+            this.min = min;
+        }
+
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+
+        public int getMin() {
+            return min;
+        }
+
+        public void setMin(int min) {
+            this.min = min;
+        }
+
+        @Override
+        public String toString() {
+            return "Pair{" +
+                    "max=" + max +
+                    ", min=" + min +
+                    '}';
+        }
     }
 }

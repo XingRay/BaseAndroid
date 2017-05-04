@@ -42,7 +42,7 @@ public class AppUtil {
         }
 
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
-        if (CollectionUtil.isEmpty(appProcesses)) {
+        if (appProcesses == null || appProcesses.isEmpty()) {
             return false;
         }
 
