@@ -94,14 +94,7 @@ public class AppUtil {
      * @return 应用的包名，无法获取到该应用信息则返回{@code null}
      */
     public static String getVersionName(Context context, String packageName) {
-        PackageManager packageManager = context.getPackageManager();
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = packageManager.getPackageInfo(packageName, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        PackageInfo packageInfo = getPackageInfo(context, packageName);
         if (packageInfo == null) {
             return null;
         }
@@ -117,6 +110,22 @@ public class AppUtil {
      * @return 应用的版本号，无法获取应用信息则返回-1
      */
     public static int getVersionCode(Context context, String packageName) {
+        PackageInfo packageInfo = getPackageInfo(context, packageName);
+        if (packageInfo == null) {
+            return -1;
+        }
+
+        return packageInfo.versionCode;
+    }
+
+    /**
+     * 获取应用的信息
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     * @return 应用信息
+     */
+    public static PackageInfo getPackageInfo(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();
         PackageInfo packageInfo = null;
         try {
@@ -125,10 +134,6 @@ public class AppUtil {
             e.printStackTrace();
         }
 
-        if (packageInfo == null) {
-            return -1;
-        }
-
-        return packageInfo.versionCode;
+        return packageInfo;
     }
 }
