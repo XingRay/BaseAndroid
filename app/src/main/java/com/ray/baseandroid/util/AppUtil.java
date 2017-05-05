@@ -2,6 +2,7 @@ package com.ray.baseandroid.util;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
@@ -68,13 +69,66 @@ public class AppUtil {
      * @return 该应用是否安装
      */
     public static boolean isAppInstalled(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ApplicationInfo> installedApplications = packageManager.getInstalledApplications(0);
+        for (ApplicationInfo info : installedApplications) {
+            if (info == null) {
+                continue;
+            }
+
+            if (!info.packageName.equals(packageName)) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 获取应用的版本
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     * @return 应用的包名，无法获取到该应用信息则返回{@code null}
+     */
+    public static String getVersionName(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
         PackageInfo packageInfo = null;
         try {
-            packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+            packageInfo = packageManager.getPackageInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
-        return packageInfo != null;
+        if (packageInfo == null) {
+            return null;
+        }
+
+        return packageInfo.versionName;
+    }
+
+    /**
+     * 获取应用的版本号
+     *
+     * @param context     上下文
+     * @param packageName 应用包名
+     * @return 应用的版本号，无法获取应用信息则返回-1
+     */
+    public static int getVersionCode(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (packageInfo == null) {
+            return -1;
+        }
+
+        return packageInfo.versionCode;
     }
 }
