@@ -13,10 +13,10 @@ public interface KeyBoardStateListener {
     /**
      * 键盘弹起
      */
-    void onKeyBoardPopup();
+    void onPopup();
 
     /**
      * 键盘消失
      */
-    void onKeyBoardDismiss();
+    void onDismiss();
 }

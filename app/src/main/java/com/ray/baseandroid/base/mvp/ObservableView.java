@@ -1,4 +1,4 @@
-package com.ray.baseandroid.base.observable;
+package com.ray.baseandroid.base.mvp;
 
 /**
  * Author      : leixing
@@ -6,10 +6,11 @@ package com.ray.baseandroid.base.observable;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description : 可观察视图
  */
 
 public interface ObservableView {
     void subscribe(ViewObserver viewObserver);
+
     void unsubscribe(ViewObserver viewObserver);
 }

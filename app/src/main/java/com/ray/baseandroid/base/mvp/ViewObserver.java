@@ -1,4 +1,4 @@
-package com.ray.baseandroid.base.observable;
+package com.ray.baseandroid.base.mvp;
 
 /**
  * Author      : leixing
@@ -6,15 +6,19 @@ package com.ray.baseandroid.base.observable;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description : 视图事件的观察者
  */
 
 public interface ViewObserver {
     void onCreate();
 
+    void onStart();
+
     void onResume();
 
     void onPause();
+
+    void onStop();
 
     void onDestroy();
 }

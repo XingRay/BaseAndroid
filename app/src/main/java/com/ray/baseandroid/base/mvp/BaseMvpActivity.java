@@ -1,8 +1,7 @@
-package com.ray.baseandroid.base.observable;
+package com.ray.baseandroid.base.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 
 import com.ray.baseandroid.base.BaseActivity;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * Description : xxx
  */
 
-public abstract class ObservableActivity extends BaseActivity implements ObservableView {
+public abstract class BaseMvpActivity extends BaseActivity implements ObservableView {
 
     private List<ViewObserver> mViewObservers;
 
@@ -34,6 +33,17 @@ public abstract class ObservableActivity extends BaseActivity implements Observa
                 continue;
             }
             viewObserver.onCreate();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        for (ViewObserver viewObserver : mViewObservers) {
+            if (viewObserver == null) {
+                continue;
+            }
+            viewObserver.onStart();
         }
     }
 
@@ -56,6 +66,17 @@ public abstract class ObservableActivity extends BaseActivity implements Observa
                 continue;
             }
             viewObserver.onPause();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        for (ViewObserver viewObserver : mViewObservers) {
+            if (viewObserver == null) {
+                continue;
+            }
+            viewObserver.onStop();
         }
     }
 

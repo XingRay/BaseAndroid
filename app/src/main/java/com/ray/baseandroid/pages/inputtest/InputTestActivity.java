@@ -44,12 +44,12 @@ public class InputTestActivity extends BaseActivity implements KeyBoardStateList
     }
 
     @Override
-    public void onKeyBoardPopup() {
+    public void onPopup() {
         TraceUtil.log();
     }
 
     @Override
-    public void onKeyBoardDismiss() {
+    public void onDismiss() {
         TraceUtil.log();
     }
 

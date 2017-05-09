@@ -1,8 +1,7 @@
-package com.ray.baseandroid.base.observable;
+package com.ray.baseandroid.base.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 
 import com.ray.baseandroid.base.BaseFragment;
 
@@ -15,10 +14,10 @@ import java.util.List;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description :
  */
 
-public abstract class ObservableFragment extends BaseFragment implements ObservableView {
+public abstract class BaseMvpFragment extends BaseFragment implements ObservableView {
     private List<ViewObserver> mViewObservers;
 
     {
@@ -33,6 +32,17 @@ public abstract class ObservableFragment extends BaseFragment implements Observa
                 continue;
             }
             viewObserver.onCreate();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        for (ViewObserver viewObserver : mViewObservers) {
+            if (viewObserver == null) {
+                continue;
+            }
+            viewObserver.onStart();
         }
     }
 
@@ -55,6 +65,17 @@ public abstract class ObservableFragment extends BaseFragment implements Observa
                 continue;
             }
             viewObserver.onPause();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        for (ViewObserver viewObserver : mViewObservers) {
+            if (viewObserver == null) {
+                continue;
+            }
+            viewObserver.onStop();
         }
     }
 

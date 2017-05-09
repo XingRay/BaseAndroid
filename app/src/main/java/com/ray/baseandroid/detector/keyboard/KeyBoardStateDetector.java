@@ -13,6 +13,7 @@ import android.view.Window;
  * Version     : 0.0.1
  * <p>
  * Description : 软键盘检测器
+ * 注意：检测器目前只能检测竖屏状态下的键盘弹起和隐藏事件，横屏时，键盘的弹起和隐藏不会触发回调
  */
 
 public class KeyBoardStateDetector {
@@ -20,10 +21,12 @@ public class KeyBoardStateDetector {
      * 键盘状态-未知状态
      */
     private static final int KEY_BOARD_STATE_UNKNOW = 0;
+
     /**
      * 键盘状态-弹起状态
      */
     private static final int KEY_BOARD_STATE_POPUP = 1;
+
     /**
      * 键盘状态-消失状态
      */
@@ -59,10 +62,10 @@ public class KeyBoardStateDetector {
                 boolean isKeyboardPopup = isKeyboardShown(contentView);
                 if (isKeyboardPopup && keyBoardState != KEY_BOARD_STATE_POPUP) {
                     keyBoardState = KEY_BOARD_STATE_POPUP;
-                    listener.onKeyBoardPopup();
+                    listener.onPopup();
                 } else if (!isKeyboardPopup && keyBoardState != KEY_BOARD_STATE_DISMISS) {
                     keyBoardState = KEY_BOARD_STATE_DISMISS;
-                    listener.onKeyBoardDismiss();
+                    listener.onDismiss();
                 }
             }
         });
