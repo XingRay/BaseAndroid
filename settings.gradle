@@ -1,1 +1,1 @@
-include ':app'
+include ':android-lib', ':sample', ':java-lib', ':common-listview'
