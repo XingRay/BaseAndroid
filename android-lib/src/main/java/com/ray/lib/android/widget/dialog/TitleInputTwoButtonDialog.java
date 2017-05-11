@@ -26,7 +26,7 @@ public class TitleInputTwoButtonDialog extends Dialog {
     }
 
     public TitleInputTwoButtonDialog(Context context, String title, String leftButtonText, String rightButtonText) {
-        super(context, R.style.dialog_style);
+        super(context, R.style.dialog);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_title_input_two_button);
         setCancelable(true);

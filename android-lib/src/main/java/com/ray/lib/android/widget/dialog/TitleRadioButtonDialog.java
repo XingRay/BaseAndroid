@@ -38,7 +38,7 @@ public class TitleRadioButtonDialog extends Dialog {
     }
 
     public TitleRadioButtonDialog(Context context, String title, String radioText, String buttonText) {
-        super(context, R.style.dialog_style);
+        super(context, R.style.dialog);
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.dialog_title_radio_button);

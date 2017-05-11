@@ -16,7 +16,7 @@ public class TwoMenuCancelDialog extends Dialog {
     private TextView tvMenu3;
 
     public TwoMenuCancelDialog(Context context, String menu1, String menu2, String menu3) {
-        super(context, R.style.dialog_style);
+        super(context, R.style.dialog);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_two_menu_cancel_dialog);
         setCancelable(true);

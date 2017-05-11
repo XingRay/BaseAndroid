@@ -33,7 +33,7 @@ public class TitleHintTwoButtonDialog extends Dialog {
     }
 
     public TitleHintTwoButtonDialog(Context context, String hint, String title, String leftButtonText, String rightButtonText) {
-        super(context, R.style.dialog_style);
+        super(context, R.style.dialog);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_title_hint_two_button);
         setCancelable(true);

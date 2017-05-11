@@ -27,7 +27,7 @@ public class TitleHintAlertDialog extends Dialog {
     }
 
     public TitleHintAlertDialog(Context context, String title, String hint, String buttonText) {
-        super(context, R.style.dialog_style);
+        super(context, R.style.dialog);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.dialog_title_hint_alert);
         this.setCancelable(true);

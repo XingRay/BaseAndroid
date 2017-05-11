@@ -22,7 +22,7 @@ public class ProgressDialog extends Dialog {
     private TextView tvMessage;
 
     public ProgressDialog(Context context, String msg) {
-        super(context, R.style.DialogNoTitle);
+        super(context, R.style.dialog);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_progress);
         setCancelable(true);

@@ -32,7 +32,7 @@ public class DateSelectorPopupWindow extends PopupWindow implements View.OnClick
         popup.setBackgroundDrawable(new ColorDrawable());
         popup.setOutsideTouchable(true);
         popup.setFocusable(true);
-        popup.setAnimationStyle(R.style.window_frombottom);
+        popup.setAnimationStyle(R.style.window_from_bottom);
 
         dpDatePicker = (DatePicker) contentView.findViewById(R.id.dp_date_picker);
         dpDatePicker.setCalendarViewShown(false);
