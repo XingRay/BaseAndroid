@@ -36,14 +36,12 @@ public class RandomUtil {
     }
 
     /**
-     * 返回随机整数
      */
     public static int getRandomInt() {
         return getRandom().nextInt();
     }
 
     /**
-     * 返回[min, max)内的随机整数
      */
     public static int getRandomInt(int a, int b) {
         if (a == b) {
@@ -71,7 +69,6 @@ public class RandomUtil {
     }
 
     /**
-     * 返回由length个字符(a-z A-Z 0-9)组成的随机字符串
      */
     public static String getRandomString(int length) {
         if (length <= 0) {
@@ -89,17 +86,12 @@ public class RandomUtil {
     }
 
     /**
-     * 获取随机的布尔值
      */
     public static boolean getRandomBoolean() {
         return getRandom().nextBoolean();
     }
 
     /**
-     * 返回随机的布尔值，返回的true和false按照指定的比率概率分布
-     *
-     * @param trueRatio  返回真值的比例
-     * @param falseRatio 返回假值的比例
      */
     public static boolean getRandomBoolean(int trueRatio, int falseRatio) {
         int value = getRandom().nextInt(trueRatio + falseRatio);

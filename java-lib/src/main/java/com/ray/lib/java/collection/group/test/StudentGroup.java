@@ -1,6 +1,7 @@
 package com.ray.lib.java.collection.group.test;
 
 import com.ray.lib.java.collection.group.GroupData;
+import com.ray.lib.java.collection.group.Team;
 
 import java.util.Comparator;
 
@@ -8,7 +9,7 @@ import java.util.Comparator;
 /**
  * Created by leixing on 2017-01-09.
  */
-public class StudentGroup extends GroupData<StudentTag, Student, OrgStudent, GroupData.Team<StudentTag, Student>> {
+public class StudentGroup extends GroupData<StudentTag, Student, OrgStudent, Team<StudentTag, Student>> {
     @Override
     public Team<StudentTag, Student> newTeam(StudentTag studentTag) {
         return new Team<StudentTag, Student>(studentTag);

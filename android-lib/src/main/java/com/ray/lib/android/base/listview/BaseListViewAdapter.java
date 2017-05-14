@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.ray.collection.CollectionUtil;
+import com.ray.lib.java.util.CollectionUtil;
 
 import java.util.List;
 

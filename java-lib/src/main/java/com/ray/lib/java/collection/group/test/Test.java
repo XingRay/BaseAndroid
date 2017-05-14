@@ -1,6 +1,6 @@
 package com.ray.lib.java.collection.group.test;
 
-import com.ray.lib.java.collection.group.GroupData;
+import com.ray.lib.java.collection.group.Team;
 import com.ray.lib.java.util.RandomUtil;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Test {
         studentGroupData.addAll(orgStudents);
 
 
-        List<GroupData.Team<StudentTag, Student>> teams = studentGroupData.getTeams();
+        List<Team<StudentTag, Student>> teams = studentGroupData.getTeams();
         System.out.println(teams);
     }
 
