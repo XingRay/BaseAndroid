@@ -1,9 +1,9 @@
-package com.ray.lib.android.base.mvp;
+package com.ray.lib.android.base.page.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.ray.lib.android.base.BaseActivity;
+import com.ray.lib.android.base.page.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,10 @@ import java.util.List;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : MVP架构Activity基类
+ * Description : MVP架构Fragment基类
  */
 
-public abstract class BaseMvpActivity extends BaseActivity implements ObservableView {
-
+public abstract class BaseMvpFragment extends BaseFragment implements ObservableView {
     private List<ViewObserver> mViewObservers;
 
     {
@@ -26,7 +25,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {
@@ -37,7 +36,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {
@@ -48,7 +47,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {
@@ -59,7 +58,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {
@@ -70,7 +69,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {
@@ -81,7 +80,7 @@ public abstract class BaseMvpActivity extends BaseActivity implements Observable
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         for (ViewObserver viewObserver : mViewObservers) {
             if (viewObserver == null) {

@@ -1,4 +1,4 @@
-package com.ray.lib.android.base.mvp;
+package com.ray.lib.android.base.page.mvp;
 
 /**
  * Author      : leixing

@@ -1,8 +1,8 @@
 package com.ray.lib.android.util;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 
 /**
  * Author      : leixing
@@ -53,11 +53,46 @@ public class ResUtil {
      * getColor() 6.0之后过时/弃用问题
      */
     public static int getColor(Context context, int resId) {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= 23) {
-            return ContextCompat.getColor(context, resId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getColor(resId);
         } else {
             return context.getResources().getColor(resId);
         }
+    }
+
+    /**
+     * @param resId 资源ID
+     * @return Drawable资源
+     */
+    public Drawable getDrawable(Context context, int resId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getDrawable(resId, null);
+        } else {
+            return context.getResources().getDrawable(resId);
+        }
+    }
+
+    /**
+     * @param resId 资源ID
+     * @return Dimension值
+     */
+    public float getDimension(Context context, int resId) {
+        return context.getResources().getDimension(resId);
+    }
+
+    /**
+     * @param resId 资源ID
+     * @return 像素尺寸
+     */
+    public int getDimensionPixelSize(Context context, int resId) {
+        return context.getResources().getDimensionPixelSize(resId);
+    }
+
+    /**
+     * @param resId 资源ID
+     * @return 字符资源数组
+     */
+    public String[] getStringArray(Context context, int resId) {
+        return context.getResources().getStringArray(resId);
     }
 }

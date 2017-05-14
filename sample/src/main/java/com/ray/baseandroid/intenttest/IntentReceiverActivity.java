@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.intenttest.data.Follower;
 import com.ray.baseandroid.intenttest.data.Person;
-import com.ray.lib.android.base.BaseActivity;
+import com.ray.lib.android.base.page.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

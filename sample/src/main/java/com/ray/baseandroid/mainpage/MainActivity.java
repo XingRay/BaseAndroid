@@ -19,7 +19,7 @@ import com.ray.commonlistview.WrapRecyclerView;
 import com.ray.commonlistview.adapter.Adapter;
 import com.ray.commonlistview.decoration.DrawableDividerItemDecoration;
 import com.ray.commonlistview.listener.OnItemClickListener;
-import com.ray.lib.android.base.BaseActivity;
+import com.ray.lib.android.base.page.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

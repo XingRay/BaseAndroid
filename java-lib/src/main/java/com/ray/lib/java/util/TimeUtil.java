@@ -1,4 +1,4 @@
-package com.ray.lib.android.util;
+package com.ray.lib.java.util;
 
 
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.ray.lib.android.base;
+package com.ray.lib.android.base.page;
 
 import android.content.Intent;
 import android.os.Bundle;

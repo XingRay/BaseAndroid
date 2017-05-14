@@ -1,4 +1,4 @@
-package com.ray.lib.android.util;
+package com.ray.lib.java.util;
 
 import java.util.Random;
 
@@ -45,11 +45,29 @@ public class RandomUtil {
     /**
      * 返回[min, max)内的随机整数
      */
-    public static int getRandomInt(int min, int max) {
-        int trueMin = min <= max ? min : max;
-        int trueMax = max >= min ? max : min;
+    public static int getRandomInt(int a, int b) {
+        if (a == b) {
+            return a;
+        }
 
-        return trueMin + getRandom().nextInt(trueMax - trueMin);
+        int min = 0;
+        int max = 0;
+
+        if (a > b) {
+            max = a;
+            min = b;
+        } else {
+            max = b;
+            min = a;
+        }
+
+        Random random = new Random();
+        return min + random.nextInt(max - min + 1);
+    }
+
+    public static int getRandomInt(int max) {
+        Random random = new Random();
+        return random.nextInt(max + 1);
     }
 
     /**
