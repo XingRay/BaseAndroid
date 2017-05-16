@@ -140,46 +140,59 @@ public class TraceUtil {
     }
 
     public static void log(@Nullable Object obj) {
-        String msg = "" + obj;
         StackTraceElement stackTraceElement = new Throwable().getStackTrace()[1];
-        String className = stackTraceElement.getClassName();
-        String fileName = stackTraceElement.getFileName();
-        int lineNumber = stackTraceElement.getLineNumber();
-        String methodName = stackTraceElement.getMethodName();
-
-        d("at " + className + "(" + fileName + ":" + lineNumber + ")" + " @ " + methodName + "\n###############\n" + msg + "\n---------------");
+        printStackTraceElement(obj, stackTraceElement);
     }
 
     public static void log() {
-        String msg = "";
         StackTraceElement stackTraceElement = new Throwable().getStackTrace()[1];
+        printStackTraceElement(stackTraceElement);
+    }
+
+
+    private static void printStackTraceElement(StackTraceElement stackTraceElement) {
+        printStackTraceElement(null, stackTraceElement);
+    }
+
+    private static void printStackTraceElement(Object obj, StackTraceElement stackTraceElement) {
+        String msg = obj == null ? "" : obj.toString();
         String className = stackTraceElement.getClassName();
         String fileName = stackTraceElement.getFileName();
         int lineNumber = stackTraceElement.getLineNumber();
         String methodName = stackTraceElement.getMethodName();
 
-        d("at " + className + "(" + fileName + ":" + lineNumber + ")" + " @ " + methodName + "\n###############\n" + msg + "\n---------------");
+        d(_TIME_() + " at " + className + "(" + fileName + ":" + lineNumber + ")"
+                + "\n @ " + methodName
+                + "\n###############\n"
+                + msg
+                + "\n---------------");
     }
 
-    private static void printStackTrace(int startLevel, int maxLevel) {
-        Throwable throwable = new Throwable();
-        StackTraceElement[] stackTrace = throwable.getStackTrace();
+    public static void printStackTrace() {
+        StackTraceElement[] stackTraceElements = new Throwable().getStackTrace();
+        printStackTrace(stackTraceElements, 1, Integer.MAX_VALUE);
+    }
 
+    public static void printStackTrace(int maxLevel) {
+        StackTraceElement[] stackTraceElements = new Throwable().getStackTrace();
+        printStackTrace(stackTraceElements, 1, maxLevel);
+    }
+
+    private static void printStackTrace(StackTraceElement[] stackTraceElements, int startLevel, int maxLevel) {
         //防止溢出
         maxLevel = maxLevel < Integer.MAX_VALUE - startLevel ? maxLevel : Integer.MAX_VALUE - startLevel;
-        int level = stackTrace.length < maxLevel + startLevel ? stackTrace.length : maxLevel + startLevel;
+        int level = stackTraceElements.length < maxLevel + startLevel ? stackTraceElements.length : maxLevel + startLevel;
 
         StringBuilder stringBuilder = new StringBuilder();
-
+        stringBuilder.append("### ").append(_TIME_()).append("\n");
         for (int i = startLevel; i < level; i++) {
-            StackTraceElement element = stackTrace[i];
+            StackTraceElement element = stackTraceElements[i];
             String className = element.getClassName();
             String fileName = element.getFileName();
             int lineNumber = element.getLineNumber();
             String methodName = element.getMethodName();
 
-            stringBuilder
-                    .append("### at ")
+            stringBuilder.append("### at ")
                     .append(className)
                     .append("(")
                     .append(fileName)
@@ -192,13 +205,5 @@ public class TraceUtil {
         }
 
         d(stringBuilder.toString());
-    }
-
-    public static void printStackTrace() {
-        printStackTrace(2, Integer.MAX_VALUE);
-    }
-
-    public static void printStackTrace(int maxLevel) {
-        printStackTrace(2, maxLevel);
     }
 }
