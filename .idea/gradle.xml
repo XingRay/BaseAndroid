@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/android-lib" />
             <option value="$PROJECT_DIR$/common-listview" />
             <option value="$PROJECT_DIR$/java-lib" />
+            <option value="$PROJECT_DIR$/light-http" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
         </option>
