@@ -1,35 +1,73 @@
 package com.ray.lib.java.collection.group;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Author      : leixing
- * Date        : 2017-05-09
- * Email       : leixing@hecom.cn
- * Version     : 0.0.1
- * <p>
- * Description : xxx
+ * Created by leixing
+ * on 2016-10-25.
+ * Email : leixing@hecom.cn
  */
 
-public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item>, Team extends IGroupedTeam<Tag, Item>> {
+public abstract class GroupData<Tag, Item, Data extends GroupData.IData<Tag, Item>, Team extends ITeam<Tag, Item>> {
+    /**
+     */
+    private boolean isAutoSort = false;
+
+    /**
+     */
+    private boolean isSorted = true;
+
+    /**
+     */
     private List<Team> teams;
+
+    /**
+     */
+    private Comparator<Team> teamComparator;
+
+    /**
+     */
+    private Comparator<Item> itemComparator;
 
     public GroupData() {
         this.teams = new ArrayList<>();
+        this.teamComparator = getTeamComparator();
+        this.itemComparator = getItemComparator();
     }
 
-    public GroupData(List<Team> teams) {
-        this.teams = teams;
+    /**
+     *
+     * @param autoSort
+     */
+    public GroupData<Tag, Item, Data, Team> setAutoSort(boolean autoSort) {
+        isAutoSort = autoSort;
+        return this;
     }
 
     /**
      */
-    public void add(Item item, Tag tag) {
+    protected Comparator<Team> getTeamComparator() {
+        return null;
+    }
+
+    /**
+     */
+    protected Comparator<Item> getItemComparator() {
+        return null;
+    }
+
+    /**
+     *
+     * @param tag
+     * @param item
+     */
+    public GroupData<Tag, Item, Data, Team> addItem(Item item, Tag tag) {
         if (tag == null || item == null) {
-            return;
+            return this;
         }
 
         if (this.teams == null) {
@@ -42,25 +80,28 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
             teams.add(team);
         }
         team.addItem(item);
+        //添加数据后，标记为未排序
+        isSorted = false;
+        return this;
     }
 
     /**
-     *
      */
-    public void addData(Data data) {
+    public GroupData<Tag, Item, Data, Team> add(Data data) {
         if (data == null) {
-            return;
+            return this;
         }
 
-        add(data.getItem(), data.getTag());
+        addItem(data.getItem(), data.getTag());
+        return this;
     }
 
     /**
      *
      */
-    public void addData(List<Data> list) {
+    public GroupData<Tag, Item, Data, Team> addAll(List<Data> list) {
         if (list == null || list.size() == 0) {
-            return;
+            return this;
         }
 
         for (Data data : list) {
@@ -68,25 +109,29 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
                 continue;
             }
 
-            addData(data);
+            add(data);
         }
+
+        return this;
     }
 
     /**
+     *
+     * @param team
      */
-    public void addTeam(Team team) {
+    public GroupData<Tag, Item, Data, Team> addTeam(Team team) {
         if (team == null) {
-            return;
+            return this;
         }
 
         Tag tag = team.getTag();
         if (tag == null) {
-            return;
+            return this;
         }
 
         List<Item> items = team.getItems();
         if (items == null || items.size() == 0) {
-            return;
+            return this;
         }
 
         for (Item item : items) {
@@ -94,15 +139,20 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
                 continue;
             }
 
-            add(item, tag);
+            addItem(item, tag);
         }
+
+        return this;
     }
 
     /**
+     * 加入
+     *
+     * @param teams
      */
-    public void addAll(List<Team> teams) {
+    public GroupData<Tag, Item, Data, Team> addTeams(List<Team> teams) {
         if (teams == null || teams.size() == 0) {
-            return;
+            return this;
         }
 
         for (Team team : teams) {
@@ -112,6 +162,23 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
 
             addTeam(team);
         }
+
+        return this;
+    }
+
+
+    public GroupData<Tag, Item, Data, Team> addGroup(GroupData<Tag, Item, Data, Team> data) {
+        if (data == null) {
+            return this;
+        }
+
+        List<Team> teams = data.getTeams();
+        if (teams == null) {
+            return this;
+        }
+
+        addTeams(teams);
+        return this;
     }
 
     /**
@@ -141,17 +208,90 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
 
     /**
      */
-    public void sort(Comparator<Team> teamComparator, Comparator<Item> itemComparator) {
-        if (teams == null) {
-            return;
+    public Team findTeam(int index) {
+        if (index < 0) {
+            return null;
+        }
+        if (teams == null || teams.size() == 0) {
+            return null;
         }
 
-        if (teamComparator != null) {
+        if (index >= teams.size()) {
+            return null;
+        }
+
+        return teams.get(index);
+    }
+
+    /**
+     */
+    public Item findItem(Tag tag, int index) {
+        if (tag == null) {
+            return null;
+        }
+
+        if (index < 0) {
+            return null;
+        }
+
+        Team team = findTeam(tag);
+        if (team == null) {
+            return null;
+        }
+
+        List<Item> items = team.getItems();
+        if (items == null) {
+            return null;
+        }
+
+        if (index >= items.size()) {
+            return null;
+        }
+
+        return items.get(index);
+    }
+
+    /**
+     */
+    public Item findItem(int teamIndex, int itemIndex) {
+        if (teamIndex < 0) {
+            return null;
+        }
+
+        if (itemIndex < 0) {
+            return null;
+        }
+
+        Team team = findTeam(teamIndex);
+        if (team == null) {
+            return null;
+        }
+
+        List<Item> items = team.getItems();
+        if (items == null) {
+            return null;
+        }
+
+        if (itemIndex >= items.size()) {
+            return null;
+        }
+
+        return items.get(itemIndex);
+    }
+
+    /**
+     */
+    public GroupData<Tag, Item, Data, Team> sort() {
+        if (teams == null || teams.size() <= 0) {
+            return null;
+        }
+
+        if (this.teamComparator != null) {
             Collections.sort(teams, teamComparator);
         }
 
-        if (itemComparator != null) {
-            for (IGroupedTeam<Tag, Item> team : teams) {
+        if (this.itemComparator != null) {
+            for (ITeam<Tag, Item> team : teams) {
                 if (team == null) {
                     continue;
                 }
@@ -164,11 +304,112 @@ public abstract class GroupData<Tag, Item, Data extends IGroupableData<Tag, Item
                 Collections.sort(items, itemComparator);
             }
         }
+
+        return this;
     }
 
+    /**
+     */
     public List<Team> getTeams() {
+        List<Team> teams = new ArrayList<>();
+
+        trySort();
+
+        if (this.teams == null) {
+            return Collections.unmodifiableList(teams);
+        }
+
+        for (Team team : this.teams) {
+            if (team == null) {
+                continue;
+            }
+
+            teams.add(team);
+        }
+
         return Collections.unmodifiableList(teams);
     }
 
+    /**
+     */
+    public List<Item> getItems(int teamIndex) {
+        List<Item> items = new ArrayList<Item>();
+
+        Team team = findTeam(teamIndex);
+        if (team == null) {
+            return Collections.unmodifiableList(items);
+        }
+
+        trySort();
+
+        List<Item> items1 = team.getItems();
+        if (items1 == null) {
+            return Collections.unmodifiableList(items);
+        }
+
+        for (Item item : items1) {
+            if (item == null) {
+                continue;
+            }
+
+            items.add(item);
+        }
+
+        return Collections.unmodifiableList(items);
+    }
+
+    /**
+     */
+    public List<Item> getAllItems() {
+        List<Item> items = new ArrayList<>();
+
+        trySort();
+
+        if (teams == null) {
+            return Collections.unmodifiableList(items);
+        }
+
+        for (Team team : teams) {
+            if (team == null) {
+                continue;
+            }
+
+            List<Item> items1 = team.getItems();
+            if (items1 == null) {
+                continue;
+            }
+
+            for (Item item : items1) {
+                if (item == null) {
+                    continue;
+                }
+
+                items.add(item);
+            }
+        }
+
+        return Collections.unmodifiableList(items);
+    }
+
+    /**
+     */
+    private void trySort() {
+        if (isAutoSort && !isSorted) {
+            sort();
+            isSorted = true;
+        }
+    }
+
+    /**
+     */
     public abstract Team newTeam(Tag tag);
+
+    /**
+     */
+
+    public interface IData<Tag, Item> {
+        Tag getTag();
+
+        Item getItem();
+    }
 }

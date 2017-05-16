@@ -4,7 +4,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
-import com.ray.lib.android.base.BaseActivity;
+import com.ray.lib.android.base.page.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

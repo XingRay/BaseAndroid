@@ -1,4 +1,4 @@
-package com.ray.lib.android.util;
+package com.ray.lib.java.util;
 
 
 import java.text.SimpleDateFormat;
@@ -12,7 +12,7 @@ import java.util.Locale;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : 时间相关的工具类
+ * Description : xxx
  */
 
 public class TimeUtil {
@@ -22,19 +22,13 @@ public class TimeUtil {
     }
 
     /**
-     * 获取当前的时间戳 单位是毫秒
      */
     public static long getCurrentTimeStamp() {
         return new Date().getTime();
     }
 
     /**
-     * 获取两个时间戳之间的差
      *
-     * @param time1 时间1
-     * @param time2 时间2
-     * @param unit  返回值的单位
-     * @return 先计算两个时间戳之间的差值再转换为相应的单位的值
      */
     public static long timeInterval(long time1, long time2, int unit) {
         if (!isValidTimeUnit(unit)) {
@@ -74,14 +68,12 @@ public class TimeUtil {
     }
 
     /**
-     * 获取时间戳对应的天数
      */
     public static long getDays(long timeStamp) {
         return timeStamp / TimeInterval.DAY;
     }
 
     /**
-     * 获取时间戳对应的月数, 从GMT1970-01-01 00:00:00开始
      */
     public static int getRawMonth(long timeStamp) {
         Calendar now = Calendar.getInstance(Locale.getDefault());
@@ -98,10 +90,7 @@ public class TimeUtil {
     }
 
     /**
-     * 获取格式化时间， 格式为：22:15
      *
-     * @param timestamp 时间戳
-     * @return 格式化时间
      */
     public static String getTimeHHmm(long timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -109,21 +98,13 @@ public class TimeUtil {
     }
 
     /**
-     * 格式化日期， 格式为 11月22日
-     *
-     * @param timestamp 时间戳
-     * @return 格式化日期
      */
     public static String getDateMMDD(long timestamp) {
-        SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd", Locale.getDefault());
         return format.format(new Date(timestamp));
     }
 
     /**
-     * 格式化日期， 格式为 11-22
-     *
-     * @param timestamp 时间戳
-     * @return 格式化日期
      */
     public static String getDateMM_DD(long timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("MM-dd", Locale.getDefault());
@@ -131,7 +112,7 @@ public class TimeUtil {
     }
 
     public static String getDateYYYYMM(long timestamp) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM", Locale.getDefault());
         return format.format(new Date(timestamp));
     }
 

@@ -1,4 +1,4 @@
-package com.ray.lib.android.util;
+package com.ray.lib.java.util;
 
 import java.util.Random;
 
@@ -36,24 +36,39 @@ public class RandomUtil {
     }
 
     /**
-     * 返回随机整数
      */
     public static int getRandomInt() {
         return getRandom().nextInt();
     }
 
     /**
-     * 返回[min, max)内的随机整数
      */
-    public static int getRandomInt(int min, int max) {
-        int trueMin = min <= max ? min : max;
-        int trueMax = max >= min ? max : min;
+    public static int getRandomInt(int a, int b) {
+        if (a == b) {
+            return a;
+        }
 
-        return trueMin + getRandom().nextInt(trueMax - trueMin);
+        int min = 0;
+        int max = 0;
+
+        if (a > b) {
+            max = a;
+            min = b;
+        } else {
+            max = b;
+            min = a;
+        }
+
+        Random random = new Random();
+        return min + random.nextInt(max - min + 1);
+    }
+
+    public static int getRandomInt(int max) {
+        Random random = new Random();
+        return random.nextInt(max + 1);
     }
 
     /**
-     * 返回由length个字符(a-z A-Z 0-9)组成的随机字符串
      */
     public static String getRandomString(int length) {
         if (length <= 0) {
@@ -71,17 +86,12 @@ public class RandomUtil {
     }
 
     /**
-     * 获取随机的布尔值
      */
     public static boolean getRandomBoolean() {
         return getRandom().nextBoolean();
     }
 
     /**
-     * 返回随机的布尔值，返回的true和false按照指定的比率概率分布
-     *
-     * @param trueRatio  返回真值的比例
-     * @param falseRatio 返回假值的比例
      */
     public static boolean getRandomBoolean(int trueRatio, int falseRatio) {
         int value = getRandom().nextInt(trueRatio + falseRatio);

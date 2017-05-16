@@ -4,7 +4,7 @@ package com.ray.baseandroid.inputtest;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
-import com.ray.lib.android.base.BaseActivity;
+import com.ray.lib.android.base.page.BaseActivity;
 import com.ray.lib.android.detector.keyboard.KeyBoardStateDetector;
 import com.ray.lib.android.detector.keyboard.KeyBoardStateListener;
 import com.ray.lib.android.util.TraceUtil;
