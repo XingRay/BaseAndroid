@@ -3,6 +3,7 @@
           package="com.ray.baseandroid">
 
     <application
+        android:name=".common.SystemApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -51,7 +52,16 @@
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name="com.ray.baseandroid.multiprocess.MultiProcessActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".dialogactivitytest.DialogActivityTestService"/>
+
+        <service
+            android:name="com.ray.baseandroid.multiprocess.MultiProcessService"
+            android:process=":remote"/>
     </application>
 
 </manifest>
