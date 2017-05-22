@@ -11,11 +11,11 @@ public class DefaultIParamBuilder<Param> extends ParamBuilder<Param> {
      *
      * @return
      */
-    @Override
-    public RequestParams build() {
-        RequestParams requestParams = new RequestParams();
-        String json = new Gson().toJson(mParam);
-        requestParams.put("userStr", json);
-        return requestParams;
-    }
+//    @Override
+//    public RequestParams build() {
+//        RequestParams requestParams = new RequestParams();
+//        String json = new Gson().toJson(mParam);
+//        requestParams.put("userStr", json);
+//        return requestParams;
+//    }
 }

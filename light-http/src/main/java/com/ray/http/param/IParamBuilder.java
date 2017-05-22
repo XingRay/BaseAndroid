@@ -7,19 +7,19 @@ package com.ray.http.param;
  */
 public interface IParamBuilder<Param> {
 
-	/**
-	 * 传入对象作为请求的参数
-	 *
-	 * @param param
-	 * @return
-	 */
-	IParamBuilder setParam(Param param);
+    /**
+     * 传入对象作为请求的参数
+     *
+     * @param param
+     * @return
+     */
+    IParamBuilder setParam(Param param);
 
-	/**
-	 * 构建出 RequestParams
-	 *
-	 * @return
-	 */
-	RequestParams build();
+    /**
+     * 构建出 RequestParams
+     *
+     * @return
+     */
+    //RequestParams build();
 
 }
