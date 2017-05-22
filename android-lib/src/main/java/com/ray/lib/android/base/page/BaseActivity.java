@@ -1,5 +1,7 @@
 package com.ray.lib.android.base.page;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,9 +19,16 @@ import android.widget.Toast;
  */
 
 public abstract class BaseActivity extends FragmentActivity {
+
+    protected Activity mActivity;
+    protected Context mContext;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
+        mContext = getApplicationContext();
+
         if (!isParamsValid(getIntent())) {
             finish();
             return;
