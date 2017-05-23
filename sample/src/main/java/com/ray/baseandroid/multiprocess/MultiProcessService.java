@@ -3,8 +3,10 @@ package com.ray.baseandroid.multiprocess;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
+import com.ray.baseandroid.IMultiProcessService;
 import com.ray.lib.android.util.TraceUtil;
 
 /**
@@ -31,7 +33,7 @@ public class MultiProcessService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         TraceUtil.log();
-        return null;
+        return mSub;
     }
 
     @Override
@@ -51,4 +53,21 @@ public class MultiProcessService extends Service {
         super.onDestroy();
         TraceUtil.log();
     }
+
+    IMultiProcessService.Stub mSub = new IMultiProcessService.Stub() {
+        @Override
+        public void setName(String name) throws RemoteException {
+            MultiProcessCache.getInstance().setName(name);
+        }
+
+        @Override
+        public void setUid(String uid) throws RemoteException {
+            MultiProcessCache.getInstance().setUid(uid);
+        }
+
+        @Override
+        public void setData(String data) throws RemoteException {
+            MultiProcessCache.getInstance().setData(data);
+        }
+    };
 }
