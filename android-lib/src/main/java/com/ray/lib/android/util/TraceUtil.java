@@ -178,7 +178,18 @@ public class TraceUtil {
         printStackTrace(stackTraceElements, 1, maxLevel);
     }
 
+    /**
+     * print stack trace elements to log
+     *
+     * @param stackTraceElements stack trace element to be print into log
+     * @param startLevel         index from top of stack to be print
+     * @param maxLevel           max index of stack to be print
+     */
     private static void printStackTrace(StackTraceElement[] stackTraceElements, int startLevel, int maxLevel) {
+        d(formatStackTrace(stackTraceElements, startLevel, maxLevel));
+    }
+
+    private static String formatStackTrace(StackTraceElement[] stackTraceElements, int startLevel, int maxLevel) {
         //防止溢出
         maxLevel = maxLevel < Integer.MAX_VALUE - startLevel ? maxLevel : Integer.MAX_VALUE - startLevel;
         int level = stackTraceElements.length < maxLevel + startLevel ? stackTraceElements.length : maxLevel + startLevel;
@@ -204,6 +215,6 @@ public class TraceUtil {
                     .append("\n");
         }
 
-        d(stringBuilder.toString());
+        return stringBuilder.toString();
     }
 }

@@ -136,4 +136,22 @@ public class AppUtil {
 
         return packageInfo;
     }
+
+    /**
+     * get name of current process
+     *
+     * @param context runtime context
+     * @return name of current process
+     */
+    public static String getProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processes = manager.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo process : processes) {
+            if (process.pid == pid) {
+                return process.processName;
+            }
+        }
+        return null;
+    }
 }
