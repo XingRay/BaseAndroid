@@ -3,6 +3,7 @@ package com.ray.baseandroid.multitype;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
@@ -15,6 +16,7 @@ import me.drakeet.multitype.ItemViewBinder;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.drakeet.multitype.MultiTypeAsserts;
+import me.drakeet.multitype.TypePool;
 
 /**
  * Author      : leixing
@@ -31,6 +33,11 @@ public class MultiTypeListActivity extends BaseActivity {
 
     private Items mItems;
     private MultiTypeAdapter mAdapter;
+    static TypePool sTypePool;
+    static {
+
+
+    }
 
     @Override
     protected void initVariables() {
@@ -49,7 +56,9 @@ public class MultiTypeListActivity extends BaseActivity {
                         }
                     }
                 });
-        MultiTypeAsserts.assertHasTheSameAdapter(rvList, mAdapter);
+        mAdapter.register(Friend.class, new FriendViewBinder());
+        mAdapter.register(Message.class).to(new RcvMessageViewBinder());
+
     }
 
     @Override
@@ -58,6 +67,7 @@ public class MultiTypeListActivity extends BaseActivity {
         ButterKnife.bind(this);
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
         rvList.setAdapter(mAdapter);
+        MultiTypeAsserts.assertHasTheSameAdapter(rvList, mAdapter);
     }
 
     @Override
@@ -70,6 +80,8 @@ public class MultiTypeListActivity extends BaseActivity {
                 mItems.add(new Message("me", content, "friend"));
             }
         }
+
+        mItems.add(new Friend("aa", "cc"));
 
         MultiTypeAsserts.assertAllRegistered(mAdapter, mItems);
         mAdapter.notifyDataSetChanged();

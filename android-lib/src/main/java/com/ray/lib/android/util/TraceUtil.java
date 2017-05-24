@@ -217,4 +217,9 @@ public class TraceUtil {
 
         return stringBuilder.toString();
     }
+
+    public static String getFormattedStackTrace() {
+        StackTraceElement[] stackTraceElements = new Throwable().getStackTrace();
+        return formatStackTrace(stackTraceElements, 1, Integer.MAX_VALUE);
+    }
 }

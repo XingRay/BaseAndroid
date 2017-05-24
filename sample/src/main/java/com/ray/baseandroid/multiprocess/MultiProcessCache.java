@@ -18,18 +18,22 @@ public class MultiProcessCache {
     public static final String UID = "uid";
     public static final String NAME = "name";
     public static final String DATA = "data";
+    public static final String APP_ID = "001";
     private static MultiProcessCache INSTANCE;
 
     private String uid;
     private String name;
     private String data;
+
     private final SharedPreferences mSP;
 
     public static MultiProcessCache getInstance() {
-        if (INSTANCE == null) {
+        if (INSTANCE == null || !INSTANCE.isValid()) {
             synchronized (MultiProcessCache.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MultiProcessCache();
+                    MultiProcessCache cache = new MultiProcessCache();
+                    cache.loadCache();
+                    INSTANCE = cache;
                 }
             }
         }
@@ -37,17 +41,29 @@ public class MultiProcessCache {
         return INSTANCE;
     }
 
+    private void loadCache() {
+        uid = SPUtil.getString(mSP, UID);
+        name = SPUtil.getString(mSP, NAME);
+        data = SPUtil.getString(mSP, DATA);
+    }
+
+    private boolean isValid() {
+        return APP_ID.equals(uid);
+    }
+
     public MultiProcessCache() {
         mSP = SPUtil.getSharedPreferences(SystemApplication.getContext(), "multi_process_cache");
+        SPUtil.putString(mSP, UID, "001");
     }
 
 
     public String getUid() {
-        return SPUtil.getString(mSP, UID);
+        return uid;
     }
 
     public void setUid(String uid) {
         SPUtil.putString(mSP, UID, uid);
+        this.uid = uid;
     }
 
     public String getName() {
@@ -56,6 +72,7 @@ public class MultiProcessCache {
 
     public void setName(String name) {
         SPUtil.putString(mSP, NAME, name);
+        this.name = name;
     }
 
     public String getData() {
@@ -64,5 +81,6 @@ public class MultiProcessCache {
 
     public void setData(String data) {
         SPUtil.putString(mSP, DATA, data);
+        this.data = data;
     }
 }

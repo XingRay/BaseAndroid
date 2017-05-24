@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.ray.baseandroid.IMultiProcessService;
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
+import com.ray.lib.android.util.AppUtil;
 import com.ray.lib.android.util.ToastUtil;
 import com.ray.lib.android.util.TraceUtil;
 
@@ -58,6 +59,9 @@ public class MultiProcessActivity extends BaseActivity {
         etUid.setText(uid);
         etName.setText(name);
         etData.setText(data);
+
+        String processName = AppUtil.getProcessName(mContext);
+        ToastUtil.showToast(this, processName);
     }
 
     @OnClick({R.id.tv_load, R.id.tv_save, R.id.start, R.id.bind, R.id.unbind, R.id.stop})
@@ -98,9 +102,7 @@ public class MultiProcessActivity extends BaseActivity {
         } else {
             TraceUtil.log("save to remote");
             try {
-                mMultiProcessService.setUid(etUid.getText().toString().trim());
                 mMultiProcessService.setName(etName.getText().toString().trim());
-                mMultiProcessService.setData(etData.getText().toString().trim());
                 ToastUtil.showToast(this, "save to remote");
             } catch (RemoteException e) {
                 e.printStackTrace();

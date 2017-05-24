@@ -7,6 +7,7 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 
 import com.ray.baseandroid.IMultiProcessService;
+import com.ray.lib.android.util.AppUtil;
 import com.ray.lib.android.util.TraceUtil;
 
 /**
@@ -26,6 +27,8 @@ public class MultiProcessService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        String processName = AppUtil.getProcessName(this.getApplicationContext());
+        TraceUtil.log(processName);
         TraceUtil.log();
     }
 

@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.ray.lib.android.base.page.BaseActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Author      : leixing
  * Date        : 2017-04-20
@@ -17,23 +14,17 @@ import java.util.List;
  * Description : MVP架构Activity基类
  */
 
-public abstract class BaseMvpActivity extends BaseActivity implements ObservableView {
+public abstract class BaseMvpActivity extends BaseActivity {
+    protected BasePresenter mPresenter;
 
-    private List<ViewObserver> mViewObservers;
-
-    {
-        mViewObservers = new ArrayList<>();
+    public void setPresenter(BasePresenter presenter) {
+        mPresenter = presenter;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onCreate();
-        }
+        mPresenter.onCreate();
     }
 
     @Override
