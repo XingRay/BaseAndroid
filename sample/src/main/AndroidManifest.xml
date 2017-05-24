@@ -62,6 +62,12 @@
         <service
             android:name="com.ray.baseandroid.multiprocess.MultiProcessService"
             android:process=":remote"/>
+
+        <activity
+            android:name="com.ray.baseandroid.multitype.MultiTypeListActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
