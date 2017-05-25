@@ -15,10 +15,12 @@ import com.ray.lib.android.base.page.BaseActivity;
  */
 
 public abstract class BaseMvpActivity extends BaseActivity {
-    protected BasePresenter mPresenter;
+    protected BasePresenter<?> mPresenter;
 
-    public void setPresenter(BasePresenter presenter) {
-        mPresenter = presenter;
+    protected abstract BasePresenter<?> newPresenter();
+
+    {
+        mPresenter = newPresenter();
     }
 
     @Override
@@ -30,67 +32,33 @@ public abstract class BaseMvpActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onStart();
-        }
+        mPresenter.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onResume();
-        }
+        mPresenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onPause();
-        }
+        mPresenter.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onStop();
-        }
+        mPresenter.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onDestroy();
-        }
-
-        mViewObservers.clear();
-    }
-
-    @Override
-    public void subscribe(ViewObserver viewObserver) {
-        mViewObservers.add(viewObserver);
-    }
-
-    @Override
-    public void unsubscribe(ViewObserver viewObserver) {
-        mViewObservers.remove(viewObserver);
+        mPresenter.onDestroy();
+        mPresenter.onDestroyView();
+        mPresenter.unbindView();
+        mPresenter = null;
     }
 }

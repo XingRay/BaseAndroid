@@ -20,7 +20,7 @@ import java.lang.reflect.Proxy;
  * Description : MVP架构的Presenter的基类，使用JDK的动态代理，代理视图对象的方法调用
  */
 
-public abstract class BasePresenter<VIEW extends ObservableView> implements ViewObserver {
+public abstract class BasePresenter<VIEW> {
 
     private VIEW proxyView;
     private boolean destroyed = false;
@@ -60,7 +60,7 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
         return activity;
     }
 
-    public Activity getActivity() {
+    final protected Activity getActivity() {
         if (activity == null && isViewSet) {
             VIEW target = proxyViewHandler.getView();
             return checkActivity(target);
@@ -73,7 +73,7 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
      *
      * @param command 命令
      */
-    protected void runOnUiThread(Runnable command) {
+    final protected void runOnUiThread(Runnable command) {
         runOnUiThread(command, true);
     }
 
@@ -85,7 +85,7 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
      *                             为{@code true}时，当视图销毁后（activity、fragment调用onDestroy），命令将被丢弃
      *                             为{@code false}时，不论视图是否销毁，都将在UI线程运行命令
      */
-    protected void runOnUiThread(Runnable command, boolean justRunWhenViewValid) {
+    final protected void runOnUiThread(Runnable command, boolean justRunWhenViewValid) {
         if (justRunWhenViewValid && !isViewValid()) return;
         mUIHandler.post(command);
     }
@@ -104,7 +104,7 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
      *
      * @return 代理的视图对象
      */
-    public VIEW getView() {
+    final protected VIEW getView() {
         return this.proxyView;
     }
 
@@ -123,38 +123,37 @@ public abstract class BasePresenter<VIEW extends ObservableView> implements View
         }
         proxyViewHandler = new ProxyViewHandler(targetView);
         proxyView = (VIEW) Proxy.newProxyInstance(this.getClass().getClassLoader(), targetView.getClass().getInterfaces(), proxyViewHandler);
-
-        targetView.subscribe(this);
     }
 
-    @Override
-    public void onCreate() {
+    protected void onCreate() {
 
     }
 
-    @Override
-    public void onStart() {
+    protected void onStart() {
 
     }
 
-    @Override
-    public void onResume() {
+    protected void onResume() {
 
     }
 
-    @Override
-    public void onPause() {
+    protected void onPause() {
 
     }
 
-    @Override
-    public void onStop() {
+    protected void onStop() {
 
     }
 
-    @Override
-    public void onDestroy() {
+    protected void onDestroy() {
+
+    }
+
+    final void onDestroyView() {
         destroyed = true;
+    }
+
+    final void unbindView() {
         if (!keepActivityAlways()) {
             activity = null;
         }

@@ -5,9 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.ray.lib.android.base.page.BaseFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Author      : leixing
  * Date        : 2017-04-20
@@ -17,88 +14,51 @@ import java.util.List;
  * Description : MVP架构Fragment基类
  */
 
-public abstract class BaseMvpFragment extends BaseFragment implements ObservableView {
-    private List<ViewObserver> mViewObservers;
+public abstract class BaseMvpFragment extends BaseFragment {
+    protected BasePresenter<? extends BaseFragment> mPresenter;
+
+    protected abstract BasePresenter<? extends BaseFragment> newPresenter();
 
     {
-        mViewObservers = new ArrayList<>();
+        mPresenter = newPresenter();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onCreate();
-        }
+        mPresenter.onCreate();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onStart();
-        }
+        mPresenter.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onResume();
-        }
+        mPresenter.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onPause();
-        }
+        mPresenter.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onStop();
-        }
+        mPresenter.onStop();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        for (ViewObserver viewObserver : mViewObservers) {
-            if (viewObserver == null) {
-                continue;
-            }
-            viewObserver.onDestroy();
-        }
-
-        mViewObservers.clear();
-    }
-
-    @Override
-    public void subscribe(ViewObserver viewObserver) {
-        mViewObservers.add(viewObserver);
-    }
-
-    @Override
-    public void unsubscribe(ViewObserver viewObserver) {
-        mViewObservers.remove(viewObserver);
+        mPresenter.onDestroy();
+        mPresenter.onDestroyView();
+        mPresenter.unbindView();
+        mPresenter = null;
     }
 }
