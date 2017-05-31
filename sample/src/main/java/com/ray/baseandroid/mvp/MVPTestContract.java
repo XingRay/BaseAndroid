@@ -11,6 +11,7 @@ package com.ray.baseandroid.mvp;
 
 public interface MVPTestContract {
     interface View {
+        void setContent(String content);
     }
 
     interface Presenter {

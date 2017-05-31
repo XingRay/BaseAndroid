@@ -152,11 +152,11 @@ public abstract class BasePresenter<VIEW> {
 
     }
 
-    private void onDestroyView() {
+    void onDestroyView() {
         destroyed = true;
     }
 
-    private void unbindView() {
+    void unbindView() {
         if (!keepActivityAlways()) {
             activity = null;
         }

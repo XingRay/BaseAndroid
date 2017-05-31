@@ -49,4 +49,9 @@ public class MVPTestActivity extends BaseMvpActivity<MVPTestContract.Presenter> 
     public void onViewClicked() {
         TraceUtil.log();
     }
+
+    @Override
+    public void setContent(String content) {
+        tvContent.setText(content);
+    }
 }
