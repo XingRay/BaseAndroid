@@ -68,6 +68,10 @@
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name="com.ray.baseandroid.mvp.MVPTestActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

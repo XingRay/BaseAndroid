@@ -33,6 +33,9 @@ public abstract class BasePresenter<VIEW> {
     public BasePresenter(VIEW view) {
         setView(view);
         mUIHandler = new Handler(Looper.getMainLooper());
+        if (view instanceof IViewDelegatable) {
+            ((IViewDelegatable) view).setViewDelegate(new ViewDelegate(this));
+        }
     }
 
     /**
@@ -149,11 +152,11 @@ public abstract class BasePresenter<VIEW> {
 
     }
 
-    final void onDestroyView() {
+    private void onDestroyView() {
         destroyed = true;
     }
 
-    final void unbindView() {
+    private void unbindView() {
         if (!keepActivityAlways()) {
             activity = null;
         }
@@ -186,6 +189,47 @@ public abstract class BasePresenter<VIEW> {
                 }
             }
             return null;
+        }
+    }
+
+    private static class ViewDelegate implements IViewLifeCycle {
+
+        private final BasePresenter mPresenter;
+
+        private ViewDelegate(BasePresenter presenter) {
+            mPresenter = presenter;
+        }
+
+        @Override
+        public void onCreate() {
+            mPresenter.onCreate();
+        }
+
+        @Override
+        public void onStart() {
+            mPresenter.onStart();
+        }
+
+        @Override
+        public void onResume() {
+            mPresenter.onResume();
+        }
+
+        @Override
+        public void onPause() {
+            mPresenter.onPause();
+        }
+
+        @Override
+        public void onStop() {
+            mPresenter.onStop();
+        }
+
+        @Override
+        public void onDestroy() {
+            mPresenter.onDestroy();
+            mPresenter.onDestroyView();
+            mPresenter.unbindView();
         }
     }
 }

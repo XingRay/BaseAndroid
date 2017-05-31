@@ -14,5 +14,6 @@ public interface MVPTestContract {
     }
 
     interface Presenter {
+        void loadData();
     }
 }

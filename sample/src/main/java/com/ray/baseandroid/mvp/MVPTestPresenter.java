@@ -1,6 +1,7 @@
 package com.ray.baseandroid.mvp;
 
 import com.ray.lib.android.base.page.mvp.BasePresenter;
+import com.ray.lib.android.util.TraceUtil;
 
 /**
  * Author      : leixing
@@ -18,31 +19,36 @@ public class MVPTestPresenter extends BasePresenter<MVPTestContract.View> implem
 
     @Override
     protected void onCreate() {
-        super.onCreate();
+        TraceUtil.log();
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
+        TraceUtil.log();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
+        TraceUtil.log();
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
+        TraceUtil.log();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
+        TraceUtil.log();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        TraceUtil.log();
+    }
+
+    @Override
+    public void loadData() {
+        TraceUtil.log();
     }
 }
