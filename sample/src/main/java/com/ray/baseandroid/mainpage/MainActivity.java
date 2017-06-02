@@ -17,6 +17,7 @@ import com.ray.baseandroid.multiprocess.MultiProcessActivity;
 import com.ray.baseandroid.multitype.MultiTypeListActivity;
 import com.ray.baseandroid.mvp.MVPTestActivity;
 import com.ray.baseandroid.oom.OOMTestActivity;
+import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.commonlistview.ViewHolder;
 import com.ray.commonlistview.WrapRecyclerView;
 import com.ray.commonlistview.adapter.Adapter;
@@ -38,7 +39,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("input test", InputTestActivity.class),
             new Function("multi process", MultiProcessActivity.class),
             new Function("multiple type list", MultiTypeListActivity.class),
-            new Function("mvp test", MVPTestActivity.class)
+            new Function("mvp test", MVPTestActivity.class),
+            new Function("sp test", SPTestActivity.class)
     );
     private List<Function> mFunctions;
     private Activity mActivity;
