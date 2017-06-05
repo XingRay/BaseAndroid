@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'io.github.openfeign:feign-gson:9.5.0'
+    compile 'com.google.code.gson:gson:2.8.1'
 }
 
 sourceCompatibility = "1.7"

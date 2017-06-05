@@ -1,5 +1,6 @@
 package com.ray.lib.android.util;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -161,8 +162,9 @@ public class TraceUtil {
         int lineNumber = stackTraceElement.getLineNumber();
         String methodName = stackTraceElement.getMethodName();
 
-        d(_TIME_() + " at " + className + "(" + fileName + ":" + lineNumber + ")"
-                + "\n @ " + methodName
+        d(_TIME_()
+                + "\nat " + className + "(" + fileName + ":" + lineNumber + ")"
+                + "\n@ " + methodName
                 + "\n###############\n"
                 + msg
                 + "\n---------------");
@@ -189,6 +191,7 @@ public class TraceUtil {
         d(formatStackTrace(stackTraceElements, startLevel, maxLevel));
     }
 
+    @NonNull
     private static String formatStackTrace(StackTraceElement[] stackTraceElements, int startLevel, int maxLevel) {
         //防止溢出
         maxLevel = maxLevel < Integer.MAX_VALUE - startLevel ? maxLevel : Integer.MAX_VALUE - startLevel;
@@ -218,6 +221,7 @@ public class TraceUtil {
         return stringBuilder.toString();
     }
 
+    @NonNull
     public static String getFormattedStackTrace() {
         StackTraceElement[] stackTraceElements = new Throwable().getStackTrace();
         return formatStackTrace(stackTraceElements, 1, Integer.MAX_VALUE);
