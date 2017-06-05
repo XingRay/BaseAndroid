@@ -77,6 +77,36 @@
             android:name="com.ray.baseandroid.sptest.SPTestActivity"
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.ray.baseandroid.alarm.AlarmActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="alarm_clock"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.ray.baseandroid.alarm.AlarmSetActivity"
+            android:configChanges="keyboard|orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <receiver
+            android:name=".alarm.AlarmReceiver">
+            <intent-filter>
+                <action android:name="alarm_clock"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".alarm.AlarmService">
+            <intent-filter>
+                <action android:name="alarm_clock"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

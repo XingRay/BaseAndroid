@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.ray.baseandroid.R;
+import com.ray.baseandroid.alarm.AlarmSetActivity;
 import com.ray.baseandroid.dialogactivitytest.DialogActivityTestActivity;
 import com.ray.baseandroid.dim.DimActivity;
 import com.ray.baseandroid.inputtest.InputTestActivity;
@@ -40,7 +41,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("multi process", MultiProcessActivity.class),
             new Function("multiple type list", MultiTypeListActivity.class),
             new Function("mvp test", MVPTestActivity.class),
-            new Function("sp test", SPTestActivity.class)
+            new Function("sp test", SPTestActivity.class),
+            new Function("alarm test", AlarmSetActivity.class)
     );
     private List<Function> mFunctions;
     private Activity mActivity;

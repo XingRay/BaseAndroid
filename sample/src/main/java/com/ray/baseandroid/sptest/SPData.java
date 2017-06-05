@@ -43,7 +43,6 @@ public class SPData {
         for (int i = 0; i < ENTRY_NUMBER; i++) {
             String value = prefix + "_" + i + "\n" + RandomUtil.getRandomString(300);
             SPUtil.putString(mSP, getKey(i), value);
-            TraceUtil.log("save data : " + getKey(i) + " -->" + value);
         }
     }
 
@@ -52,7 +51,6 @@ public class SPData {
         for (int i = 0; i < 100; i++) {
             String value = SPUtil.getString(mSP, getKey(i));
             stringBuilder.append(value).append("\n\n");
-            TraceUtil.log("load data : " + getKey(i) + " --> " + value);
         }
 
         return stringBuilder.toString();
