@@ -30,12 +30,15 @@ public class AlarmService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        String notification = intent.getStringExtra("notification");
+        TraceUtil.log(notification);
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        TraceUtil.log();
+        String notification = intent.getStringExtra("notification");
+        TraceUtil.log(notification);
         return super.onStartCommand(intent, flags, startId);
     }
 

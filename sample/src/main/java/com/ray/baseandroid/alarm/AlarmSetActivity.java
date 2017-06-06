@@ -88,7 +88,7 @@ public class AlarmSetActivity extends BaseActivity {
     }
 
     private void setClock() {
-        TraceUtil.log(new TextView(this));
+        TraceUtil.log();
         Intent intent = new Intent();
         intent.setAction("alarm_clock");
         intent.putExtra("notification", "Time's up");
