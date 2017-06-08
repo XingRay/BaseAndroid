@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/java-lib" />
             <option value="$PROJECT_DIR$/json-lib" />
             <option value="$PROJECT_DIR$/light-http" />
+            <option value="$PROJECT_DIR$/period-service" />
             <option value="$PROJECT_DIR$/sample" />
             <option value="$PROJECT_DIR$/taskmanager" />
           </set>

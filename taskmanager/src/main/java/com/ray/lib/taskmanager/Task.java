@@ -30,12 +30,12 @@ public abstract class Task implements Runnable {
     /**
      * this task is successfully executed
      */
-    private boolean mIsSuccessed;
+    private boolean mIsSucceed;
 
     /**
      * precursors of this task, this task must wait for all of precursors's successful completion before its execution
      */
-    List<Task> mPrecursors;
+    private List<Task> mPrecursors;
 
     /**
      * successors of this task, this task will notify its successors after it completed successfully
@@ -52,7 +52,7 @@ public abstract class Task implements Runnable {
         }
         run();
 
-        if (mIsSuccessed) {
+        if (mIsSucceed) {
             notifySuccessors();
         }
     }
@@ -67,7 +67,7 @@ public abstract class Task implements Runnable {
         mRetryTimes--;
 
         run();
-        if (mIsSuccessed) {
+        if (mIsSucceed) {
             notifySuccessors();
         }
     }
@@ -75,7 +75,7 @@ public abstract class Task implements Runnable {
     private boolean isAllPrecursorsSuccess() {
         if (mPrecursors != null) {
             for (Task precursor : mPrecursors) {
-                if (!precursor.isSucessed()) {
+                if (!precursor.isSucceed()) {
                     return false;
                 }
             }
@@ -93,12 +93,12 @@ public abstract class Task implements Runnable {
         return mRetryTimes > 0;
     }
 
-    boolean isSucessed() {
-        return mIsSuccessed;
+    boolean isSucceed() {
+        return mIsSucceed;
     }
 
-    final void setResult(boolean isSuccessed) {
-        mIsSuccessed = isSuccessed;
+    final void setResult(boolean isSucceed) {
+        mIsSucceed = isSucceed;
     }
 
     private void notifySuccessors() {
