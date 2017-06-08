@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hecom.activity_dialog.DialogActivityManager;
+import com.hecom.activity_dialog.ActivityDialog;
 import com.hecom.activity_dialog.DialogAdapter;
 import com.ray.baseandroid.R;
 import com.ray.lib.android.util.ViewUtil;
@@ -52,7 +52,7 @@ public class DialogActivityTestService extends Service {
     }
 
     private void test01() {
-        DialogActivityManager.getInstance().showDialog(this.getApplicationContext(),
+        ActivityDialog.getInstance().showDialog(this.getApplicationContext(),
                 new DialogAdapter()
                         .layoutId(R.layout.layout_dialog_alert)
                         .viewBinder(new DialogAdapter.ViewBinder() {

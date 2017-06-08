@@ -108,7 +108,7 @@ public class HostActivity extends FragmentActivity {
     }
 
     private void loadData() {
-        DialogActivityFragment fragment = DialogActivityFragment.newInstance(mEventId, mCancelable);
+        ActivityDialogFragment fragment = ActivityDialogFragment.newInstance(mEventId, mCancelable);
         fragment.show(getSupportFragmentManager(), DIALOG_ACTIVITY_FRAGMENT);
     }
 

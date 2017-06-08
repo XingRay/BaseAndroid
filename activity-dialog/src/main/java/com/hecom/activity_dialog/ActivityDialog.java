@@ -15,15 +15,15 @@ import java.util.concurrent.atomic.AtomicLong;
  * Description : 弹窗Activity的管理器，用于管理事件和{@link DialogAdapter}
  */
 
-public class DialogActivityManager {
-    private static volatile DialogActivityManager INSTANCE;
+public class ActivityDialog {
+    private static volatile ActivityDialog INSTANCE;
     private final Map<Long, DialogAdapter> mAdapters;
     /**
      * 事件id，每次获取时数值+1
      */
     private AtomicLong eventId;
 
-    private DialogActivityManager() {
+    private ActivityDialog() {
         eventId = new AtomicLong(0);
 
         //API最低等级到16时，可以使用以下优化
@@ -31,11 +31,11 @@ public class DialogActivityManager {
         mAdapters = new HashMap<>();
     }
 
-    public static DialogActivityManager getInstance() {
+    public static ActivityDialog getInstance() {
         if (INSTANCE == null) {
-            synchronized (DialogActivityManager.class) {
+            synchronized (ActivityDialog.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new DialogActivityManager();
+                    INSTANCE = new ActivityDialog();
                 }
             }
         }
@@ -103,5 +103,51 @@ public class DialogActivityManager {
      */
     private long generateEventId() {
         return eventId.getAndIncrement();
+    }
+
+    public static class Builder {
+        /**
+         * 弹窗是否可以被取消
+         */
+        private boolean mCancelable;
+
+        /**
+         * 弹窗的优先级
+         */
+        private int mPriority;
+
+        /**
+         * 弹窗的名字，弹窗时如果有同名的弹窗，后者将会替代前者
+         */
+        private String mName;
+
+        /**
+         * 弹窗的适配器，用于渲染弹窗的界面UI
+         */
+        private DialogAdapter mAdapter;
+
+        public Builder cancelable(boolean cancelable) {
+            mCancelable = cancelable;
+            return this;
+        }
+
+        public Builder priority(int priority) {
+            mPriority = priority;
+            return this;
+        }
+
+        public Builder name(String name) {
+            mName = name;
+            return this;
+        }
+
+        public Builder Adapter(DialogAdapter adapter) {
+            mAdapter = adapter;
+            return this;
+        }
+
+        public ActivityDialog create() {
+            return new ActivityDialog();
+        }
     }
 }

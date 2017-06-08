@@ -16,18 +16,18 @@ import android.view.ViewGroup;
  * Description : 用于展示弹窗视图的DialogFragment
  */
 
-public class DialogActivityFragment extends DialogFragment {
+public class ActivityDialogFragment extends DialogFragment {
     public static final String EVENT_ID = "event_id";
     public static final String CANCELABLE = "cancelable";
     private View mRootView;
     private long mEventId;
     private DialogAdapter mAdapter;
 
-    public DialogActivityFragment() {
+    public ActivityDialogFragment() {
     }
 
-    public static DialogActivityFragment newInstance(long eventId, boolean cancelable) {
-        DialogActivityFragment fragment = new DialogActivityFragment();
+    public static ActivityDialogFragment newInstance(long eventId, boolean cancelable) {
+        ActivityDialogFragment fragment = new ActivityDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putLong(EVENT_ID, eventId);
         bundle.putBoolean(CANCELABLE, cancelable);
@@ -57,7 +57,7 @@ public class DialogActivityFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DialogActivityManager.getInstance().removeAdapter(mEventId);
+        ActivityDialog.getInstance().removeAdapter(mEventId);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class DialogActivityFragment extends DialogFragment {
         Bundle arguments = getArguments();
         mEventId = arguments.getLong(EVENT_ID);
         boolean cancelable = arguments.getBoolean(CANCELABLE, false);
-        mAdapter = DialogActivityManager.getInstance().getAdapter(mEventId);
+        mAdapter = ActivityDialog.getInstance().getAdapter(mEventId);
         mAdapter.dialogFragment(this);
         setCancelable(cancelable);
     }
