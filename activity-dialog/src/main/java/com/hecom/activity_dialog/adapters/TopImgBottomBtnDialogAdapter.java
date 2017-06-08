@@ -1,12 +1,13 @@
-package com.ray.lib.android.widget.dialogactivity.adapters;
+package com.hecom.activity_dialog.adapters;
 
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.ray.lib.android.R;
-import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.android.widget.dialogactivity.DialogAdapter;
-import com.ray.lib.android.widget.dialogactivity.listener.ClickListener;
+import com.hecom.activity_dialog.DialogAdapter;
+import com.hecom.activity_dialog.R;
+import com.hecom.activity_dialog.listener.ClickListener;
 
 
 /**
@@ -33,12 +34,16 @@ public class TopImgBottomBtnDialogAdapter extends DialogAdapter {
     protected void bindView(View rootView, DialogFragment fragment) {
         super.bindView(rootView, fragment);
 
-        ViewUtil.setImgRes(rootView, R.id.iv_top, mImgResId);
-        ViewUtil.setText(rootView, R.id.tv_desc, mContent);
-        ViewUtil.setText(rootView, R.id.tv_btn, mButtonText);
+        ImageView imageView = (ImageView) rootView.findViewById(R.id.iv_top);
+        imageView.setImageResource(mImgResId);
 
+        TextView textView = (TextView) rootView.findViewById(R.id.tv_desc);
+        textView.setText(mContent);
 
-        ViewUtil.setOnClickListener(rootView, R.id.tv_btn, new View.OnClickListener() {
+        TextView textView1 = (TextView) rootView.findViewById(R.id.tv_btn);
+        textView1.setText(mButtonText);
+
+        rootView.findViewById(R.id.tv_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
@@ -49,8 +54,6 @@ public class TopImgBottomBtnDialogAdapter extends DialogAdapter {
                 }
             }
         });
-
-
 
         /*Window window = fragment.getDialog().getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);

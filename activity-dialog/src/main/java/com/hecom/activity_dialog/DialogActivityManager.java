@@ -1,4 +1,4 @@
-package com.ray.lib.android.widget.dialogactivity;
+package com.hecom.activity_dialog;
 
 import android.content.Context;
 
@@ -61,7 +61,7 @@ public class DialogActivityManager {
         long eventId = generateEventId();
         mAdapters.put(eventId, adapter);
 
-        DialogActivity.showDialog(context, eventId, cancelable, priority, width, height);
+        HostActivity.showDialog(context, eventId, cancelable, priority, width, height);
         return adapter;
     }
 

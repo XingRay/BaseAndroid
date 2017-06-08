@@ -1,4 +1,4 @@
-package com.ray.lib.android.widget.dialogactivity.listener;
+package com.hecom.activity_dialog.listener;
 
 /**
  * Author      : leixing

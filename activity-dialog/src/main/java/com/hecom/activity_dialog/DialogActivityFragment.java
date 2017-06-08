@@ -1,4 +1,4 @@
-package com.ray.lib.android.widget.dialogactivity;
+package com.hecom.activity_dialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -22,7 +22,6 @@ public class DialogActivityFragment extends DialogFragment {
     private View mRootView;
     private long mEventId;
     private DialogAdapter mAdapter;
-
 
     public DialogActivityFragment() {
     }

@@ -1,4 +1,4 @@
-package com.ray.lib.android.widget.dialogactivity;
+package com.hecom.activity_dialog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
  * Description : 抽象的窗口宿主类Activity
  */
 
-public class DialogActivity extends FragmentActivity {
+public class HostActivity extends FragmentActivity {
     public static final String EVENT_ID = "event_id";
     public static final String CANCELABLE = "cancelable";
     public static final String PRIORITY = "priority";
@@ -50,7 +50,7 @@ public class DialogActivity extends FragmentActivity {
         intent.putExtra(HEIGHT, height);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClass(context, DialogActivity.class);
+        intent.setClass(context, HostActivity.class);
         context.startActivity(intent);
     }
 

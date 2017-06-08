@@ -10,10 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hecom.activity_dialog.DialogActivityManager;
+import com.hecom.activity_dialog.DialogAdapter;
 import com.ray.baseandroid.R;
 import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.android.widget.dialogactivity.DialogActivityManager;
-import com.ray.lib.android.widget.dialogactivity.DialogAdapter;
 
 
 /**

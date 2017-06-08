@@ -1,11 +1,11 @@
-package com.ray.lib.android.widget.dialogactivity.adapters;
+package com.hecom.activity_dialog.adapters;
 
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.TextView;
 
-import com.ray.lib.android.R;
-import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.android.widget.dialogactivity.DialogAdapter;
+import com.hecom.activity_dialog.DialogAdapter;
+import com.hecom.activity_dialog.R;
 
 
 /**
@@ -32,7 +32,8 @@ public class ProgressDialogAdapter extends DialogAdapter {
 
     @Override
     protected void bindView(View rootView, DialogFragment fragment) {
-        ViewUtil.setText(rootView, R.id.tv_message, mContent);
+        TextView textView = (TextView) rootView.findViewById(R.id.tv_message);
+        textView.setText(mContent);
     }
 
     public ProgressDialogAdapter content(CharSequence text) {

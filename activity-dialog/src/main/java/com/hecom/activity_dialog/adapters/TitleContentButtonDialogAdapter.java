@@ -1,12 +1,12 @@
-package com.ray.lib.android.widget.dialogactivity.adapters;
+package com.hecom.activity_dialog.adapters;
 
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.TextView;
 
-import com.ray.lib.android.R;
-import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.android.widget.dialogactivity.DialogAdapter;
-import com.ray.lib.android.widget.dialogactivity.listener.ClickListener;
+import com.hecom.activity_dialog.DialogAdapter;
+import com.hecom.activity_dialog.R;
+import com.hecom.activity_dialog.listener.ClickListener;
 
 
 /**
@@ -36,12 +36,16 @@ public class TitleContentButtonDialogAdapter extends DialogAdapter {
     protected void bindView(View rootView, DialogFragment fragment) {
         super.bindView(rootView, fragment);
 
-        ViewUtil.setText(rootView, R.id.tv_title, mTitle);
-        ViewUtil.setText(rootView, R.id.tv_content, mContent);
-        ViewUtil.setText(rootView, R.id.tv_button, mButtonText);
+        TextView textView = (TextView) rootView.findViewById(R.id.tv_title);
+        textView.setText(mTitle);
 
+        TextView textView1 = (TextView) rootView.findViewById(R.id.tv_content);
+        textView1.setText(mContent);
 
-        ViewUtil.setOnClickListener(rootView, R.id.tv_button, new View.OnClickListener() {
+        TextView textView2 = (TextView) rootView.findViewById(R.id.tv_button);
+        textView2.setText(mButtonText);
+
+        rootView.findViewById(R.id.tv_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {

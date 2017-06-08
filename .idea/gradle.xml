@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/activity-dialog" />
             <option value="$PROJECT_DIR$/android-lib" />
             <option value="$PROJECT_DIR$/common-listview" />
             <option value="$PROJECT_DIR$/java-lib" />

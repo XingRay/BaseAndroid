@@ -1,12 +1,12 @@
-package com.ray.lib.android.widget.dialogactivity.adapters;
+package com.hecom.activity_dialog.adapters;
 
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.TextView;
 
-import com.ray.lib.android.R;
-import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.android.widget.dialogactivity.DialogAdapter;
-import com.ray.lib.android.widget.dialogactivity.listener.ClickListener;
+import com.hecom.activity_dialog.DialogAdapter;
+import com.hecom.activity_dialog.R;
+import com.hecom.activity_dialog.listener.ClickListener;
 
 
 /**
@@ -34,13 +34,19 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
 
     @Override
     protected void bindView(View rootView, DialogFragment fragment) {
-        ViewUtil.setText(rootView, R.id.tv_title, mTitle);
-        ViewUtil.setText(rootView, R.id.tv_content, mContent);
-        ViewUtil.setText(rootView, R.id.tv_left_button, mLeftText);
-        ViewUtil.setText(rootView, R.id.tv_right_button, mRightText);
+        TextView textView = (TextView) rootView.findViewById(R.id.tv_title);
+        textView.setText(mTitle);
 
+        TextView textView1 = (TextView) rootView.findViewById(R.id.tv_content);
+        textView1.setText(mContent);
 
-        ViewUtil.setOnClickListener(rootView, R.id.tv_left_button, new View.OnClickListener() {
+        TextView textView2 = (TextView) rootView.findViewById(R.id.tv_left_button);
+        textView2.setText(mLeftText);
+
+        TextView textView3 = (TextView) rootView.findViewById(R.id.tv_right_button);
+        textView3.setText(mRightText);
+
+        rootView.findViewById(R.id.tv_left_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mLeftListener != null) {
@@ -52,8 +58,7 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
             }
         });
 
-
-        ViewUtil.setOnClickListener(rootView, R.id.tv_right_button, new View.OnClickListener() {
+        rootView.findViewById(R.id.tv_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRightListener != null) {
@@ -64,7 +69,6 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
                 }
             }
         });
-
     }
 
     public TitleContentTwoButtonDialogAdapter title(CharSequence title) {
