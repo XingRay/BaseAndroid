@@ -42,7 +42,7 @@ public class DialogActivityTestActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        startTestService();
+
     }
 
     @Override
@@ -69,7 +69,7 @@ public class DialogActivityTestActivity extends BaseActivity {
     }
 
     private void test01() {
-
+        startTestService();
     }
 
     private void test02() {

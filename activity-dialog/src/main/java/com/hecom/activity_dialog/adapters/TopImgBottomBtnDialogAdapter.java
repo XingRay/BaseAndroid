@@ -1,6 +1,5 @@
 package com.hecom.activity_dialog.adapters;
 
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,9 +30,7 @@ public class TopImgBottomBtnDialogAdapter extends DialogAdapter {
     }
 
     @Override
-    protected void bindView(View rootView, DialogFragment fragment) {
-        super.bindView(rootView, fragment);
-
+    protected void bindView(View rootView) {
         ImageView imageView = (ImageView) rootView.findViewById(R.id.iv_top);
         imageView.setImageResource(mImgResId);
 

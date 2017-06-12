@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -52,25 +51,34 @@ public class DialogActivityTestService extends Service {
     }
 
     private void test01() {
-        ActivityDialog.getInstance().showDialog(this.getApplicationContext(),
-                new DialogAdapter()
-                        .layoutId(R.layout.layout_dialog_alert)
-                        .viewBinder(new DialogAdapter.ViewBinder() {
+        final ActivityDialog dialog = new ActivityDialog(this)
+                .cancelable(false)
+                .height(200)
+                .width(240)
+                .name("test")
+                .priority(10)
+                .Adapter(new DialogAdapter() {
+                    @Override
+                    protected int getLayoutId() {
+                        return R.layout.layout_dialog_alert;
+                    }
+
+                    @Override
+                    protected void bindView(View rootView) {
+                        TextView tvMsg = ViewUtil.findView(rootView, R.id.tv_msg);
+                        tvMsg.setText("test01 in service");
+
+                        TextView tvConfirm = (TextView) rootView.findViewById(R.id.tv_confirm);
+                        tvConfirm.setText("ok");
+
+                        tvConfirm.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            protected void bindView(View rootView, final DialogFragment fragment) {
-                                TextView tvMsg = ViewUtil.findView(rootView, R.id.tv_msg);
-                                tvMsg.setText("test01 in service");
-
-                                TextView tvConfirm = (TextView) rootView.findViewById(R.id.tv_confirm);
-
-                                tvConfirm.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        fragment.dismiss();
-                                    }
-                                });
+                            public void onClick(View v) {
+                                dismiss();
                             }
-                        }));
+                        });
+                    }
+                }).show();
     }
 
     @Override

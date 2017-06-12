@@ -1,6 +1,5 @@
 package com.hecom.activity_dialog.adapters;
 
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +30,7 @@ public class ProgressDialogAdapter extends DialogAdapter {
     }
 
     @Override
-    protected void bindView(View rootView, DialogFragment fragment) {
+    protected void bindView(View rootView) {
         TextView textView = (TextView) rootView.findViewById(R.id.tv_message);
         textView.setText(mContent);
     }

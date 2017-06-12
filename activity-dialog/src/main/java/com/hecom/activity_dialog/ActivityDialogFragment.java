@@ -17,20 +17,24 @@ import android.view.ViewGroup;
  */
 
 public class ActivityDialogFragment extends DialogFragment {
-    public static final String EVENT_ID = "event_id";
+    public static final String CODE = "code";
     public static final String CANCELABLE = "cancelable";
+    public static final String STYLE = "style";
+    public static final String THEME = "theme";
     private View mRootView;
-    private long mEventId;
+    private long mCode;
     private DialogAdapter mAdapter;
 
     public ActivityDialogFragment() {
     }
 
-    public static ActivityDialogFragment newInstance(long eventId, boolean cancelable) {
+    public static ActivityDialogFragment newInstance(long code, boolean cancelable, int style, int theme) {
         ActivityDialogFragment fragment = new ActivityDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putLong(EVENT_ID, eventId);
+        bundle.putLong(CODE, code);
         bundle.putBoolean(CANCELABLE, cancelable);
+        bundle.putInt(STYLE, style);
+        bundle.putInt(THEME, theme);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -49,15 +53,9 @@ public class ActivityDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        loadData();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        ActivityDialog.getInstance().removeAdapter(mEventId);
+        AdapterManager.getInstance().remove(mCode);
     }
 
     @Override
@@ -68,18 +66,28 @@ public class ActivityDialogFragment extends DialogFragment {
 
     private void initVariables() {
         Bundle arguments = getArguments();
-        mEventId = arguments.getLong(EVENT_ID);
+        mCode = arguments.getLong(CODE);
+
+        mAdapter = AdapterManager.getInstance().get(mCode);
+        mAdapter.bindDialog(this);
+
         boolean cancelable = arguments.getBoolean(CANCELABLE, false);
-        mAdapter = ActivityDialog.getInstance().getAdapter(mEventId);
-        mAdapter.dialogFragment(this);
         setCancelable(cancelable);
+
+        int style = arguments.getInt(STYLE);
+        if (style == 0) {
+            style = STYLE_NO_TITLE;
+        }
+
+        int theme = arguments.getInt(THEME);
+        if (theme == 0) {
+            theme = R.style.DialogNoTitle;
+        }
+
+        setStyle(style, theme);
     }
 
     private void initView() {
-        mAdapter.bindView(mRootView, this);
-    }
-
-    private void loadData() {
-
+        mAdapter.bindView(mRootView);
     }
 }

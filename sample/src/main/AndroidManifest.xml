@@ -23,11 +23,6 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.ray.lib.android.widget.dialogactivity.DialogActivity"
-            android:configChanges="keyboard|orientation"
-            android:screenOrientation="portrait"/>
-
-        <activity
             android:name=".dim.DimActivity"
             android:configChanges="keyboard|orientation"
             android:screenOrientation="portrait"/>

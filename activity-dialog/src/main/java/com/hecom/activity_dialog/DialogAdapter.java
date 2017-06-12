@@ -9,13 +9,12 @@ import android.view.View;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : DialogAdapter适配器,用于提供视图展示的参数和事件回调
+ * Description : adapter for render UI for {@link ActivityDialog}
  */
 
-public class DialogAdapter implements DialogOperator {
+public abstract class DialogAdapter implements DialogHandle {
 
     private int mLayoutId;
-    private ViewBinder mViewBinder;
     private DialogFragment mFragment;
     private boolean mAutoDismiss;
 
@@ -23,25 +22,11 @@ public class DialogAdapter implements DialogOperator {
         mAutoDismiss = true;
     }
 
-    public DialogAdapter layoutId(int layoutId) {
-        mLayoutId = layoutId;
-        return this;
-    }
+    protected abstract int getLayoutId();
 
-    protected int getLayoutId() {
-        return mLayoutId;
-    }
+    protected abstract void bindView(View rootView);
 
-    public DialogAdapter viewBinder(ViewBinder viewBinder) {
-        mViewBinder = viewBinder;
-        return this;
-    }
-
-    protected void bindView(View rootView, DialogFragment fragment) {
-        mViewBinder.bindView(rootView, fragment);
-    }
-
-    DialogAdapter dialogFragment(DialogFragment fragment) {
+    DialogAdapter bindDialog(DialogFragment fragment) {
         mFragment = fragment;
         return this;
     }
@@ -57,19 +42,9 @@ public class DialogAdapter implements DialogOperator {
 
     @Override
     public void dismiss() {
+        if (mFragment == null) {
+            throw new IllegalStateException("can not dismiss dialog without bind");
+        }
         mFragment.dismiss();
-    }
-
-    /**
-     * 视图绑定器，用于绑定控件的数据和事件
-     */
-    public static abstract class ViewBinder {
-        /**
-         * 绑定控件的数据和事件
-         *
-         * @param rootView
-         * @param fragment
-         */
-        protected abstract void bindView(View rootView, DialogFragment fragment);
     }
 }

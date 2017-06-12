@@ -2,152 +2,132 @@ package com.hecom.activity_dialog;
 
 import android.content.Context;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
  * Author      : leixing
  * Date        : 2017-04-14
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : 弹窗Activity的管理器，用于管理事件和{@link DialogAdapter}
+ * Description : dialog user for show a dialog at background
  */
 
 public class ActivityDialog {
-    private static volatile ActivityDialog INSTANCE;
-    private final Map<Long, DialogAdapter> mAdapters;
+
     /**
-     * 事件id，每次获取时数值+1
+     * context for dialog, it can be {@code Activity} or {@code Service} or {@code Application}
      */
-    private AtomicLong eventId;
+    private final Context mContext;
 
-    private ActivityDialog() {
-        eventId = new AtomicLong(0);
+    /**
+     * is dialog will dismiss when click outside of it
+     */
+    private boolean mCancelable;
 
-        //API最低等级到16时，可以使用以下优化
-        //LongSparseArray<DialogActivityAdapter> mAdapters = new LongSparseArray<>();
-        mAdapters = new HashMap<>();
-    }
+    /**
+     * priority of the dialog
+     * higher the value is, more chance the dialog has to show
+     */
+    private int mPriority;
 
-    public static ActivityDialog getInstance() {
-        if (INSTANCE == null) {
-            synchronized (ActivityDialog.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ActivityDialog();
-                }
-            }
+    /**
+     * name of the dialog, if two {@code ActivityDialog} have the same name, the later one will replace
+     * the previous one
+     */
+    private String mName;
+
+    /**
+     * adapter for render UI by given data
+     */
+    private DialogAdapter mAdapter;
+
+    /**
+     * width of the dialog
+     */
+    private int mWidth;
+
+    /**
+     * height of the dialog
+     */
+    private int mHeight;
+    private int mStyle;
+    private int mTheme;
+
+    public ActivityDialog(Context context) {
+        if (context == null) {
+            throw new IllegalArgumentException("context can not be null");
         }
+        mContext = context;
 
-        return INSTANCE;
+        mCancelable = true;
+        mPriority = 0;
+        mName = "";
+    }
+
+    public ActivityDialog cancelable(boolean cancelable) {
+        mCancelable = cancelable;
+        return this;
+    }
+
+    public ActivityDialog priority(int priority) {
+        mPriority = priority;
+        return this;
+    }
+
+    public ActivityDialog name(String name) {
+        mName = name;
+        return this;
+    }
+
+    public ActivityDialog Adapter(DialogAdapter adapter) {
+        mAdapter = adapter;
+        return this;
+    }
+
+    public ActivityDialog width(int width) {
+        mWidth = width;
+        return this;
+    }
+
+    public ActivityDialog height(int height) {
+        mHeight = height;
+        return this;
+    }
+
+    public ActivityDialog style(int style) {
+        mStyle = style;
+        return this;
+    }
+
+    public ActivityDialog theme(int theme) {
+        mTheme = theme;
+        return this;
     }
 
     /**
-     * 弹出dialog
-     *
-     * @param context    上下文信息
-     * @param cancelable 是否可以去取消
-     * @param priority   优先级
-     * @param width      弹窗的宽度
-     * @param height     弹窗的高度
-     * @param adapter    适配器
+     * show this dialog to user
      */
-    public DialogOperator showDialog(Context context, boolean cancelable, long priority, int width, int height, DialogAdapter adapter) {
-        if (adapter == null) {
+    public ActivityDialog show() {
+        if (mAdapter == null) {
             throw new IllegalArgumentException("adapter can not be null");
         }
 
-        long eventId = generateEventId();
-        mAdapters.put(eventId, adapter);
+        long code = CodeGenerator.getInstance().next();
+        AdapterManager.getInstance().put(code, mAdapter);
 
-        HostActivity.showDialog(context, eventId, cancelable, priority, width, height);
-        return adapter;
+        HostActivity.showDialog(mContext, code, mCancelable, mPriority, mWidth, mHeight, mStyle, mTheme);
+        return this;
     }
 
-    public DialogOperator showDialog(Context context, boolean cancelable, long priority, DialogAdapter adapter) {
-        return showDialog(context, cancelable, priority, 160, 280, adapter);
-    }
-
-    public DialogOperator showDialog(Context context, boolean cancelable, DialogAdapter adapter) {
-        return showDialog(context, cancelable, 0, adapter);
-    }
-
-    public DialogOperator showDialog(Context context, DialogAdapter adapter) {
-        return showDialog(context, false, adapter);
-    }
-
-    /**
-     * 获取缓存的Adapter
-     *
-     * @param eventId
-     * @return
-     */
-    DialogAdapter getAdapter(long eventId) {
-        return mAdapters.get(eventId);
-    }
-
-    /**
-     * 从缓存中移除adapter
-     *
-     * @param eventId
-     */
-    void removeAdapter(long eventId) {
-        mAdapters.remove(eventId);
-    }
-
-    /**
-     * 产生一个唯一的事件id
-     *
-     * @return
-     */
-    private long generateEventId() {
-        return eventId.getAndIncrement();
-    }
-
-    public static class Builder {
-        /**
-         * 弹窗是否可以被取消
-         */
-        private boolean mCancelable;
-
-        /**
-         * 弹窗的优先级
-         */
-        private int mPriority;
-
-        /**
-         * 弹窗的名字，弹窗时如果有同名的弹窗，后者将会替代前者
-         */
-        private String mName;
-
-        /**
-         * 弹窗的适配器，用于渲染弹窗的界面UI
-         */
-        private DialogAdapter mAdapter;
-
-        public Builder cancelable(boolean cancelable) {
-            mCancelable = cancelable;
-            return this;
+    public ActivityDialog dismiss() {
+        if (mAdapter != null) {
+            mAdapter.dismiss();
         }
 
-        public Builder priority(int priority) {
-            mPriority = priority;
-            return this;
-        }
+        return this;
+    }
 
-        public Builder name(String name) {
-            mName = name;
-            return this;
-        }
-
-        public Builder Adapter(DialogAdapter adapter) {
-            mAdapter = adapter;
-            return this;
-        }
-
-        public ActivityDialog create() {
-            return new ActivityDialog();
-        }
+    public boolean isShowing() {
+        // TODO: 2017-06-12
+        return true;
     }
 }

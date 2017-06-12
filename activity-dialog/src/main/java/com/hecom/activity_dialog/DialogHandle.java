@@ -6,9 +6,9 @@ package com.hecom.activity_dialog;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description : handle for control dialog
  */
 
-public interface DialogOperator {
+public interface DialogHandle {
     void dismiss();
 }
