@@ -1,6 +1,8 @@
-package com.hecom.activity_dialog;
+package com.ray.activity_dialog;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.ViewGroup;
 
 /**
  * Author      : leixing
@@ -21,46 +23,79 @@ public class ActivityDialog {
     /**
      * is dialog will dismiss when click outside of it
      */
-    private boolean mCancelable;
+    boolean mCancelable;
+
+    /**
+     * is this dialog will auto dismiss after any click event
+     */
+    boolean mAutoDismiss;
 
     /**
      * priority of the dialog
      * higher the value is, more chance the dialog has to show
      */
-    private int mPriority;
+    int mPriority;
 
     /**
      * name of the dialog, if two {@code ActivityDialog} have the same name, the later one will replace
      * the previous one
      */
-    private String mName;
+    String mName;
 
     /**
      * adapter for render UI by given data
      */
-    private DialogAdapter mAdapter;
+    DialogAdapter mAdapter;
 
     /**
      * width of the dialog
      */
-    private int mWidth;
+    int mWidth;
 
     /**
      * height of the dialog
      */
-    private int mHeight;
-    private int mStyle;
-    private int mTheme;
+    int mHeight;
+
+    /**
+     * style of dialog
+     */
+    int mStyle;
+
+    /**
+     * theme of dialog
+     */
+    int mTheme;
+
+    /**
+     * is dialog showing
+     */
+    private boolean mIsShowing;
+
+    /**
+     * the host where this dialog actually show at
+     */
+    private Activity mHost;
+
+    /**
+     * unique code of this dialog, update at
+     */
+    private long mCode;
 
     public ActivityDialog(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("context can not be null");
         }
         mContext = context;
+        mCode = CodeGenerator.getInstance().next();
 
+        // default values
+        mAutoDismiss = true;
         mCancelable = true;
         mPriority = 0;
         mName = "";
+        mWidth = ViewGroup.LayoutParams.MATCH_PARENT;
+        mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     public ActivityDialog cancelable(boolean cancelable) {
@@ -73,13 +108,26 @@ public class ActivityDialog {
         return this;
     }
 
+    public ActivityDialog autoDismiss(boolean autoDismiss) {
+        mAutoDismiss = autoDismiss;
+        if (mAdapter != null) {
+            mAdapter.autoDismiss(autoDismiss);
+        }
+        return this;
+    }
+
     public ActivityDialog name(String name) {
         mName = name;
         return this;
     }
 
     public ActivityDialog Adapter(DialogAdapter adapter) {
+        if (mAdapter != null) {
+            mAdapter.unbindDialog();
+        }
         mAdapter = adapter;
+        mAdapter.bindDialog(this);
+        mAdapter.autoDismiss(mAutoDismiss);
         return this;
     }
 
@@ -106,28 +154,41 @@ public class ActivityDialog {
     /**
      * show this dialog to user
      */
-    public ActivityDialog show() {
+    public void show() {
+        if (mIsShowing) {
+            return;
+        }
+        mIsShowing = true;
+
         if (mAdapter == null) {
             throw new IllegalArgumentException("adapter can not be null");
         }
 
-        long code = CodeGenerator.getInstance().next();
-        AdapterManager.getInstance().put(code, mAdapter);
-
-        HostActivity.showDialog(mContext, code, mCancelable, mPriority, mWidth, mHeight, mStyle, mTheme);
-        return this;
+        DialogManager.getInstance().put(mCode, this);
+        HostActivity.showDialog(mContext, mCode);
     }
 
-    public ActivityDialog dismiss() {
-        if (mAdapter != null) {
-            mAdapter.dismiss();
+    public void dismiss() {
+        if (!mIsShowing) {
+            return;
         }
+        mIsShowing = false;
 
-        return this;
+        if (mHost != null && !mHost.isFinishing()) {
+            mHost.finish();
+        }
+        DialogManager.getInstance().remove(mCode);
     }
 
     public boolean isShowing() {
-        // TODO: 2017-06-12
-        return true;
+        return mIsShowing;
+    }
+
+    void bindHost(Activity host) {
+        mHost = host;
+    }
+
+    void unbindHost() {
+        mHost = null;
     }
 }

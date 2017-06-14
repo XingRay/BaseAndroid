@@ -2,6 +2,8 @@ package com.ray.baseandroid.dialogactivitytest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -70,6 +72,12 @@ public class DialogActivityTestActivity extends BaseActivity {
 
     private void test01() {
         startTestService();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BigMemoryActivity.start(mActivity);
+            }
+        }, 5000);
     }
 
     private void test02() {

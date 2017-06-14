@@ -1,11 +1,11 @@
-package com.hecom.activity_dialog.adapters;
+package com.ray.activity_dialog.adapters;
 
 import android.view.View;
 import android.widget.TextView;
 
-import com.hecom.activity_dialog.DialogAdapter;
-import com.hecom.activity_dialog.R;
-import com.hecom.activity_dialog.listener.ClickListener;
+import com.ray.activity_dialog.DialogAdapter;
+import com.ray.activity_dialog.R;
+import com.ray.activity_dialog.listener.ClickListener;
 
 
 /**

@@ -7,10 +7,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hecom.activity_dialog.ActivityDialog;
-import com.hecom.activity_dialog.DialogAdapter;
+import com.ray.activity_dialog.ActivityDialog;
+import com.ray.activity_dialog.DialogAdapter;
 import com.ray.baseandroid.R;
 import com.ray.lib.android.util.ViewUtil;
 
@@ -51,11 +52,11 @@ public class DialogActivityTestService extends Service {
     }
 
     private void test01() {
-        final ActivityDialog dialog = new ActivityDialog(this)
-                .cancelable(false)
-                .height(200)
-                .width(240)
+        new ActivityDialog(this.getApplicationContext())
+                .cancelable(true)
                 .name("test")
+                .width(ViewGroup.LayoutParams.MATCH_PARENT)
+                .height(ViewGroup.LayoutParams.WRAP_CONTENT)
                 .priority(10)
                 .Adapter(new DialogAdapter() {
                     @Override
@@ -75,6 +76,7 @@ public class DialogActivityTestService extends Service {
                             @Override
                             public void onClick(View v) {
                                 dismiss();
+                                Log.i("test", "click");
                             }
                         });
                     }

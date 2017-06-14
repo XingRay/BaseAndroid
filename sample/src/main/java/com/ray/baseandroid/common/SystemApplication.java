@@ -21,7 +21,6 @@ public class SystemApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TraceUtil.log();
         INSTANCE = this;
     }
 

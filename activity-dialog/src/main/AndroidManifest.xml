@@ -1,6 +1,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hecom.activity_dialog">
+    package="com.ray.activity_dialog">
 
     <application
         android:allowBackup="true"

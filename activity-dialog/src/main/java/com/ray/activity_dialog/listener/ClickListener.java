@@ -1,4 +1,4 @@
-package com.hecom.activity_dialog.listener;
+package com.ray.activity_dialog.listener;
 
 /**
  * Author      : leixing

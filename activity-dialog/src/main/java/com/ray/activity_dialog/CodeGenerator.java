@@ -1,4 +1,4 @@
-package com.hecom.activity_dialog;
+package com.ray.activity_dialog;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,7 +17,7 @@ public class CodeGenerator {
     /**
      * unique code
      */
-    private static AtomicLong mCode;
+    private AtomicLong mCode;
 
     public static CodeGenerator getInstance() {
         if (INSTANCE == null) {
