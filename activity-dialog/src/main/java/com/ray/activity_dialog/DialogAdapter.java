@@ -12,19 +12,9 @@ import android.view.View;
  */
 
 public abstract class DialogAdapter {
-    private boolean mIsAutoDismiss;
     private ActivityDialog mDialog;
 
     public DialogAdapter() {
-        mIsAutoDismiss = true;
-    }
-
-    void autoDismiss(boolean autoDismiss) {
-        mIsAutoDismiss = autoDismiss;
-    }
-
-    public boolean isAutoDismiss() {
-        return mIsAutoDismiss;
     }
 
     protected abstract int getLayoutId();

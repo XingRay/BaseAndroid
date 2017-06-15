@@ -2,6 +2,7 @@ package com.ray.baseandroid.dialogactivitytest;
 
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -76,11 +77,30 @@ public class DialogActivityTestService extends Service {
                             @Override
                             public void onClick(View v) {
                                 dismiss();
-                                Log.i("test", "click");
+                                Log.i("test", "onClick");
                             }
                         });
                     }
-                }).show();
+                })
+                .showListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        Log.i("test", "onShow");
+                    }
+                })
+                .dismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.i("test", "onDismiss");
+                    }
+                })
+                .cancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        Log.i("test", "onCancel");
+                    }
+                })
+                .show();
     }
 
     @Override

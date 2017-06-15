@@ -3,7 +3,5 @@
     <color name="common_divider_line">#e6e8ea</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="gray_normal">#666666</color>
     <color name="main_red">#e15151</color>
-    <color name="divider_line">#e6e8ea</color>
 </resources>

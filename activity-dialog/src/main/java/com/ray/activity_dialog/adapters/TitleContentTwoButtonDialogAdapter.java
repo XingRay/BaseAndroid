@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.ray.activity_dialog.DialogAdapter;
 import com.ray.activity_dialog.R;
-import com.ray.activity_dialog.listener.ClickListener;
 
 
 /**
@@ -23,8 +22,8 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
     private CharSequence mContent;
     private CharSequence mLeftText;
     private CharSequence mRightText;
-    private ClickListener mLeftListener;
-    private ClickListener mRightListener;
+    private View.OnClickListener mLeftListener;
+    private View.OnClickListener mRightListener;
 
     @Override
     protected int getLayoutId() {
@@ -39,33 +38,27 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
         TextView textView1 = (TextView) rootView.findViewById(R.id.tv_content);
         textView1.setText(mContent);
 
-        TextView textView2 = (TextView) rootView.findViewById(R.id.tv_left_button);
+        final TextView textView2 = (TextView) rootView.findViewById(R.id.tv_left_button);
         textView2.setText(mLeftText);
-
-        TextView textView3 = (TextView) rootView.findViewById(R.id.tv_right_button);
-        textView3.setText(mRightText);
-
-        rootView.findViewById(R.id.tv_left_button).setOnClickListener(new View.OnClickListener() {
+        textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mLeftListener != null) {
-                    mLeftListener.onClick();
+                    mLeftListener.onClick(textView2);
                 }
-                if (isAutoDismiss()) {
-                    dismiss();
-                }
+                dismiss();
             }
         });
 
-        rootView.findViewById(R.id.tv_right_button).setOnClickListener(new View.OnClickListener() {
+        final TextView textView3 = (TextView) rootView.findViewById(R.id.tv_right_button);
+        textView3.setText(mRightText);
+        textView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mRightListener != null) {
-                    mRightListener.onClick();
+                    mRightListener.onClick(textView3);
                 }
-                if (isAutoDismiss()) {
-                    dismiss();
-                }
+                dismiss();
             }
         });
     }
@@ -90,12 +83,12 @@ public class TitleContentTwoButtonDialogAdapter extends DialogAdapter {
         return this;
     }
 
-    public TitleContentTwoButtonDialogAdapter leftListener(ClickListener listener) {
+    public TitleContentTwoButtonDialogAdapter leftListener(View.OnClickListener listener) {
         mLeftListener = listener;
         return this;
     }
 
-    public TitleContentTwoButtonDialogAdapter rightListener(ClickListener listener) {
+    public TitleContentTwoButtonDialogAdapter rightListener(View.OnClickListener listener) {
         mRightListener = listener;
         return this;
     }

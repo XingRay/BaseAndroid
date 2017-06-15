@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.ray.activity_dialog.DialogAdapter;
 import com.ray.activity_dialog.R;
-import com.ray.activity_dialog.listener.ClickListener;
 
 
 /**
@@ -21,7 +20,7 @@ public class TitleContentButtonDialogAdapter extends DialogAdapter {
     private CharSequence mTitle;
     private CharSequence mContent;
     private CharSequence mButtonText;
-    private ClickListener mListener;
+    private View.OnClickListener mListener;
 
     public TitleContentButtonDialogAdapter() {
     }
@@ -39,18 +38,15 @@ public class TitleContentButtonDialogAdapter extends DialogAdapter {
         TextView textView1 = (TextView) rootView.findViewById(R.id.tv_content);
         textView1.setText(mContent);
 
-        TextView textView2 = (TextView) rootView.findViewById(R.id.tv_button);
+        final TextView textView2 = (TextView) rootView.findViewById(R.id.tv_button);
         textView2.setText(mButtonText);
-
-        rootView.findViewById(R.id.tv_button).setOnClickListener(new View.OnClickListener() {
+        textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onClick();
+                    mListener.onClick(textView2);
                 }
-                if (isAutoDismiss()) {
-                    dismiss();
-                }
+                dismiss();
             }
         });
     }
@@ -70,7 +66,7 @@ public class TitleContentButtonDialogAdapter extends DialogAdapter {
         return this;
     }
 
-    public TitleContentButtonDialogAdapter clickListener(ClickListener listener) {
+    public TitleContentButtonDialogAdapter clickListener(View.OnClickListener listener) {
         mListener = listener;
         return this;
     }

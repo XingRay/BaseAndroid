@@ -75,17 +75,13 @@ public class HostActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (mDialog.mCancelable) {
-            super.onBackPressed();
-        }
+        mDialog.cancel();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (MotionEvent.ACTION_OUTSIDE == event.getAction()) {
-            if (mDialog.mCancelable) {
-                finish();
-            }
+            mDialog.cancel();
             return true;
         }
 
