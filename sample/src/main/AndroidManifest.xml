@@ -101,6 +101,8 @@
 
         <activity android:name=".dialogactivitytest.BigMemoryActivity"/>
 
+        <activity android:name=".customview.CustomViewActivity"/>
+
     </application>
 
 </manifest>

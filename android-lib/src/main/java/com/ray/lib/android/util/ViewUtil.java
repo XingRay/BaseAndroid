@@ -67,6 +67,15 @@ public class ViewUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static float sp2px(Context context, float spValue) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, getDisplayMetrics(context));
+    }
+
+    public static float px2sp(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
     private static DisplayMetrics getDisplayMetrics(Context context) {
         Resources resources;
 

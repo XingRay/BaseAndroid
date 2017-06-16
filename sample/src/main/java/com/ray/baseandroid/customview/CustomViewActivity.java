@@ -1,0 +1,168 @@
+package com.ray.baseandroid.customview;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.ray.baseandroid.R;
+import com.ray.lib.android.base.page.BaseActivity;
+import com.ray.lib.android.util.CustomViewUtil;
+import com.ray.lib.android.util.StringUtil;
+import com.ray.lib.android.util.ViewUtil;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Author      : leixing
+ * Date        : 2017-06-15
+ * Email       : leixing@hecom.cn
+ * Version     : 0.0.1
+ * <p>
+ * Description : xxx
+ */
+
+public class CustomViewActivity extends BaseActivity {
+    @BindView(R.id.iv_image)
+    ImageView ivImage;
+
+    @BindView(R.id.et_num)
+    EditText etNumber;
+
+    @Override
+    protected void initVariables() {
+
+    }
+
+    @Override
+    protected void initView() {
+        setContentView(R.layout.activity_custom_view);
+        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void loadData() {
+
+    }
+
+    @OnClick({R.id.iv_image, R.id.bt_load})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_load:
+                loadImg();
+                break;
+        }
+    }
+
+    private void loadImg() {
+        switch (getNumber()) {
+            case 0:
+                drawBitmap();
+                break;
+            case 1:
+                drawImg();
+                break;
+            case 2:
+                drawPoints();
+                break;
+            case 3:
+                drawLines();
+            default:
+        }
+    }
+
+    private int getNumber() {
+        return StringUtil.toInt(etNumber.getText().toString().trim(), 0);
+    }
+
+    private void drawBitmap() {
+        Bitmap bitmap = Bitmap.createBitmap(500, 800, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextAlign(Paint.Align.LEFT);
+        paint.setTextSize(ViewUtil.sp2px(mContext, 16));
+        paint.setTextSkewX(0.5f);
+        paint.setUnderlineText(true);
+        paint.setFakeBoldText(true);
+
+        canvas.drawText("自定义控件 test01", 50, 100, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(20);
+        paint.setStrokeJoin(Paint.Join.BEVEL);
+
+        canvas.drawRect(30, 200, 350, 350, paint);
+
+        ivImage.setImageBitmap(bitmap);
+    }
+
+    private void drawImg() {
+        Bitmap bitmap = Bitmap.createBitmap(500, 800, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+
+        Bitmap img = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        int width = img.getWidth();
+        int height = img.getHeight();
+        canvas.drawBitmap(img, 0, 0, paint);
+        Rect src = new Rect(0, 0, width >> 1, height >> 1);
+        Rect dst = new Rect(0, height, width * 3, height + height * 3);
+        canvas.drawBitmap(img, src, dst, paint);
+
+        ivImage.setImageBitmap(bitmap);
+    }
+
+    private void drawPoints() {
+        Bitmap bitmap = Bitmap.createBitmap(600, 800, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setStrokeWidth(15);
+
+        paint.setColor(Color.BLUE);
+        canvas.drawPoint(100, 100, paint);
+
+        paint.setColor(Color.RED);
+        float[] points = new float[]{153.5f, 534.5f, 453.5f, 546.5f};
+        canvas.drawPoints(points, paint);
+
+        paint.setColor(Color.YELLOW);
+        points = new float[]{153.5f, 12.4f, 123.4f, 534.5f, 453.5f, 546.5f, 326.3f, 235.6f, 45.7f, 23.56f};
+        canvas.drawPoints(points, 1, 8, paint);
+
+        ivImage.setImageBitmap(bitmap);
+    }
+
+    private void drawLines() {
+        int width = 1080;
+        int height = 1400;
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+        paint.setStrokeWidth(6);
+
+        paint.setColor(Color.RED);
+        canvas.drawLine(0, 0, 100, 100, paint);
+
+        paint.setColor(Color.BLUE);
+        float[] points = {100, 50, 100, 100, 100, 100, 200, 100, 200, 100, 200, 50};
+        canvas.drawLines(points, paint);
+
+        paint.setColor(Color.YELLOW);
+        points = new float[]{1, 1, 1, 10, 50, 100, 50, 150, 50, 150, 130, 130, 130, 130, 280, 500, 280, 500, 500, 50};
+        canvas.drawLines(points, 4, 16, paint);
+
+        ivImage.setImageBitmap(bitmap);
+    }
+}
