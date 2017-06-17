@@ -14,7 +14,7 @@ import java.lang.reflect.Proxy;
 /**
  * Author      : leixing
  * Date        : 2017-04-14
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : MVP架构的Presenter的基类，使用JDK的动态代理，代理视图对象的方法调用

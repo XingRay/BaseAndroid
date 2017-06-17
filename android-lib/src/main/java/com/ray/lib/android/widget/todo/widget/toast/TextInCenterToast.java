@@ -17,7 +17,7 @@ import com.ray.lib.android.R;
 /**
  * Created by leixing
  * on 2016-10-31.
- * Email : leixing@hecom.cn
+ * Email : leixing1012@gmail.cn
  */
 
 public class TextInCenterToast extends Toast {

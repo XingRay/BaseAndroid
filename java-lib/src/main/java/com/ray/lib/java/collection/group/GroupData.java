@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by leixing
  * on 2016-10-25.
- * Email : leixing@hecom.cn
+ * Email : leixing1012@gmail.cn
  */
 
 public abstract class GroupData<Tag, Item, Data extends GroupData.IData<Tag, Item>, Team extends ITeam<Tag, Item>> {

@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference;
 /**
  * Author      : leixing
  * Date        : 2017-04-14
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : dialog user for show a dialog at background

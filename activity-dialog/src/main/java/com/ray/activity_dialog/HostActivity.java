@@ -13,7 +13,7 @@ import android.view.WindowManager;
 /**
  * Author      : leixing
  * Date        : 2017-02-20
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : host activity for dialog

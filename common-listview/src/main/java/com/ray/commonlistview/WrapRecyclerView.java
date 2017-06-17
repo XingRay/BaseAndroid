@@ -12,7 +12,7 @@ import com.ray.commonlistview.adapter.WrapRecyclerAdapter;
 /**
  * Author      : leixing
  * Date        : 2017-04-10
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : xxx

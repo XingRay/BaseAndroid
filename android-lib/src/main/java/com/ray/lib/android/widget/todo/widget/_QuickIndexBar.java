@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by leixing
  * on 2016-10-31.
- * Email : leixing@hecom.cn
+ * Email : leixing1012@gmail.cn
  */
 // TODO: 2016-10-31 待完成
 public class _QuickIndexBar extends View {

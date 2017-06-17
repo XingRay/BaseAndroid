@@ -14,7 +14,7 @@ import me.drakeet.multitype.ItemViewBinder;
 /**
  * Author      : leixing
  * Date        : 2017-05-23
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : xxx

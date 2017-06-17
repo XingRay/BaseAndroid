@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * Author      : leixing
  * Date        : 2017-06-06
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : manager for a list of task

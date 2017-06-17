@@ -14,7 +14,7 @@ import com.ray.lib.android.util.ViewUtil;
 /**
  * Author      : leixing
  * Date        : 2016-12-22
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : 快速导航栏
