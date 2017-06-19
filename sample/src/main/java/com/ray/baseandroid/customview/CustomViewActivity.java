@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,10 +37,13 @@ public class CustomViewActivity extends BaseActivity {
 
     @BindView(R.id.et_num)
     EditText etNumber;
+    private int width;
+    private int height;
 
     @Override
     protected void initVariables() {
-
+        width = 1080;
+        height = 1600;
     }
 
     @Override
@@ -62,27 +67,46 @@ public class CustomViewActivity extends BaseActivity {
     }
 
     private void loadImg() {
+        Bitmap bitmap = null;
         switch (getNumber()) {
             case 0:
-                drawBitmap();
+                bitmap = drawBitmap();
                 break;
             case 1:
-                drawImg();
+                bitmap = drawImg();
                 break;
             case 2:
-                drawPoints();
+                bitmap = drawPoints();
                 break;
             case 3:
-                drawLines();
+                bitmap = drawLines();
+                break;
+            case 4:
+                bitmap = drawRect();
+                break;
+            case 5:
+                bitmap = drawOval();
+                break;
+            case 6:
+                bitmap = drawCircle();
+                break;
+            case 7:
+                bitmap = drawArc();
+                break;
+            case 8:
+                bitmap = drawPath();
+                break;
             default:
         }
+
+        ivImage.setImageBitmap(bitmap);
     }
 
     private int getNumber() {
         return StringUtil.toInt(etNumber.getText().toString().trim(), 0);
     }
 
-    private void drawBitmap() {
+    private Bitmap drawBitmap() {
         Bitmap bitmap = Bitmap.createBitmap(500, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
@@ -104,10 +128,10 @@ public class CustomViewActivity extends BaseActivity {
 
         canvas.drawRect(30, 200, 350, 350, paint);
 
-        ivImage.setImageBitmap(bitmap);
+        return bitmap;
     }
 
-    private void drawImg() {
+    private Bitmap drawImg() {
         Bitmap bitmap = Bitmap.createBitmap(500, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
@@ -120,10 +144,10 @@ public class CustomViewActivity extends BaseActivity {
         Rect dst = new Rect(0, height, width * 3, height + height * 3);
         canvas.drawBitmap(img, src, dst, paint);
 
-        ivImage.setImageBitmap(bitmap);
+        return bitmap;
     }
 
-    private void drawPoints() {
+    private Bitmap drawPoints() {
         Bitmap bitmap = Bitmap.createBitmap(600, 800, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
@@ -140,10 +164,11 @@ public class CustomViewActivity extends BaseActivity {
         points = new float[]{153.5f, 12.4f, 123.4f, 534.5f, 453.5f, 546.5f, 326.3f, 235.6f, 45.7f, 23.56f};
         canvas.drawPoints(points, 1, 8, paint);
 
-        ivImage.setImageBitmap(bitmap);
+        return bitmap;
+
     }
 
-    private void drawLines() {
+    private Bitmap drawLines() {
         int width = 1080;
         int height = 1400;
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -163,6 +188,112 @@ public class CustomViewActivity extends BaseActivity {
         points = new float[]{1, 1, 1, 10, 50, 100, 50, 150, 50, 150, 130, 130, 130, 130, 280, 500, 280, 500, 500, 50};
         canvas.drawLines(points, 4, 16, paint);
 
-        ivImage.setImageBitmap(bitmap);
+        return bitmap;
+    }
+
+
+    private Bitmap drawRect() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStrokeWidth(5);
+        canvas.drawRect(120, 120, 230, 450, paint);
+
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(new Rect(250, 100, 500, 400), paint);
+
+        paint.setColor(Color.YELLOW);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawRoundRect(new RectF(100, 600, 600, 900), 60, 60, paint);
+        return bitmap;
+    }
+
+    private Bitmap drawOval() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+
+        paint.setColor(Color.RED);
+        canvas.drawOval(new RectF(100, 100, 400, 600), paint);
+
+        return bitmap;
+    }
+
+    private Bitmap drawCircle() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+
+        paint.setColor(Color.RED);
+        canvas.drawCircle(600, 600, 300, paint);
+        return bitmap;
+    }
+
+    private Bitmap drawArc() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setColor(Color.RED);
+        canvas.drawArc(new RectF(100, 100, 500, 400), 30, 30, false, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.BLUE);
+        canvas.drawArc(new RectF(600, 100, 1000, 400), 30, -60, false, paint);
+
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setColor(Color.YELLOW);
+        canvas.drawArc(new RectF(100, 500, 500, 800), 150, 60, true, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.GREEN);
+        canvas.drawArc(new RectF(600, 500, 1000, 800), 150, -60, true, paint);
+
+        return bitmap;
+    }
+
+    private Bitmap drawPath() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+        paint.setColor(Color.RED);
+
+        Path path = new Path();
+        path.moveTo(26, 235);
+        path.lineTo(243, 226);
+        path.lineTo(320, 23);
+        path.lineTo(384, 229);
+        path.lineTo(616, 231);
+        path.lineTo(438, 362);
+        path.lineTo(498, 570);
+        path.lineTo(318, 449);
+        path.lineTo(136, 569);
+        path.lineTo(203, 361);
+        path.close();
+
+        path.addRect(new RectF(100, 600, 500, 900), Path.Direction.CW);
+        path.addRoundRect(new RectF(600, 600, 1000, 900),
+                new float[]{10f, 20f, 30f, 40, 50, 60, 70, 80}, Path.Direction.CCW);
+        path.addOval(new RectF(700, 10, 1000, 400), Path.Direction.CW);
+        path.addCircle(500, 400, 300, Path.Direction.CCW);
+        path.addArc(new RectF(100, 100, 800, 1500), 90, 360);
+
+        canvas.drawPath(path, paint);
+
+
+        return bitmap;
     }
 }
