@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Author      : leixing
  * Date        : 2017-04-26
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : App工具类

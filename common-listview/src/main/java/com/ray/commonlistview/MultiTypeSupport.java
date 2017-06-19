@@ -3,7 +3,7 @@ package com.ray.commonlistview;
 /**
  * Author      : leixing
  * Date        : 2017-04-06
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : Recyclerview的多布局支持接口

@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.alarm.AlarmSetActivity;
+import com.ray.baseandroid.customview.BezierCurveActivity;
+import com.ray.baseandroid.customview.CustomView2Activity;
 import com.ray.baseandroid.customview.CustomViewActivity;
 import com.ray.baseandroid.dialogactivitytest.DialogActivityTestActivity;
 import com.ray.baseandroid.dim.DimActivity;
@@ -44,7 +46,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("mvp test", MVPTestActivity.class),
             new Function("sp test", SPTestActivity.class),
             new Function("alarm test", AlarmSetActivity.class),
-            new Function("custom view", CustomViewActivity.class)
+            new Function("custom view", CustomViewActivity.class),
+            new Function("bezier curve", BezierCurveActivity.class),
+            new Function("customer view 2", CustomView2Activity.class)
     );
     private List<Function> mFunctions;
     private Activity mActivity;

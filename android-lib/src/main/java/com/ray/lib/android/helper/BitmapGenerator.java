@@ -12,7 +12,7 @@ import com.ray.lib.android.util.ViewUtil;
 /**
  * Author      : leixing
  * Date        : 2017-01-18
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : xxx

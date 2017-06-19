@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * Author      : leixing
  * Date        : 2017-04-07
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : 条目的长按事件接口

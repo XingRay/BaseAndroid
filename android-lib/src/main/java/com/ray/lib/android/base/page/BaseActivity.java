@@ -12,7 +12,7 @@ import android.widget.Toast;
 /**
  * Author      : leixing
  * Date        : 2017-04-14
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : activity的基类

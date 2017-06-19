@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Author      : leixing
  * Date        : 2017-06-12
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
  * Description : manager for {@link ActivityDialog}, use {@code Map} to cache {@link ActivityDialog},

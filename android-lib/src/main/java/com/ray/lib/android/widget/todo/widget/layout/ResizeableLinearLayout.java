@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 /**
  * Created by leixing
  * on 2016-11-01.
- * Email : leixing@hecom.cn
+ * Email : leixing1012@gmail.cn
  */
 
 public class ResizeableLinearLayout extends LinearLayout {
