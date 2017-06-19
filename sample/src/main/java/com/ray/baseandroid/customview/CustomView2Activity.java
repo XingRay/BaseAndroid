@@ -63,6 +63,8 @@ public class CustomView2Activity extends BaseActivity {
             case 0:
                 view = loadMoveBall();
                 break;
+            case 1:
+                view = loadCoordinateView();
             default:
         }
 
@@ -84,5 +86,13 @@ public class CustomView2Activity extends BaseActivity {
         }, 200, 50);
 
         return moveBallView;
+    }
+
+    private View loadCoordinateView() {
+        final CoordinateView movecoordinateViewallView = new CoordinateView(mContext);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1000);
+        movecoordinateViewallView.setLayoutParams(layoutParams);
+
+        return movecoordinateViewallView;
     }
 }
