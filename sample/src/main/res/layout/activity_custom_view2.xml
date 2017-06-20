@@ -123,6 +123,10 @@
                 android:lines="1"
                 android:text="text15"/>
         </com.ray.baseandroid.customview.ExpandableLinearLayout>
-    </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="next text"/>
+    </LinearLayout>
 </ScrollView>

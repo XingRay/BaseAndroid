@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 public class ExpandableLinearLayout extends LinearLayout {
     private static int COLLAPSED_HEIGHT = 410;
     private static int COLLAPSED_WIDTH = 410;
-    private static int EXPAND_SPEED = 50;
+    private static int EXPAND_SPEED = 10;
 
     private Status status = Status.COLLAPSED;
     private int mCurrentHeight;
@@ -118,8 +118,17 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         if (status == Status.COLLAPSING) {
-            requestLayout();
+            reLayout();
         }
+    }
+
+    private void reLayout() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                requestLayout();
+            }
+        });
     }
 
     private void onMeasureCollapsed(int widthMeasureSpec, int heightMeasureSpec) {
@@ -167,7 +176,7 @@ public class ExpandableLinearLayout extends LinearLayout {
         }
 
         if (status == Status.EXPANDING) {
-            requestLayout();
+            reLayout();
         }
     }
 
