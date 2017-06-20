@@ -1,9 +1,13 @@
 package com.ray.baseandroid.customview;
 
+import android.view.View;
+
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Author      : leixing
@@ -15,6 +19,11 @@ import butterknife.ButterKnife;
  */
 
 public class CustomView2Activity extends BaseActivity {
+
+    @BindView(R.id.el_layout)
+    ExpandableLinearLayout elLayout;
+
+    private boolean mIsExpand;
 
     @Override
     protected void initVariables() {
@@ -30,5 +39,19 @@ public class CustomView2Activity extends BaseActivity {
     @Override
     protected void loadData() {
 
+    }
+
+    @OnClick({R.id.bt_click})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_click:
+                click();
+                break;
+        }
+    }
+
+    private void click() {
+        mIsExpand = !mIsExpand;
+        elLayout.setExpand(mIsExpand);
     }
 }
