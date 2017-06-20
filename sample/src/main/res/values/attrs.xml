@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="work_title_view">
+        <attr name="title" format="string"/>
+        <attr name="type" format="string"/>
+        <attr name="name" format="string"/>
+        <attr name="content" format="string"/>
+        <attr name="time" format="string"/>
+        <attr name="type_color" format="color"/>
+        <attr name="type_size" format="dimension"/>
+        <attr name="type_background_color" format="color"/>
+        <attr name="title_color" format="color"/>
+        <attr name="title_size" format="dimension"/>
+        <attr name="time_color" format="color"/>
+        <attr name="time_size" format="dimension"/>
+        <attr name="name_content_color" format="color"/>
+        <attr name="name_content_size" format="dimension"/>
+    </declare-styleable>
+</resources>
