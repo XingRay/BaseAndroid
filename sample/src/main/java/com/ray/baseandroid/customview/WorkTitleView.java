@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
-import com.ray.lib.android.util.CustomViewUtil;
 
 /**
  * Author      : leixing
@@ -179,7 +178,6 @@ public class WorkTitleView extends RelativeLayout {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         canvas.drawRoundRect(new RectF(0, 0, width, height), height >> 2, height >> 2, paint);

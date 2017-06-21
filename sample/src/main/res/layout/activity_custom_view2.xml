@@ -20,18 +20,34 @@
             app:type="typexxx"
             app:type_background_color="#33cc33"/>
 
-        <Button
-            android:id="@+id/bt_click"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="click"/>
+            android:orientation="horizontal">
 
-        <com.ray.baseandroid.customview.ExpandableLinearLayout
-            android:id="@+id/el_layout"
+            <Button
+                android:id="@+id/bt_click1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="click1"/>
+
+            <Button
+                android:id="@+id/bt_click2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="click2"/>
+        </LinearLayout>
+
+
+        <com.ray.baseandroid.customview.CollapsibleLinearLayout
+            android:id="@+id/el_layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/gray"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            app:is_collapsed="false">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,9 +138,111 @@
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:text="text15"/>
-        </com.ray.baseandroid.customview.ExpandableLinearLayout>
+        </com.ray.baseandroid.customview.CollapsibleLinearLayout>
+
+        <com.ray.baseandroid.customview.CollapsibleLinearLayout
+            android:id="@+id/el_layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:orientation="vertical"
+            app:animation_duration="100"
+            app:collapsed_height="300"
+            app:is_collapsed="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text4"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text6"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text7"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text8"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text9"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text10"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text11"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text12"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text13"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text14"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="text15"/>
+        </com.ray.baseandroid.customview.CollapsibleLinearLayout>
 
         <TextView
+            android:id="@+id/tv_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="next text"/>

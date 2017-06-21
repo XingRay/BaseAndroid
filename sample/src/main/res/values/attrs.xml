@@ -16,4 +16,11 @@
         <attr name="name_content_color" format="color"/>
         <attr name="name_content_size" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="CollapsibleLinearLayout">
+        <attr name="animation_duration" format="integer"/>
+        <attr name="collapsed_height" format="integer"/>
+        <attr name="collapsed_width" format="integer"/>
+        <attr name="is_collapsed" format="boolean"/>
+    </declare-styleable>
 </resources>
