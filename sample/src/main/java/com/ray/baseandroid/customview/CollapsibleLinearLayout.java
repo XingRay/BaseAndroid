@@ -76,14 +76,15 @@ public class CollapsibleLinearLayout extends LinearLayout {
     }
 
     public void setCollapse(boolean collapse) {
-        if (collapse) {
-            doCollapse();
-        } else {
-            doExpand();
-        }
+        mStatus = collapse ? Status.COLLAPSED : Status.EXPANDED;
+        requestLayout();
     }
 
-    private void doExpand() {
+    public boolean isCollapsed() {
+        return mStatus == Status.COLLAPSED;
+    }
+
+    public void expand() {
         if (mStatus != Status.COLLAPSED) {
             return;
         }
@@ -153,7 +154,7 @@ public class CollapsibleLinearLayout extends LinearLayout {
         mExpandAnimator.start();
     }
 
-    private void doCollapse() {
+    public void collapse() {
         if (mStatus != Status.EXPANDED) {
             return;
         }
