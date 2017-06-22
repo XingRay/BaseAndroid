@@ -19,7 +19,9 @@ import com.ray.baseandroid.R;
  * <p>
  * Description : CollapsibleLinearLayout
  */
-
+// TODO: 2017-06-22 add setFraction(float fraction), allow layout can collaspe at any time with given fraction
+// TODO: 2017-06-22 add touch support, allow layout collapse by user move finger when touching layout
+// TODO: 2017-06-22 add method to get status of this layout
 public class CollapsibleLinearLayout extends LinearLayout {
     public static final int DEFAULT_ANIMATION_DURATION = 300;
     public static final int DEFAULT_COLLAPSED_HEIGHT = 400;
@@ -37,8 +39,7 @@ public class CollapsibleLinearLayout extends LinearLayout {
     private Status mStatus = Status.COLLAPSED;
     private ValueAnimator mExpandAnimator;
     private ValueAnimator mCollapseAnimator;
-    private ActionListener mExpandListener;
-    private ActionListener mCollapseListener;
+    private ActionListener mActionListener;
 
     public CollapsibleLinearLayout(Context context) {
         this(context, null);
@@ -70,19 +71,15 @@ public class CollapsibleLinearLayout extends LinearLayout {
         typedArray.recycle();
     }
 
-    public void setExpandListener(ActionListener listener) {
-        mExpandListener = listener;
+    public void setActionListener(ActionListener listener) {
+        mActionListener = listener;
     }
 
-    public void setCollapseListener(ActionListener listener) {
-        mCollapseListener = listener;
-    }
-
-    public void setExpand(boolean expand) {
-        if (expand) {
-            doExpand();
-        } else {
+    public void setCollapse(boolean collapse) {
+        if (collapse) {
             doCollapse();
+        } else {
+            doExpand();
         }
     }
 
@@ -112,13 +109,15 @@ public class CollapsibleLinearLayout extends LinearLayout {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int value = (int) animation.getAnimatedValue();
+                    float fraction = animation.getAnimatedFraction();
+
                     if (getOrientation() == VERTICAL) {
                         mCurrentHeight = value;
                     } else {
                         mCurrentWidth = value;
                     }
-                    if (mExpandListener != null) {
-                        mExpandListener.onProgress(value);
+                    if (mActionListener != null) {
+                        mActionListener.onProgress(fraction, value);
                     }
                     requestLayout();
                 }
@@ -127,16 +126,16 @@ public class CollapsibleLinearLayout extends LinearLayout {
                 @Override
                 public void onAnimationStart(Animator animation) {
                     mStatus = Status.EXPANDING;
-                    if (mExpandListener != null) {
-                        mExpandListener.onStart();
+                    if (mActionListener != null) {
+                        mActionListener.onStart();
                     }
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mStatus = Status.EXPANDED;
-                    if (mExpandListener != null) {
-                        mExpandListener.onComplete();
+                    if (mActionListener != null) {
+                        mActionListener.onComplete(false);
                     }
                 }
 
@@ -180,13 +179,15 @@ public class CollapsibleLinearLayout extends LinearLayout {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int value = (int) animation.getAnimatedValue();
+                    float fraction = animation.getAnimatedFraction();
+
                     if (getOrientation() == VERTICAL) {
                         mCurrentHeight = value;
                     } else {
                         mCurrentWidth = value;
                     }
-                    if (mCollapseListener != null) {
-                        mCollapseListener.onProgress(value);
+                    if (mActionListener != null) {
+                        mActionListener.onProgress(fraction, value);
                     }
                     requestLayout();
                 }
@@ -195,16 +196,16 @@ public class CollapsibleLinearLayout extends LinearLayout {
                 @Override
                 public void onAnimationStart(Animator animation) {
                     mStatus = Status.COLLAPSING;
-                    if (mCollapseListener != null) {
-                        mCollapseListener.onStart();
+                    if (mActionListener != null) {
+                        mActionListener.onStart();
                     }
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mStatus = Status.COLLAPSED;
-                    if (mCollapseListener != null) {
-                        mCollapseListener.onComplete();
+                    if (mActionListener != null) {
+                        mActionListener.onComplete(true);
                     }
                 }
 
@@ -270,15 +271,46 @@ public class CollapsibleLinearLayout extends LinearLayout {
         setMeasuredDimension(width, height);
     }
 
+    /**
+     * status of this {@link CollapsibleLinearLayout}
+     */
     private enum Status {
+        /**
+         * expanded, it's height(vertical) or width(horizontal)
+         */
         EXPANDED, COLLAPSING, COLLAPSED, EXPANDING
     }
 
+    /**
+     * listener for {@link CollapsibleLinearLayout} action,
+     * when expand or collapse the layout, methods of {@link ActionListener} will
+     * called.
+     * <p>
+     * Note: if the height or width is less than {@link CollapsibleLinearLayout#mCollapsedHeight} or
+     * {@link CollapsibleLinearLayout#mCollapsedWidth},  any method of {@link ActionListener}
+     * will <b>NOT<b/> called after invoke {@link CollapsibleLinearLayout#setCollapse(boolean)}
+     * and {@link CollapsibleLinearLayout#setActionListener(ActionListener)}
+     */
     public interface ActionListener {
+        /**
+         * called when start to expand or collapse {@link CollapsibleLinearLayout}
+         */
         void onStart();
 
-        void onProgress(int value);
+        /**
+         * called when expanding or collapsing {@link CollapsibleLinearLayout}
+         *
+         * @param fraction fraction of animation when expanding or collapsing.
+         * @param value    the height or width of {@link CollapsibleLinearLayout} when expanding or collapsing.
+         */
+        void onProgress(float fraction, int value);
 
-        void onComplete();
+        /**
+         * called when finish expanding or collapsing.
+         *
+         * @param isCollapsed {@code true} - when finish collapsing
+         *                    {@code false} - when finish expanding
+         */
+        void onComplete(boolean isCollapsed);
     }
 }

@@ -43,36 +43,24 @@ public class CustomView2Activity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_custom_view2);
         ButterKnife.bind(this);
-        elLayout2.setExpandListener(new CollapsibleLinearLayout.ActionListener() {
+        elLayout2.setActionListener(new CollapsibleLinearLayout.ActionListener() {
             @Override
             public void onStart() {
                 TraceUtil.log();
             }
 
             @Override
-            public void onProgress(int value) {
+            public void onProgress(float fraction, int value) {
             }
 
             @Override
-            public void onComplete() {
+            public void onComplete(boolean isCollapsed) {
                 TraceUtil.log();
-                tvText.setVisibility(View.GONE);
-            }
-        });
-        elLayout2.setCollapseListener(new CollapsibleLinearLayout.ActionListener() {
-            @Override
-            public void onStart() {
-                TraceUtil.log();
-            }
-
-            @Override
-            public void onProgress(int value) {
-            }
-
-            @Override
-            public void onComplete() {
-                TraceUtil.log();
-                tvText.setVisibility(View.VISIBLE);
+                if (isCollapsed) {
+                    tvText.setVisibility(View.GONE);
+                } else {
+                    tvText.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
@@ -96,11 +84,11 @@ public class CustomView2Activity extends BaseActivity {
 
     private void click1() {
         mIsCollapsed1 = !mIsCollapsed1;
-        elLayout1.setExpand(mIsCollapsed1);
+        elLayout1.setCollapse(mIsCollapsed1);
     }
 
     private void click2() {
         mIsCollapsed2 = !mIsCollapsed2;
-        elLayout2.setExpand(mIsCollapsed2);
+        elLayout2.setCollapse(mIsCollapsed2);
     }
 }
