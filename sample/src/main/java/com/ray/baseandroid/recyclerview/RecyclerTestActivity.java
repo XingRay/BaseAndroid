@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ray.baseandroid.R;
 import com.ray.commonlistview.LoadRefreshRecyclerView;
 import com.ray.lib.android.base.page.BaseActivity;
+import com.ray.lib.java.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +30,15 @@ import butterknife.ButterKnife;
 
 public class RecyclerTestActivity extends BaseActivity {
     @BindView(R.id.rv_list)
-    LoadRefreshRecyclerView rvList;
+    RecyclerView rvList;
+
+    private PersonAdapter mAdapter;
+    private List<Person> mPersons;
 
     @Override
     protected void initVariables() {
-        List<Person> mPersons = new ArrayList<>();
-
+        mPersons = new ArrayList<>();
+        mAdapter = new PersonAdapter(mContext, mPersons);
     }
 
     @Override
@@ -42,12 +47,21 @@ public class RecyclerTestActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
-        r =
+        rvList.setAdapter(mAdapter);
     }
 
     @Override
     protected void loadData() {
 
+        for (int i = 0; i < 100; i++) {
+            Person person = new Person();
+            person.setAge(RandomUtil.getRandomInt(18, 30));
+            person.setName(RandomUtil.getRandomString(8));
+            person.setSex(RandomUtil.getRandomBoolean() ? "male" : "female");
+            mPersons.add(person);
+        }
+
+        mAdapter.notifyDataSetChanged();
     }
 
     private static class PersonAdapter extends RecyclerView.Adapter<PersonViewHolder> {
@@ -64,24 +78,35 @@ public class RecyclerTestActivity extends BaseActivity {
 
         @Override
         public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            mInflater.inflate(R.layout.item_person_item)
-            return null;
+            View itemView = mInflater.inflate(R.layout.item_person_item, parent, false);
+            return new PersonViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(PersonViewHolder holder, int position) {
-
+            Person person = mPersons.get(position);
+            holder.tvName.setText(person.getName());
+            holder.tvSex.setText(person.getSex());
+            holder.tvAge.setText(String.valueOf(person.getAge()));
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return mPersons.size();
         }
     }
 
-    private static class PersonViewHolder extends RecyclerView.ViewHolder {
-        public PersonViewHolder(View itemView) {
-            super(itemView);
+    static class PersonViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_name)
+        TextView tvName;
+        @BindView(R.id.tv_sex)
+        TextView tvSex;
+        @BindView(R.id.tv_age)
+        TextView tvAge;
+
+        PersonViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }
