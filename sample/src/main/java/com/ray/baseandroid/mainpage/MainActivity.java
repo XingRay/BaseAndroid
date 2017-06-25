@@ -21,6 +21,7 @@ import com.ray.baseandroid.multiprocess.MultiProcessActivity;
 import com.ray.baseandroid.multitype.MultiTypeListActivity;
 import com.ray.baseandroid.mvp.MVPTestActivity;
 import com.ray.baseandroid.oom.OOMTestActivity;
+import com.ray.baseandroid.recyclerview.RecyclerTestActivity;
 import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.commonlistview.ViewHolder;
 import com.ray.commonlistview.WrapRecyclerView;
@@ -48,8 +49,10 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("alarm test", AlarmSetActivity.class),
             new Function("custom view", CustomViewActivity.class),
             new Function("bezier curve", BezierCurveActivity.class),
-            new Function("customer view 2", CustomView2Activity.class)
+            new Function("customer view 2", CustomView2Activity.class),
+            new Function("recycler view ", RecyclerTestActivity.class)
     );
+
     private List<Function> mFunctions;
     private Activity mActivity;
     private Context mContext;
