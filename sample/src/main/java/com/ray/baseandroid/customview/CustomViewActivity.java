@@ -16,6 +16,7 @@ import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
 import com.ray.lib.android.util.CustomViewUtil;
 import com.ray.lib.android.util.StringUtil;
+import com.ray.lib.android.util.TraceUtil;
 import com.ray.lib.android.util.ViewUtil;
 
 import butterknife.BindView;
@@ -95,6 +96,9 @@ public class CustomViewActivity extends BaseActivity {
                 break;
             case 8:
                 bitmap = drawPath();
+                break;
+            case 9:
+                bitmap = drawText();
                 break;
             default:
         }
@@ -292,6 +296,45 @@ public class CustomViewActivity extends BaseActivity {
         path.addArc(new RectF(100, 100, 800, 1500), 90, 360);
 
         canvas.drawPath(path, paint);
+
+
+        return bitmap;
+    }
+
+    private Bitmap drawText() {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        CustomViewUtil.drawCoordinate(canvas, paint, width, height);
+        paint.setTextSize(50);
+
+        int baseLine = 300;
+
+        paint.setColor(Color.BLACK);
+        String text = "Hello, boy";
+        canvas.drawText(text, 100, baseLine, paint);
+
+        Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+        TraceUtil.log("top = "+fontMetrics.top +"\n"
+        +"ascent = "+fontMetrics.ascent+"\n"
+        +"descent = "+fontMetrics.descent+"\n"
+        +"bottom = "+fontMetrics.bottom+"\n"
+        +"leading = "+fontMetrics.leading);
+
+        float textWidth = paint.measureText(text);
+        TraceUtil.log(textWidth);
+
+        Rect rect = new Rect();
+        paint.getTextBounds(text, 0, text.length(), rect);
+        TraceUtil.log("left = "+rect.left+"\n"
+        +"top = "+rect.top+"\n"
+                        +"right = "+rect.right+"\n"
+                        +"bottom = "+rect.bottom+"\n"
+        );
+
+        paint.setColor(Color.RED);
+        canvas.drawLine(100, baseLine, 100+textWidth, baseLine, paint);
 
 
         return bitmap;
