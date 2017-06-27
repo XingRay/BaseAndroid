@@ -21,7 +21,9 @@ import com.ray.baseandroid.multiprocess.MultiProcessActivity;
 import com.ray.baseandroid.multitype.MultiTypeListActivity;
 import com.ray.baseandroid.mvp.MVPTestActivity;
 import com.ray.baseandroid.oom.OOMTestActivity;
-import com.ray.baseandroid.recyclerview.RecyclerTestActivity;
+import com.ray.baseandroid.recyclerview.recycler1.RecyclerTestActivity;
+import com.ray.baseandroid.recyclerview.recycler2.RecyclerTest2Activity;
+import com.ray.baseandroid.recyclerview.recycler3.RecyclerTest3Activity;
 import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.commonlistview.ViewHolder;
 import com.ray.commonlistview.WrapRecyclerView;
@@ -50,7 +52,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("custom view", CustomViewActivity.class),
             new Function("bezier curve", BezierCurveActivity.class),
             new Function("customer view 2", CustomView2Activity.class),
-            new Function("recycler view ", RecyclerTestActivity.class)
+            new Function("recycler view ", RecyclerTestActivity.class),
+            new Function("recycler view 2", RecyclerTest2Activity.class),
+            new Function("recycler view 3", RecyclerTest3Activity.class)
     );
 
     private List<Function> mFunctions;

@@ -23,4 +23,12 @@
         <attr name="collapsed_width" format="integer"/>
         <attr name="is_collapsed" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="IRecyclerView">
+        <attr name="refreshHeaderLayout" format="reference" />  <!--refresh header layout res id-->
+        <attr name="loadMoreFooterLayout" format="reference" /> <!--loadmore fotter layout res id-->
+        <attr name="refreshEnabled" format="boolean" />
+        <attr name="loadMoreEnabled" format="boolean" />
+        <attr name="refreshFinalMoveOffset" format="dimension" />   <!--refresh header max move distance-->
+    </declare-styleable>
 </resources>

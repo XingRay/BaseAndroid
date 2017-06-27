@@ -38,4 +38,8 @@ dependencies {
         exclude group: 'com.android.support'
     })
     compile project(path: ':activity-dialog')
+    compile 'com.github.Aspsine:IRecyclerView:0.0.5'
+    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+    compile 'com.dinuscxj:recyclerrefreshlayout:2.0.3'
+    compile 'com.android.support:design:26.0.0-alpha1'
 }
