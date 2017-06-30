@@ -17,13 +17,6 @@
         <attr name="name_content_size" format="dimension"/>
     </declare-styleable>
 
-    <declare-styleable name="CollapsibleLinearLayout">
-        <attr name="animation_duration" format="integer"/>
-        <attr name="collapsed_height" format="integer"/>
-        <attr name="collapsed_width" format="integer"/>
-        <attr name="is_collapsed" format="boolean"/>
-    </declare-styleable>
-
     <declare-styleable name="IRecyclerView">
         <attr name="refreshHeaderLayout" format="reference" />  <!--refresh header layout res id-->
         <attr name="loadMoreFooterLayout" format="reference" /> <!--loadmore fotter layout res id-->

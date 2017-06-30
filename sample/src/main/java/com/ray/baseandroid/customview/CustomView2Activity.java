@@ -1,11 +1,10 @@
 package com.ray.baseandroid.customview;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
-import com.ray.lib.android.util.TraceUtil;
+import com.ray.lib.android.widget.MarqueeTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,17 +21,8 @@ import butterknife.OnClick;
 
 public class CustomView2Activity extends BaseActivity {
 
-    @BindView(R.id.el_layout1)
-    CollapsibleLinearLayout elLayout1;
-
-    @BindView(R.id.el_layout2)
-    CollapsibleLinearLayout elLayout2;
-
-    @BindView(R.id.tv_text)
-    TextView tvText;
-
-    private boolean mIsCollapsed1;
-    private boolean mIsCollapsed2;
+    @BindView(R.id.mtv_text)
+    MarqueeTextView mtvText;
 
     @Override
     protected void initVariables() {
@@ -43,26 +33,6 @@ public class CustomView2Activity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_custom_view2);
         ButterKnife.bind(this);
-        elLayout2.setActionListener(new CollapsibleLinearLayout.ActionListener() {
-            @Override
-            public void onStart() {
-                TraceUtil.log();
-            }
-
-            @Override
-            public void onProgress(float fraction, int value) {
-            }
-
-            @Override
-            public void onComplete(boolean isCollapsed) {
-                TraceUtil.log();
-                if (isCollapsed) {
-                    tvText.setVisibility(View.GONE);
-                } else {
-                    tvText.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     @Override
@@ -83,12 +53,8 @@ public class CustomView2Activity extends BaseActivity {
     }
 
     private void click1() {
-        mIsCollapsed1 = !mIsCollapsed1;
-        elLayout1.setCollapse(mIsCollapsed1);
     }
 
     private void click2() {
-        mIsCollapsed2 = !mIsCollapsed2;
-        elLayout2.setCollapse(mIsCollapsed2);
     }
 }

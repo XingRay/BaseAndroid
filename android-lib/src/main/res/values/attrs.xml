@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CollapsibleLinearLayout">
+        <attr name="animation_duration" format="integer"/>
+        <attr name="collapsed_height" format="integer"/>
+        <attr name="collapsed_width" format="integer"/>
+        <attr name="is_collapsed" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="MarqueeTextView">
+        <attr name="restart_distance" format="float"/>
+        <attr name="marquee_interval_mills" format="integer"/>
+        <attr name="restart_delay_mills" format="integer"/>
+        <attr name="marquee_speed" format="float"/>
+        <attr name="marquee" format="boolean"/>
+        <attr name="text" format="string|reference"/>
+        <attr name="textSize" format="dimension|reference"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
+</resources>

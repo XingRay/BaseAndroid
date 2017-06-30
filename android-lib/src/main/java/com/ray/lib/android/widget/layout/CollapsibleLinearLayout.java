@@ -1,4 +1,4 @@
-package com.ray.baseandroid.customview;
+package com.ray.lib.android.widget.layout;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.ray.baseandroid.R;
+import com.ray.lib.android.R;
 
 
 /**
