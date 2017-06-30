@@ -428,8 +428,8 @@ public class StringUtil {
      * @param s 待转换的字符串
      * @return 如果输入的胃null，则返回"",否则返回原字符串
      */
-    public static String nullToEmpty(String s) {
-        return s == null ? "" : s;
+    public static String nullToEmpty(CharSequence s) {
+        return s == null ? "" : s.toString();
     }
 
     /**
