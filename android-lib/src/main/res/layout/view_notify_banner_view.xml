@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.ray.lib.android.widget.MarqueeTextView
+        android:id="@+id/mtv_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:marquee="true"
+        app:marquee_interval_mills="30"
+        app:marquee_speed="1"
+        app:textColor="#333"
+        app:textSize="12sp"/>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/icon_x"/>
+</merge>

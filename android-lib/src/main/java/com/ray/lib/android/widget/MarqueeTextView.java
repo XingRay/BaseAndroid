@@ -144,20 +144,34 @@ public class MarqueeTextView extends View implements Marquee {
     }
 
     public void startMarquee() {
+        startMarquee(0);
+    }
+
+    public void startMarqueeDelayed() {
+        startMarquee(restartDelayMills);
+    }
+
+    public void startMarquee(int delay) {
+        mScrollX = 0;
+        mIsMarqueeRunning = true;
+        sendMessage(delay);
+    }
+
+    public void stopMarquee() {
+        mScrollX = 0;
+        mIsMarqueeRunning = false;
+        removeMessage();
+        invalidate();
+    }
+
+    public void restartMarquee() {
         mIsMarqueeRunning = true;
         sendMessage();
     }
 
-    public void stopMarquee() {
-        removeMessage();
-        mScrollX = 0;
-        mIsMarqueeRunning = false;
-        invalidate();
-    }
-
     public void pauseMarquee() {
-        removeMessage();
         mIsMarqueeRunning = false;
+        removeMessage();
     }
 
     public boolean needMarquee() {

@@ -3,7 +3,6 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -30,16 +29,9 @@
             android:textSize="12sp"/>
     </LinearLayout>
 
-    <com.ray.lib.android.widget.MarqueeTextView
-        android:id="@+id/mtv_text"
+    <com.ray.lib.android.widget.NotifyBannerView
+        android:id="@+id/nbv_banner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        app:marquee="true"
-        app:marquee_interval_mills="100"
-        app:marquee_speed="3"
-        app:restart_distance="100"
-        app:text="QWERTYUIOPLKJH123456789asdfghjkkl"
-        app:textColor="@color/red"
-        app:textSize="16sp"/>
+        android:layout_height="15dp"
+        android:background="#aaddaa"/>
 </LinearLayout>
