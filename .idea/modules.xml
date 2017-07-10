@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaseAndroid.iml" filepath="$PROJECT_DIR$/BaseAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/activity-dialog/activity-dialog.iml" filepath="$PROJECT_DIR$/activity-dialog/activity-dialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/common-listview/common-listview.iml" filepath="$PROJECT_DIR$/common-listview/common-listview.iml" />
       <module fileurl="file://$PROJECT_DIR$/java-lib/java-lib.iml" filepath="$PROJECT_DIR$/java-lib/java-lib.iml" />

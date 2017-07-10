@@ -99,8 +99,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".dialogactivitytest.BigMemoryActivity"/>
-
         <activity android:name=".customview.CustomViewActivity"/>
 
         <activity android:name="com.ray.baseandroid.customview.BezierCurveActivity"/>

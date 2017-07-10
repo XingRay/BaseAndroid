@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ray.activity_dialog.ActivityDialog;
-import com.ray.activity_dialog.DialogAdapter;
 import com.ray.baseandroid.R;
 import com.ray.lib.android.util.ViewUtil;
+import com.xingray.activitydialog.ActivityDialog;
+import com.xingray.activitydialog.DialogAdapter;
 
 
 /**

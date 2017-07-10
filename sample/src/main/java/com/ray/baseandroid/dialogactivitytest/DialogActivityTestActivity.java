@@ -72,12 +72,6 @@ public class DialogActivityTestActivity extends BaseActivity {
 
     private void test01() {
         startTestService();
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                BigMemoryActivity.start(mActivity);
-            }
-        }, 5000);
     }
 
     private void test02() {
