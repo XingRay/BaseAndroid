@@ -22,7 +22,7 @@ import com.ray.baseandroid.R;
  * ×
  * Description : xxx
  */
-public class ClipView extends View{
+public class ClipView extends View {
 
     private Bitmap mBitmap;
     private Paint mPaint;
@@ -38,7 +38,7 @@ public class ClipView extends View{
 
     public ClipView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_dog);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_x);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPath = new Path();
     }
@@ -50,6 +50,6 @@ public class ClipView extends View{
         mPath.reset();
         mPath.addCircle(130, 90, 50, Path.Direction.CCW);
         canvas.clipPath(mPath, Region.Op.UNION);
-        canvas.drawBitmap(mBitmap, 0,0,null);
+        canvas.drawBitmap(mBitmap, 0, 0, null);
     }
 }

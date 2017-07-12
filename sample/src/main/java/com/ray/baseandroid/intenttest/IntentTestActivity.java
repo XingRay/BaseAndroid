@@ -1,7 +1,9 @@
 package com.ray.baseandroid.intenttest;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
@@ -16,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.ray.baseandroid.intenttest.IntentSearchActivity.RESULT_SEARCH;
+
 /**
  * Author      : leixing
  * Date        : 2017-04-14
@@ -27,10 +31,17 @@ import butterknife.OnClick;
 
 public class IntentTestActivity extends BaseActivity {
     public static final int REQUEST_CODE_PERSON = 101;
-    @BindView(R.id.tv_test01)
-    TextView tvTest01;
-    @BindView(R.id.tv_test02)
-    TextView tvTest02;
+    private static final int REQUEST_CODE_SEARCH = 102;
+
+    @BindView(R.id.bt_test01)
+    Button btTest01;
+
+    @BindView(R.id.bt_test02)
+    Button btTest02;
+
+    @BindView(R.id.tv_result)
+    TextView tvResult;
+
     private List<Person> mPersons;
 
     @Override
@@ -53,32 +64,58 @@ public class IntentTestActivity extends BaseActivity {
         showPersons();
     }
 
-    @OnClick({R.id.tv_test01, R.id.tv_test02})
+    @OnClick({R.id.bt_test01, R.id.bt_test02})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_test01:
-                gotoReceiverPage();
+            case R.id.bt_test01:
+                gotoReceiverPage1();
                 break;
-            case R.id.tv_test02:
+            case R.id.bt_test02:
+                gotoReceiverPage2();
                 break;
         }
     }
 
-    private void gotoReceiverPage() {
+    private void gotoReceiverPage1() {
         IntentReceiverActivity.start(this, REQUEST_CODE_PERSON, mPersons);
+    }
+
+    private void gotoReceiverPage2() {
+        IntentReceiverActivity.start(this, REQUEST_CODE_SEARCH);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_PERSON) {
-            if (resultCode == RESULT_OK) {
-                showPersons();
-            }
+        switch (requestCode) {
+            case REQUEST_CODE_PERSON:
+                handlePersonResult(resultCode, data);
+                break;
+            case REQUEST_CODE_SEARCH:
+                handleSearchResult(resultCode, data);
+                break;
+            default:
+        }
+    }
+
+    private void handlePersonResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            showPersons();
+        }
+    }
+
+    private void handleSearchResult(int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+
+        String result = data.getStringExtra(RESULT_SEARCH);
+        if (!TextUtils.isEmpty(result)) {
+            tvResult.setText(result);
         }
     }
 
     private void showPersons() {
-        tvTest02.setText(mPersons.toString());
+        tvResult.setText(mPersons.toString());
     }
 }
