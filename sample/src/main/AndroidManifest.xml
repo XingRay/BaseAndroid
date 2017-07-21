@@ -112,6 +112,8 @@
         <activity android:name="com.ray.baseandroid.recyclerview.recycler3.RecyclerTest3Activity"/>
 
         <activity android:name="com.ray.baseandroid.intenttest.IntentSearchActivity"/>
+
+        <activity android:name="com.ray.baseandroid.anr.AnrActivity"/>
     </application>
 
 </manifest>
