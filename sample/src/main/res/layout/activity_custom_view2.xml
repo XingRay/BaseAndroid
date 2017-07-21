@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="click1"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/bt_click2"
@@ -23,16 +23,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="click2"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <com.ray.lib.android.widget.NotifyBannerView
         android:id="@+id/nbv_banner"
         android:layout_width="match_parent"
         android:layout_height="15dp"
-        android:background="#aaddaa" />
+        android:background="#aaddaa"/>
 
-    <com.ray.baseandroid.customview.ClipView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.ray.baseandroid.customview.GradientLineView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"/>
+
 </LinearLayout>

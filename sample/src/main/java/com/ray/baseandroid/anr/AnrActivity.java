@@ -53,14 +53,20 @@ public class AnrActivity extends BaseActivity {
 
     private void load() {
         tvResult.setText("loading");
-        for(int i=0; i<Integer.MAX_VALUE; i++){
-            int k = 123*321;
-            int l = 123/321;
-            /*for(int j=0; j<Integer.MAX_VALUE; j++){
+        tvResult.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long start = System.currentTimeMillis();
+                while (true) {
+                    long currentTimeMillis = System.currentTimeMillis();
+                    // loop for anr
+                    if (currentTimeMillis - start > 20 * 1000) {
+                        break;
+                    }
+                }
 
-            }*/
-        }
-
-        tvResult.setText("loaded");
+                tvResult.setText("loaded");
+            }
+        }, 500);
     }
 }
