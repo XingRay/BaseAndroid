@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_selection"
+        android:layout_width="64dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/left_round_white"
+        android:drawableEnd="@drawable/arrow_gray_down"
+        android:drawableRight="@drawable/arrow_gray_down"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textColor="@color/common_title"
+        android:textSize="12sp"
+        tools:text="全国"/>
+
+    <com.hecom.widget.text.SearchEditText
+        android:id="@+id/et_keyword"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/tv_selection"
+        android:layout_toRightOf="@id/tv_selection"
+        android:background="@drawable/right_round_white"
+        android:drawableLeft="@drawable/work_icon_search"
+        android:drawablePadding="4dp"
+        android:drawableStart="@drawable/work_icon_search"
+        android:gravity="start|center_vertical"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/content_text"
+        android:textColorHint="@color/text_hit"
+        android:textSize="13sp"/>
+
+    <ImageView
+        android:id="@+id/iv_clear"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/icon_x"
+        android:visibility="gone"/>
+</merge>
