@@ -17,4 +17,18 @@
         <attr name="textSize" format="dimension|reference"/>
         <attr name="textColor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="RefreshableEmptyView">
+        <attr name="content_text" format="string|reference"/>
+        <attr name="content_text_size" format="dimension|reference"/>
+        <attr name="content_text_color" format="color"/>
+
+        <attr name="icon_src" format="reference"/>
+
+        <attr name="refresh_text" format="string|reference"/>
+        <attr name="refresh_text_size" format="dimension|reference"/>
+        <attr name="refresh_text_color" format="color"/>
+        <attr name="refresh_enable" format="boolean"/>
+        <attr name="refresh_background" format="reference|color"/>
+    </declare-styleable>
 </resources>

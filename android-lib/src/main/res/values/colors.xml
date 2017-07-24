@@ -11,4 +11,6 @@
     <color name="common_red">#e15151</color>
     <color name="main_red">#e15151</color>
     <color name="divider_line">#e6e8ea</color>
+    <color name="common_hint">#ababab</color>
+    <color name="common_light_blue">#50a2ff</color>
 </resources>
