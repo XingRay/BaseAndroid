@@ -3,7 +3,7 @@ package com.ray.baseandroid.recyclerview;
 /**
  * Author      : leixing
  * Date        : 2017-06-23
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

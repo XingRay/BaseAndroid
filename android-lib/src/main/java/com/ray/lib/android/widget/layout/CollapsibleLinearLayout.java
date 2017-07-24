@@ -14,7 +14,7 @@ import com.ray.lib.android.R;
 /**
  * Author      : leixing
  * Date        : 2017-06-20
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@gmail.com
  * Version     : 0.0.1
  * <p>
  * Description : CollapsibleLinearLayout
