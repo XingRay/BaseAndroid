@@ -7,6 +7,8 @@
     <color name="gray">#808080</color>
     <color name="touming">#0000</color>
     <color name="gray_normal">#666666</color>
+    <color name="common_title">#333333</color>
+    <color name="common_red">#e15151</color>
     <color name="main_red">#e15151</color>
     <color name="divider_line">#e6e8ea</color>
 </resources>
