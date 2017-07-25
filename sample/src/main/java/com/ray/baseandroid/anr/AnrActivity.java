@@ -59,6 +59,9 @@ public class AnrActivity extends BaseActivity {
                 long start = System.currentTimeMillis();
                 while (true) {
                     long currentTimeMillis = System.currentTimeMillis();
+                    long a = 12345567;
+                    long b = a * (a - 100) / 654321;
+                    long c = (b + a) * (b - a - 100) / 1234 / 321;
                     // loop for anr
                     if (currentTimeMillis - start > 20 * 1000) {
                         break;
