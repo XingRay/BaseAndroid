@@ -31,13 +31,13 @@
         android:drawablePadding="4dp"
         android:drawableStart="@drawable/work_icon_search"
         android:gravity="start|center_vertical"
-        android:hint="@string/search"
+        android:hint="search"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textColor="@color/content_text"
-        android:textColorHint="@color/text_hit"
+        android:textColor="@color/content"
+        android:textColorHint="@color/hint"
         android:textSize="13sp"/>
 
     <ImageView
