@@ -47,7 +47,7 @@ public class MarqueeTextView extends View implements Marquee {
         super(context, attrs, defStyleAttr);
         applyAttributes(context, attrs);
 
-        mHandler = new InternalHandler();
+        mHandler = new InternalHandler(Looper.myLooper());
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(mTextSize);
@@ -279,8 +279,8 @@ public class MarqueeTextView extends View implements Marquee {
     }
 
     private static class InternalHandler extends Handler {
-        InternalHandler() {
-            super(Looper.getMainLooper());
+        public InternalHandler(Looper looper) {
+            super(looper);
         }
 
         @Override
