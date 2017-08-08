@@ -56,12 +56,13 @@ public class WrapRecyclerView extends RecyclerView {
                 mWrapRecyclerAdapter.notifyItemChanged(positionStart);
         }
 
-        @Override
+
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
             if (mAdapter == null) return;
             // 观察者  列表Adapter更新 包裹的也需要更新不然列表的notifyItemChanged没效果
-            if (mWrapRecyclerAdapter != mAdapter)
-                mWrapRecyclerAdapter.notifyItemChanged(positionStart, payload);
+            if (mWrapRecyclerAdapter != mAdapter) {
+//                mWrapRecyclerAdapter.notifyItemChanged(positionStart, payload);
+            }
         }
 
         @Override

@@ -29,17 +29,27 @@ dependencies {
     })
 //    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     testCompile 'junit:junit:4.12'
-    compile 'com.jakewharton:butterknife:8.5.1'
+    compile('com.jakewharton:butterknife:8.5.1'){
+            exclude group: 'com.android.support'
+    }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile project(':android-lib')
     compile project(':common-listview')
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile('me.drakeet.multitype:multitype:3.0.1', {
+//    compile 'com.android.support:appcompat-v7:22.2.1'
+//    compile 'com.android.support:design:22.2.1'
+    compile('me.drakeet.multitype:multitype:3.0.1') {
         exclude group: 'com.android.support'
-    })
-    compile 'com.github.Aspsine:IRecyclerView:0.0.5'
-    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
-    compile 'com.dinuscxj:recyclerrefreshlayout:2.0.3'
-    compile 'com.github.XingRay:activity-dialog:v0.0.1'
+    }
+    compile ('com.github.Aspsine:IRecyclerView:0.0.5'){
+        exclude group: 'com.android.support'
+    }
+    compile ('com.github.Aspsine:SwipeToLoadLayout:1.0.4'){
+        exclude group: 'com.android.support'
+    }
+    compile('com.dinuscxj:recyclerrefreshlayout:2.0.3'){
+        exclude group: 'com.android.support'
+    }
+    compile ('com.github.XingRay:activity-dialog:v0.0.1'){
+        exclude group: 'com.android.support'
+    }
 }
