@@ -26,6 +26,7 @@ import com.ray.baseandroid.recyclerview.recycler1.RecyclerTestActivity;
 import com.ray.baseandroid.recyclerview.recycler2.RecyclerTest2Activity;
 import com.ray.baseandroid.recyclerview.recycler3.RecyclerTest3Activity;
 import com.ray.baseandroid.sptest.SPTestActivity;
+import com.ray.baseandroid.text.TextActivity;
 import com.ray.commonlistview.ViewHolder;
 import com.ray.commonlistview.WrapRecyclerView;
 import com.ray.commonlistview.adapter.Adapter;
@@ -56,7 +57,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("recycler view ", RecyclerTestActivity.class),
             new Function("recycler view 2", RecyclerTest2Activity.class),
             new Function("recycler view 3", RecyclerTest3Activity.class),
-            new Function("anr test", AnrActivity.class)
+            new Function("anr test", AnrActivity.class),
+            new Function("text", TextActivity.class)
     );
 
     private List<Function> mFunctions;

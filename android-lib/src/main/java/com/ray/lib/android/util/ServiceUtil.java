@@ -19,7 +19,8 @@ public class ServiceUtil {
      * @return 服务是否正在运行
      */
     public static boolean isServiceRunning(Context context, Class<? extends Service> service) {
-        List<ActivityManager.RunningServiceInfo> runningServices = SystemServiceUtil.getActivityManager(context).getRunningServices(Integer.MAX_VALUE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(Integer.MAX_VALUE);
         for (ActivityManager.RunningServiceInfo info : runningServices) {
             if (info.service.getClassName().equals(service.getName())) {
                 return true;

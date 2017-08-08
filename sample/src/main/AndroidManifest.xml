@@ -114,6 +114,10 @@
         <activity android:name="com.ray.baseandroid.intenttest.IntentSearchActivity"/>
 
         <activity android:name="com.ray.baseandroid.anr.AnrActivity"/>
+
+        <activity
+            android:name="com.ray.baseandroid.text.TextActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

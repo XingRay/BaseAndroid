@@ -53,11 +53,11 @@ public class ResUtil {
      * getColor() 6.0之后过时/弃用问题
      */
     public static int getColor(Context context, int resId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getColor(resId);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            return context.getColor(resId);
+//        } else {
             return context.getResources().getColor(resId);
-        }
+//        }
     }
 
     /**
@@ -65,11 +65,11 @@ public class ResUtil {
      * @return Drawable资源
      */
     public Drawable getDrawable(Context context, int resId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return context.getResources().getDrawable(resId, null);
-        } else {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            return context.getResources().getDrawable(resId, null);
+//        } else {
             return context.getResources().getDrawable(resId);
-        }
+//        }
     }
 
     /**
