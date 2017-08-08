@@ -8,13 +8,11 @@
     android:orientation="vertical"
     android:showDividers="middle">
 
-    <TextView
+    <com.ray.baseandroid.text.linkstextview.ClickableLinksTextView
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:autoLink="phone|email|web"
-        android:textIsSelectable="true"/>
+        android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
