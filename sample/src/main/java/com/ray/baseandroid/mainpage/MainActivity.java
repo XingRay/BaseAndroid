@@ -10,6 +10,7 @@ import android.view.View;
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.alarm.AlarmSetActivity;
 import com.ray.baseandroid.anr.AnrActivity;
+import com.ray.baseandroid.counter.CounterActivity;
 import com.ray.baseandroid.customview.BezierCurveActivity;
 import com.ray.baseandroid.customview.CustomView2Activity;
 import com.ray.baseandroid.customview.CustomViewActivity;
@@ -58,7 +59,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("recycler view 2", RecyclerTest2Activity.class),
             new Function("recycler view 3", RecyclerTest3Activity.class),
             new Function("anr test", AnrActivity.class),
-            new Function("text", TextActivity.class)
+            new Function("text", TextActivity.class),
+            new Function("counter", CounterActivity.class)
     );
 
     private List<Function> mFunctions;

@@ -53,4 +53,5 @@ dependencies {
         exclude group: 'com.android.support'
     }
     compile project(':linkifytext')
+    compile project(':viewcounter')
 }
