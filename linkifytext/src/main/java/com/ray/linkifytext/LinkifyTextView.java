@@ -1,10 +1,13 @@
-package com.ray.baseandroid.text.linkstextview;
+package com.ray.linkifytext;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.v4.text.util.LinkifyCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.method.ArrowKeyMovementMethod;
+import android.text.util.Linkify;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,9 +17,33 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
+ * 解决TextView在同时设置 autoLink和 isTextSelectable 会导致spannable点击错位的问题
+ * {@see <a href="https://stackoverflow.com/questions/14862750/textview-that-is-linkified-and-selectable">StackOverflow</a>}
+ * <p>
+ * The autoLink attribute has an annoying bug: if you click in your example on the phone number,
+ * then return back and click on the second url link - it will open the phone number again.
+ * This attribute works so bad with multiple links , that I have implemented my own class,
+ * here is the link on Github ClickableLinksTextView.java
+ * <p>
+ * In your example you can replace your TextView class by my ClickableLinksTextView class in the
+ * xml-layout and change the code like this:
+ * <p>
+ * <code>
+ * ClickableLinksTextView textView = (ClickableLinksTextView)view.findViewById(R.id.mytext);
+ * textView.setText("My text: +4412345678 Go to website: www.google.com Blah blah");
+ * Linkify.addLinks(textView, Linkify.ALL);
+ * <p>
+ * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+ * textView.setMovementMethod(ArrowKeyMovementMethod.getInstance());
+ * textView.setTextIsSelectable(true);
+ * // the autoLink attribute must be removed, if you hasn't set it then ok, otherwise call textView.setAutoLink(0);
+ * }
+ * </code>
+ * <p>
+ * <p>
  * The TextView that handles correctly clickable spans.
  */
-public class ClickableLinksTextView extends AppCompatTextView {
+public class LinkifyTextView extends AppCompatTextView {
     public static final String TAG = "ClickableLinksTextView";
 
     private boolean mBaseEditorCopied = false;
@@ -24,16 +51,23 @@ public class ClickableLinksTextView extends AppCompatTextView {
     private Field mDiscardNextActionUpField = null;
     private Field mIgnoreActionUpEventField = null;
 
-    public ClickableLinksTextView(Context context) {
+    public LinkifyTextView(Context context) {
         super(context);
     }
 
-    public ClickableLinksTextView(Context context, AttributeSet attrs, int defStyle) {
+    public LinkifyTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public ClickableLinksTextView(Context context, AttributeSet attrs) {
+    public LinkifyTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void setTextLinkifyAndSelectable(CharSequence text, @LinkifyCompat.LinkifyMask int mask, boolean selectable) {
+        setText(text);
+        Linkify.addLinks(this, mask);
+        setMovementMethod(ArrowKeyMovementMethod.getInstance());
+        setTextIsSelectable(selectable);
     }
 
     @Override

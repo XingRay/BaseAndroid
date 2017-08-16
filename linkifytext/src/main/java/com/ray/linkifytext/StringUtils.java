@@ -1,4 +1,4 @@
-package com.ray.baseandroid.text.linkstextview;
+package com.ray.linkifytext;
 
 public class StringUtils {
 

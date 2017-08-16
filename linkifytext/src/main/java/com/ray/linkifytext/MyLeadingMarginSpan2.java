@@ -1,4 +1,4 @@
-package com.ray.baseandroid.text.linkstextview;
+package com.ray.linkifytext;
 
 import android.annotation.TargetApi;
 import android.graphics.Canvas;

@@ -50,9 +50,6 @@ public class TextActivity extends BaseActivity {
 
     private void setText() {
         String text = "hhshxhxhxh 13800090001 hdjxhxh 079183110644 bxjxbxbxj 01013241567 hDjxjzjzj010546764646hxjxjxj 010-15467543 hdjxjxj shhxhdhxHsHxjhxhxhx aaabbb@hecom.cn dhdhjdhxjdhxjdj http://www.baidu.com dhfhhx https://www.baidu.com djxjixhd www.baidu.com hxjxbxhxbbxb www.baidu.com?params=qwe jdjfndjjx hxjbdjx@dhhx.cn dhuxbxb@hdjxh.com.cn djjxhd@163.com jfjcjxnxj";
-        tvText.setText(text);
-        Linkify.addLinks(tvText, Linkify.ALL);
-        tvText.setMovementMethod(ArrowKeyMovementMethod.getInstance());
-        tvText.setTextIsSelectable(true);
+
     }
 }

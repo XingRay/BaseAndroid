@@ -1,4 +1,4 @@
-package com.ray.baseandroid.text.linkstextview;
+package com.ray.linkifytext;
 
 import android.text.Layout;
 import android.text.NoCopySpan;
@@ -121,7 +121,7 @@ public class MyLinkMovementMethod extends ScrollingMovementMethod {
 
             case UP:
                 int beststart,
-                bestend;
+                        bestend;
 
                 beststart = -1;
                 bestend = -1;
