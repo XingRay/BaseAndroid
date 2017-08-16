@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:showDividers="middle">
 
-    <com.ray.baseandroid.text.linkstextview.ClickableLinksTextView
+    <com.ray.linkifytext.LinkifyTextView
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/right_round_white"
+        android:background="@color/white"
         android:drawableLeft="@drawable/icon_search"
         android:drawablePadding="4dp"
         android:drawableStart="@drawable/icon_search"
