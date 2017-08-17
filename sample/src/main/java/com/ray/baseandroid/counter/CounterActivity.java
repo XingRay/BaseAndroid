@@ -28,11 +28,10 @@ public class CounterActivity extends BaseActivity {
     @Override
     protected void initVariables() {
         mCounter = new ViewCounter()
-                .from(1000)
-                .to(0)
+                .from(0)
+                .to(Long.MAX_VALUE)
                 .count(1)
-                .intervalMills(100)
-                .strictMode(true)
+                .intervalMills(1)
                 .countListener(new ViewCounter.CountListener() {
                     @Override
                     public void onCount(long count, boolean hasNext) {

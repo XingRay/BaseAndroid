@@ -13,22 +13,24 @@ import java.lang.ref.WeakReference;
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description : counter for widget
  */
 
 public class ViewCounter implements Counter {
+    private static final int MSG_COUNT = 100;
+    private static final int MIN_INTERVAL_MILLS = 1;
 
-    public static final int MSG_COUNT = 100;
     private final CounterHandler mHandler;
-    private long mStart;
-    private long mEnd;
-    private long mIntervalMills;
+    private long mStart = 0;
+    private long mEnd = Long.MAX_VALUE;
+    private long mIntervalMills = MIN_INTERVAL_MILLS;
     private long mCount;
     private CountListener mCountListener;
     private long mCurrentValue;
     private long mStartMills;
-    private boolean mStrictMode;
     private long mCountTime;
+    private long mNextValue;
+    private boolean mStrictMode;
 
     public ViewCounter() {
         mHandler = new CounterHandler(Looper.getMainLooper());
@@ -45,7 +47,7 @@ public class ViewCounter implements Counter {
     }
 
     public ViewCounter intervalMills(long intervalMills) {
-        mIntervalMills = intervalMills;
+        mIntervalMills = Math.max(intervalMills, MIN_INTERVAL_MILLS);
         return this;
     }
 
@@ -54,23 +56,23 @@ public class ViewCounter implements Counter {
         return this;
     }
 
-    public ViewCounter countListener(CountListener listener) {
-        mCountListener = listener;
-        return this;
-    }
-
     public ViewCounter strictMode(boolean strictMode) {
         mStrictMode = strictMode;
         return this;
     }
 
+    public ViewCounter countListener(CountListener listener) {
+        mCountListener = listener;
+        return this;
+    }
+
+
     public void start() {
         removeMessage();
         mCurrentValue = mStart;
-        if (mStrictMode) {
-            mCountTime = 0;
-            mStartMills = System.currentTimeMillis();
-        }
+        mNextValue = mStart;
+        mCountTime = 0;
+        mStartMills = System.currentTimeMillis();
         sendMessage(0);
     }
 
@@ -86,39 +88,52 @@ public class ViewCounter implements Counter {
         removeMessage();
     }
 
+    public long getCurrentValue() {
+        return mCurrentValue;
+    }
+
     @UiThread
     private void onCount() {
-        boolean hasNext;
-        long nextValue;
-        if (mCurrentValue < mEnd) {
-            nextValue = Math.min(mCurrentValue + mCount, mEnd);
-            hasNext = true;
-        } else if (mCurrentValue > mEnd) {
-            nextValue = Math.max(mCurrentValue - mCount, mEnd);
-            hasNext = true;
-        } else {
-            nextValue = mEnd;
-            hasNext = false;
+        long currentTimeMillis = System.currentTimeMillis();
+        long countTimes = (currentTimeMillis - mStartMills) / mIntervalMills + 1;
+        boolean hasNext = false;
+        while (mCountTime < countTimes) {
+            hasNext = count();
+            if (mStrictMode && mCountListener != null) {
+                // listener will invoke after every count in strict mode
+                mCountListener.onCount(mCurrentValue, hasNext);
+            }
+            if (!hasNext) {
+                break;
+            }
+            mCountTime++;
         }
 
-        if (mCountListener != null) {
+        if (!mStrictMode && mCountListener != null) {
+            // listener will invoke once in non strict mode
             mCountListener.onCount(mCurrentValue, hasNext);
         }
-
-        mCurrentValue = nextValue;
         if (!hasNext) {
             return;
         }
+        long nextTimeMills = mStartMills + mCountTime * mIntervalMills;
+        long delayMills = Math.max(0, nextTimeMills - currentTimeMillis);
+        sendMessage(delayMills);
+    }
 
-        if (mStrictMode) {
-            mCountTime++;
-            long currentTimeMillis = System.currentTimeMillis();
-            long nextTimeMills = mStartMills + mCountTime * mIntervalMills;
-            long delayMills = Math.max(0, nextTimeMills - currentTimeMillis);
-            sendMessage(delayMills);
+    private boolean count() {
+        boolean hasNext;
+        mCurrentValue = mNextValue;
+        if (mCurrentValue < mEnd) {
+            mNextValue = Math.min(mCurrentValue + mCount, mEnd);
+            hasNext = true;
+        } else if (mCurrentValue > mEnd) {
+            mNextValue = Math.max(mCurrentValue - mCount, mEnd);
+            hasNext = true;
         } else {
-            sendMessage(mIntervalMills);
+            hasNext = false;
         }
+        return hasNext;
     }
 
     private void sendMessage(long delayMills) {
