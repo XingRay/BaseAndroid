@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference;
  * Description : counter for widget
  */
 
-public class ViewCounter implements Counter {
+public class ViewCounter {
     private static final int MSG_COUNT = 100;
     private static final int MIN_INTERVAL_MILLS = 1;
 
@@ -138,7 +138,7 @@ public class ViewCounter implements Counter {
 
     private void sendMessage(long delayMills) {
         Message message = mHandler.obtainMessage(MSG_COUNT);
-        message.obj = new WeakReference<Counter>(this);
+        message.obj = new WeakReference<>(this);
         mHandler.sendMessageDelayed(message, delayMills);
     }
 
