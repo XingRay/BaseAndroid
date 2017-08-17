@@ -67,25 +67,29 @@ public class ViewCounter {
     }
 
 
-    public void start() {
+    public ViewCounter start() {
         removeMessage();
         mCurrentValue = mStart;
         mNextValue = mStart;
         mCountTime = 0;
         mStartMills = System.currentTimeMillis();
         sendMessage(0);
+        return this;
     }
 
-//    private void pause() {
+//    private ViewCounter pause() {
 //        // TODO: 2017-08-16
+//        return this;
 //    }
 
-//    private void restart() {
+//    private ViewCounter resume() {
 //        // TODO: 2017-08-16
+//        return this;
 //    }
 
-    public void stop() {
+    public ViewCounter stop() {
         removeMessage();
+        return this;
     }
 
     public long getCurrentValue() {
