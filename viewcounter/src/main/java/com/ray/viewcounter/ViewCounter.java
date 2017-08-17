@@ -76,13 +76,13 @@ public class ViewCounter implements Counter {
         sendMessage(0);
     }
 
-    private void pause() {
-        // TODO: 2017-08-16
-    }
+//    private void pause() {
+//        // TODO: 2017-08-16
+//    }
 
-    private void restart() {
-        // TODO: 2017-08-16
-    }
+//    private void restart() {
+//        // TODO: 2017-08-16
+//    }
 
     public void stop() {
         removeMessage();
