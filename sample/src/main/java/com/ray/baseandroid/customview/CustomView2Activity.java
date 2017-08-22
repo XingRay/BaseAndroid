@@ -1,11 +1,10 @@
 package com.ray.baseandroid.customview;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
-import com.ray.lib.android.util.TraceUtil;
-import com.ray.lib.android.widget.NotifyBannerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +20,8 @@ import butterknife.OnClick;
  */
 
 public class CustomView2Activity extends BaseActivity {
-    @BindView(R.id.nbv_banner)
-    NotifyBannerView nbvBanner;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
 
     @Override
     protected void initVariables() {
@@ -33,21 +32,6 @@ public class CustomView2Activity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_custom_view2);
         ButterKnife.bind(this);
-
-        nbvBanner.setText("亲爱的用户，当前个别功能正在升级维护中，如若带来不便敬请谅解");
-        nbvBanner.setDismissListener(new NotifyBannerView.DismissListener() {
-            @Override
-            public void onDismiss(View v) {
-                TraceUtil.log();
-                nbvBanner.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        nbvBanner.setText("亲爱的用户，维护功能已全部升级完毕，欢迎您继续使用红圈产品");
-                        nbvBanner.show();
-                    }
-                }, 1000);
-            }
-        });
     }
 
     @Override
@@ -68,8 +52,10 @@ public class CustomView2Activity extends BaseActivity {
     }
 
     private void click1() {
+        tvStatus.setTextAppearance(mContext, R.style.TextStyle1);
     }
 
     private void click2() {
+        tvStatus.setTextAppearance(mContext, R.style.TextStyle2);
     }
 }
