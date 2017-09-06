@@ -29,6 +29,7 @@ import com.ray.baseandroid.recyclerview.recycler3.RecyclerTest3Activity;
 import com.ray.baseandroid.spantest.SpannableTestActivity;
 import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.baseandroid.text.TextActivity;
+import com.ray.baseandroid.webview.WebTestActivity;
 import com.ray.commonlistview.ViewHolder;
 import com.ray.commonlistview.WrapRecyclerView;
 import com.ray.commonlistview.adapter.Adapter;
@@ -62,7 +63,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("anr test", AnrActivity.class),
             new Function("text", TextActivity.class),
             new Function("counter", CounterActivity.class),
-            new Function("span test", SpannableTestActivity.class)
+            new Function("span test", SpannableTestActivity.class),
+            new Function("webview", WebTestActivity.class)
     );
 
     private List<Function> mFunctions;

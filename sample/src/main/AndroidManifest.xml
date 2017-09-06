@@ -2,12 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ray.baseandroid">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".common.SystemApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
         <activity android:name=".mainpage.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -121,6 +124,9 @@
         <activity android:name="com.ray.baseandroid.counter.CounterActivity"/>
 
         <activity android:name=".spantest.SpannableTestActivity"/>
+
+        <activity android:name="com.ray.baseandroid.webview.WebTestActivity"/>
+        <activity android:name="com.ray.baseandroid.webview.WebViewActivity"/>
     </application>
 
 </manifest>

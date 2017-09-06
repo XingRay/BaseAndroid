@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
@@ -26,7 +25,7 @@ public class WebViewActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private String mUrl;
 
-    public static void open(Context context, String url) {
+    public static void start(Context context, String url) {
         Intent intent = new Intent();
         intent.putExtra(URL, url);
         intent.setClass(context, WebViewActivity.class);
@@ -44,6 +43,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initVariables() {
+        mFragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -51,10 +51,14 @@ public class WebViewActivity extends BaseActivity {
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
 
-        mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.fl_webview, WebViewFragment.newInstance(mUrl));
-        transaction.commit();
+        WebViewFragment fragment = (WebViewFragment) mFragmentManager.findFragmentById(R.id.fl_webview);
+        if (fragment == null) {
+            fragment = WebViewFragment.newInstance(mUrl);
+            mFragmentManager
+                    .beginTransaction()
+                    .add(R.id.fl_webview, fragment)
+                    .commit();
+        }
     }
 
     @Override

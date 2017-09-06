@@ -3,7 +3,9 @@ package com.ray.lib.android.base.page;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Author      : leixing
@@ -24,11 +26,11 @@ public abstract class BaseFragment extends Fragment {
         initVariables();
     }
 
+    @Nullable
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mRootView = view;
-        initView(mRootView);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = initView(inflater, container);
+        return mRootView;
     }
 
     @Override
@@ -39,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initVariables();
 
-    protected abstract void initView(View rootView);
+    protected abstract View initView(LayoutInflater inflater, @Nullable ViewGroup container);
 
     protected abstract void loadData();
 }

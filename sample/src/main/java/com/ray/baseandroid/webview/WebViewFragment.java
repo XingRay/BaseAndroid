@@ -1,9 +1,19 @@
 package com.ray.baseandroid.webview;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Author      : leixing
@@ -18,6 +28,9 @@ public class WebViewFragment extends BaseFragment {
 
     public static final String URL = "url";
     private String mUrl;
+
+    @BindView(R.id.wv_web)
+    WebView wvWeb;
 
     public static WebViewFragment newInstance(String url) {
         WebViewFragment fragment = new WebViewFragment();
@@ -37,12 +50,42 @@ public class WebViewFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView(View rootView) {
+    protected View initView(LayoutInflater inflater, @Nullable ViewGroup container) {
+        View rootView = inflater.inflate(R.layout.fragment_webview, container, false);
+        ButterKnife.bind(this, rootView);
+        initWebView();
+        return rootView;
+    }
 
+    private void initWebView() {
+        wvWeb.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                super.onLoadResource(view, url);
+            }
+
+
+        });
     }
 
     @Override
     protected void loadData() {
-
+        wvWeb.loadUrl(mUrl);
     }
 }
