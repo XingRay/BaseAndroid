@@ -2,9 +2,14 @@ package com.ray.lib.android.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -12,6 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ray.lib.java.util.TextUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author      : leixing
@@ -157,5 +167,48 @@ public class ViewUtil {
     public static void setImgRes(View rootView, int id, int imgResId) {
         ImageView imageView = (ImageView) rootView.findViewById(id);
         imageView.setImageResource(imgResId);
+    }
+
+    @NonNull
+    public static CharSequence highLightKeyword(CharSequence raw, String keyword, int highLightColor) {
+        if (TextUtils.isEmpty(raw)) {
+            return "";
+        }
+
+        if (TextUtils.isEmpty(keyword)) {
+            return raw;
+        }
+
+        SpannableString spannableString = new SpannableString(raw);
+        Pattern pattern = Pattern.compile(keyword);
+        Matcher matcher = pattern.matcher(spannableString);
+
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            spannableString.setSpan(new ForegroundColorSpan(highLightColor), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        return spannableString;
+    }
+
+    public static CharSequence scaleText(CharSequence raw, String regex, float scale) {
+        if (TextUtil.isEmpty(raw)) {
+            return "";
+        }
+        if (TextUtil.isEmpty(regex)) {
+            return raw;
+        }
+
+        SpannableString spannableString = new SpannableString(raw);
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(raw);
+        while (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            spannableString.setSpan(new RelativeSizeSpan(scale), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        return spannableString;
     }
 }

@@ -119,6 +119,8 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name="com.ray.baseandroid.counter.CounterActivity"/>
+
+        <activity android:name=".spantest.SpannableTestActivity"/>
     </application>
 
 </manifest>

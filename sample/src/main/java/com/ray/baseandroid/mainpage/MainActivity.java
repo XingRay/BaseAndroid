@@ -26,6 +26,7 @@ import com.ray.baseandroid.oom.OOMTestActivity;
 import com.ray.baseandroid.recyclerview.recycler1.RecyclerTestActivity;
 import com.ray.baseandroid.recyclerview.recycler2.RecyclerTest2Activity;
 import com.ray.baseandroid.recyclerview.recycler3.RecyclerTest3Activity;
+import com.ray.baseandroid.spantest.SpannableTestActivity;
 import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.baseandroid.text.TextActivity;
 import com.ray.commonlistview.ViewHolder;
@@ -60,7 +61,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("recycler view 3", RecyclerTest3Activity.class),
             new Function("anr test", AnrActivity.class),
             new Function("text", TextActivity.class),
-            new Function("counter", CounterActivity.class)
+            new Function("counter", CounterActivity.class),
+            new Function("span test", SpannableTestActivity.class)
     );
 
     private List<Function> mFunctions;
