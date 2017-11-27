@@ -16,6 +16,7 @@ import com.ray.baseandroid.customview.CustomView2Activity;
 import com.ray.baseandroid.customview.CustomViewActivity;
 import com.ray.baseandroid.dialogactivitytest.DialogActivityTestActivity;
 import com.ray.baseandroid.dim.DimActivity;
+import com.ray.baseandroid.img.ImgTestActivity;
 import com.ray.baseandroid.inputtest.InputTestActivity;
 import com.ray.baseandroid.intenttest.IntentTestActivity;
 import com.ray.baseandroid.mainpage.data.entity.Function;
@@ -64,7 +65,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("text", TextActivity.class),
             new Function("counter", CounterActivity.class),
             new Function("span test", SpannableTestActivity.class),
-            new Function("webview", WebTestActivity.class)
+            new Function("webview", WebTestActivity.class),
+            new Function("img test", ImgTestActivity.class)
     );
 
     private List<Function> mFunctions;

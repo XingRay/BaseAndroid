@@ -127,6 +127,7 @@
 
         <activity android:name="com.ray.baseandroid.webview.WebTestActivity"/>
         <activity android:name="com.ray.baseandroid.webview.WebViewActivity"/>
+        <activity android:name="com.ray.baseandroid.img.ImgTestActivity"/>
     </application>
 
 </manifest>
