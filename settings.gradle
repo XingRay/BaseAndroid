@@ -1,1 +1,1 @@
-include ':android-lib', ':sample', ':java-lib', ':common-listview', ':light-http', ':json-lib', ':taskmanager', ':period-service', ':linkifytext', ':searchbar', ':viewcounter'
+include ':android-lib', ':sample', ':java-lib', ':common-listview', ':light-http', ':json-lib', ':taskmanager', ':period-service', ':linkifytext', ':searchbar', ':viewcounter', ':switch-layout'

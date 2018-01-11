@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/period-service/period-service.iml" filepath="$PROJECT_DIR$/period-service/period-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/searchbar/searchbar.iml" filepath="$PROJECT_DIR$/searchbar/searchbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/switch-layout/switch-layout.iml" filepath="$PROJECT_DIR$/switch-layout/switch-layout.iml" />
       <module fileurl="file://$PROJECT_DIR$/taskmanager/taskmanager.iml" filepath="$PROJECT_DIR$/taskmanager/taskmanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewcounter/viewcounter.iml" filepath="$PROJECT_DIR$/viewcounter/viewcounter.iml" />
     </modules>
