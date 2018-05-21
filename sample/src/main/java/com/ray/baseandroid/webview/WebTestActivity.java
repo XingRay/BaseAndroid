@@ -1,11 +1,10 @@
 package com.ray.baseandroid.webview;
 
-import android.widget.EditText;
-
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
 import com.ray.lib.java.util.TextUtil;
 
+import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

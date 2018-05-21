@@ -42,6 +42,7 @@ public abstract class BaseActivity extends FragmentActivity {
      * 根据调用activity的intent所携带的参数，判断activity是否可以显示
      *
      * @param intent 启动activity的参数
+     *
      * @return activity是否可以显示
      */
     protected boolean isParamsValid(Intent intent) {
@@ -68,13 +69,15 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * @param id  资源id
      * @param <T> 控件的类型参数
+     *
      * @return 控件对象
      */
     @SuppressWarnings("unchecked")
     protected <T extends View> T findView(int id) {
         View view = findViewById(id);
         if (view == null) {
-            throw new IllegalArgumentException("can not find view(id:" + id + ") in activity:" + this.getClass().getSimpleName());
+            throw new IllegalArgumentException(
+                    "can not find view(id:" + id + ") in activity:" + this.getClass().getSimpleName());
         }
 
         return (T) view;
