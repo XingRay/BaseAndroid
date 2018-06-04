@@ -78,7 +78,8 @@ public class TaskExecutor {
                 CORE_POOL_SIZE,
                 MAXIMUM_POOL_SIZE,
                 30L, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(128), new NamedThreadFactory("cpu-pool"));
+                new LinkedBlockingQueue<Runnable>(128),
+                new NamedThreadFactory("cpu-pool"));
 
         uiHandler = new Handler(Looper.getMainLooper());
     }
