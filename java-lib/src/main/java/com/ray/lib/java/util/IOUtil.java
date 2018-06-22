@@ -16,7 +16,7 @@ public class IOUtil {
     }
 
     public static <T> void print(PrintStream printStream, List<T> list) {
-        if (CollectionUtil.isEmpty(list)) {
+        if (list == null || list.isEmpty()) {
             printStream.println("[]");
             return;
         }

@@ -1,7 +1,7 @@
 package com.ray.lib.java.util;
 
 /**
- * use for operate Url
+ * use for process Url
  * 用于操作Url数据
  */
 public class UrlUtil {

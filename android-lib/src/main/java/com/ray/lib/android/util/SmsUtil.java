@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * use for operate sms
+ * use for process sms
  * 用于操作短信
  */
 public class SmsUtil {

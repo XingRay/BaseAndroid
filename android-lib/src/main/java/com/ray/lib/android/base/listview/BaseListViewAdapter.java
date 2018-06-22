@@ -5,8 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.ray.lib.java.util.CollectionUtil;
-
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ public abstract class BaseListViewAdapter<Bean, Holder extends BaseHolder<Bean>>
 
     @Override
     public int getCount() {
-        if (CollectionUtil.isEmpty(list)) {
+        if (list == null || list.isEmpty()) {
             return 0;
         }
 
@@ -36,7 +34,7 @@ public abstract class BaseListViewAdapter<Bean, Holder extends BaseHolder<Bean>>
 
     @Override
     public Bean getItem(int position) {
-        if (CollectionUtil.isEmpty(list)) {
+        if (list == null || list.isEmpty()) {
             return null;
         }
 

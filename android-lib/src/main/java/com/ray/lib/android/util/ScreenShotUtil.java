@@ -204,7 +204,7 @@ public class ScreenShotUtil {
                 out.close();
             }
         } catch (IOException e) {
-            // TODO: handle exception
+            // TODO: traversal exception
         }
         return bitmap;
     }

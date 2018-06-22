@@ -7,8 +7,6 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
-import com.ray.lib.java.util.CollectionUtil;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -349,7 +347,7 @@ public class StringUtil {
         }
 
         String[] split = listString.split(separator);
-        if (CollectionUtil.isEmpty(split)) {
+        if (split == null || split.length == 0) {
             return list;
         }
 

@@ -1,7 +1,6 @@
 package com.ray.lib.java.util.collection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -12,25 +11,26 @@ import java.util.Set;
 
 /**
  * @author : leixing
- * @date : 2018-01-08
- * <p>
- * Email       : leixing@hecom.cn
+ * Date        : 2017-02-20
+ * Email       : leixing1012@gmail.cn
  * Version     : 0.0.1
  * <p>
- * Description : xxx
+ * Description : util for collection
  */
 
-@SuppressWarnings({"unused", "WeakerAccess", "UnusedReturnValue", "SameParameterValue"})
+@SuppressWarnings({"WeakerAccess", "unused", "BooleanMethodIsAlwaysInverted", "unchecked"})
 public class CollectionUtil {
-    /**
-     * 判断集合、map、数组是否为空
-     */
-    public static boolean isEmpty(Collection collection) {
-        return collection == null || collection.isEmpty() || collection.size() == 0;
+
+    private CollectionUtil() {
+        throw new UnsupportedOperationException();
     }
 
-    public static boolean isEmpty(Map map) {
-        return map == null || map.isEmpty() || map.size() == 0;
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isEmpty(Map<?, ?> map) {
+        return map == null || map.isEmpty();
     }
 
     public static <T> boolean isEmpty(T[] array) {
@@ -65,177 +65,209 @@ public class CollectionUtil {
         return array == null || array.length == 0;
     }
 
-//    public static boolean isEmpty(JSONArray array) {
-//        return array == null || array.length() == 0;
-//    }
-
-    /**
-     * 判断集合、Map、数组是否含有元素
-     *
-     * @return 是否含有元素
-     */
-    public static boolean hasElem(Collection collection) {
-        return !isEmpty(collection);
+    public static boolean hasElement(Collection<?> collection) {
+        return collection != null && !collection.isEmpty();
     }
 
-    public static boolean hasElem(Map map) {
-        return !isEmpty(map);
+    public static boolean hasElement(Map<?, ?> map) {
+        return map != null && !map.isEmpty();
     }
 
-    public static <T> boolean hasElem(T[] array) {
-        return !isEmpty(array);
+    public static <T> boolean hasElement(T[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(boolean[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(boolean[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(byte[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(byte[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(char[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(char[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(int[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(int[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(long[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(long[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(float[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(float[] array) {
+        return array != null && array.length > 0;
     }
 
-    public static boolean hasElem(double[] array) {
-        return !isEmpty(array);
+    public static boolean hasElement(double[] array) {
+        return array != null && array.length > 0;
     }
 
-    /**
-     * 获取集合/map/数组的大小
-     *
-     * @param collection 集合
-     */
-    public static int getSize(Collection collection) {
-        return isEmpty(collection) ? 0 : collection.size();
+    public static int getSize(Collection<?> collection) {
+        return collection == null ? 0 : collection.size();
     }
 
-    public static int getSize(Map map) {
-        return isEmpty(map) ? 0 : map.size();
+    public static int getSize(Map<?, ?> map) {
+        return map == null ? 0 : map.size();
     }
 
     public static <T> int getSize(T[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(boolean[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(byte[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(char[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(int[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(long[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(float[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
     public static int getSize(double[] array) {
-        return isEmpty(array) ? 0 : array.length;
+        return array == null ? 0 : array.length;
     }
 
-//    public static int getSize(JSONArray array) {
-//        return isEmpty(array) ? 0 : array.length();
-//    }
-
-    /**
-     * 能否指定位置获取非空元素
-     */
-    public static <T> boolean canGetElem(T[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length && array[position] != null;
-    }
-
-    public static <T> boolean canGetElem(List<T> list, int position) {
-        return !isEmpty(list) && position >= 0 && position < list.size() && list.get(position) != null;
-    }
-
-    public static boolean canGetElem(boolean[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(byte[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(char[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(int[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(long[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(float[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    public static boolean canGetElem(double[] array, int position) {
-        return !isEmpty(array) && position >= 0 && position < array.length;
-    }
-
-    /**
-     * 是否是有效的下标
-     *
-     * @param collection 用于判断的集合
-     * @param index      待判断的下标
-     * @return 下标是否是集合有效的下标
-     */
     public static boolean isValidIndex(Collection<?> collection, int index) {
-        if (collection == null) {
-            throw new IllegalArgumentException("collection can not be null");
-        }
-
-        return index >= 0 && index < collection.size();
+        return index < getSize(collection) && index >= 0;
     }
 
-    public static <T> int indexOf(T[] array, T t) {
-        if (isEmpty(array)) {
-            return -1;
-        }
-        for (int i = 0, size = array.length; i < size; i++) {
-            T elem = array[i];
-            if (elem.equals(t)) {
-                return i;
-            }
-        }
-        return -1;
+    public static boolean isValidIndex(List<?> list, int index) {
+        return index < getSize(list) && index >= 0;
     }
 
-    /**
-     * 安全的从指定位置获取元素，无法取到则返回空
-     */
+    public static boolean isValidIndex(boolean[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static <T> boolean isValidIndex(T[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(byte[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(char[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(int[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(float[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(double[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isValidIndex(long[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isOutOfIndex(Collection<?> collection, int index) {
+        return index < 0 || index >= getSize(collection);
+    }
+
+    public static boolean isOutOfIndex(List<?> list, int index) {
+        return index < 0 || index >= getSize(list);
+    }
+
+    public static <T> boolean isOutOfIndex(T[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(boolean[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(byte[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(char[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(int[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(float[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(double[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static boolean isOutOfIndex(long[] array, int index) {
+        return index < 0 || index >= getSize(array);
+    }
+
+    public static <T> boolean hasElementByKey(Map<T, ?> map, T key) {
+        return !(map == null || map.isEmpty()) && map.get(key) != null;
+    }
+
+    public static <T> boolean hasElementAt(List<T> list, int index) {
+        return isValidIndex(list, index) && list.get(index) != null;
+    }
+
+    public static <T> boolean hasElementAt(T[] array, int index) {
+        return isValidIndex(array, index) && array[index] != null;
+    }
+
+    public static boolean hasElementAt(boolean[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(byte[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(char[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(int[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(long[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(float[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean hasElementAt(double[] array, int index) {
+        return index < getSize(array) && index >= 0;
+    }
+
     public static <T> T safetyGet(List<T> list, int position) {
         T t = null;
-        if (canGetElem(list, position)) {
+        if (isValidIndex(list, position)) {
             t = list.get(position);
         }
 
@@ -244,36 +276,215 @@ public class CollectionUtil {
 
     public static <T> T safetyGet(T[] array, int position) {
         T t = null;
-        if (canGetElem(array, position)) {
+        if (isValidIndex(array, position)) {
             t = array[position];
         }
 
         return t;
     }
 
-    public static <T> boolean safetyAdd(Collection<T> collection, T item) {
-        return item != null && collection.add(item);
+    public static <K, V> V safetyGet(Map<K, V> map, K key) {
+        return map == null ? null : map.get(key);
     }
 
-    public static <T> boolean safetyAddAll(Collection<T> collection, Collection<? extends T> items) {
-        return !isEmpty(items) && collection.addAll(items);
+    public static <T> int getIndexOf(T t, T[] array) {
+        return getIndexOf(t, array, 0);
     }
 
-    /**
-     * 查找元素在数组中的下标, 如果数组为空或者没有找到元素则返回-1
-     *
-     * @param array 数组
-     * @param e     待查找的元素
-     * @param <E>   元素的类型
-     * @return 元素的下标，没有找到返回-1
-     */
-    public static <E> int getIndexInArray(E[] array, E e) {
-        if (e == null || isEmpty(array)) {
+    public static <T> int getIndexOf(T t, T[] array, int startIndex) {
+        if (array == null) {
             return -1;
         }
 
-        for (int i = 0; i < array.length; i++) {
-            if (e.equals(array[i])) {
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(T t, T[] array, int startIndex, Matcher<T> matcher) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T element = array[i];
+            if (matcher.isMatch(t, element)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(boolean t, boolean[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(boolean t, boolean[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(byte t, byte[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(byte t, byte[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(char t, char[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(char t, char[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(int t, int[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(int t, int[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(float t, float[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(float t, float[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(double t, double[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(double t, double[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(long t, long[] array) {
+        return getIndexOf(t, array, 0);
+    }
+
+    public static int getIndexOf(long t, long[] array, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <E, T> int getIndexOf(E[] elements, T target, Matcher2<E, T> matcher) {
+        return getIndexOf(elements, 0, target, matcher);
+    }
+
+    public static <E, T> int getIndexOf(E[] elements, int startIndex, T target, Matcher2<E, T> matcher) {
+        if (isOutOfIndex(elements, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = elements.length; i < size; i++) {
+            E element = elements[i];
+            if (element == null) {
+                continue;
+            }
+
+            if (matcher.isMatch(element, target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <E, T> int getIndexOf(List<E> elements, T target, Matcher2<E, T> matcher) {
+        return getIndexOf(elements, 0, target, matcher);
+    }
+
+    public static <E, T> int getIndexOf(List<E> elements, int startIndex, T target, Matcher2<E, T> matcher) {
+        if (isOutOfIndex(elements, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = elements.size(); i < size; i++) {
+            E element = elements.get(i);
+            if (element == null) {
+                continue;
+            }
+
+            if (matcher.isMatch(element, target)) {
                 return i;
             }
         }
@@ -282,39 +493,6 @@ public class CollectionUtil {
     }
 
     /**
-     * 从数组中获取元素, 如果数组为空或者下标越界则返回空
-     */
-    public static <E> E getElementInArray(int index, E[] array) {
-        if (array == null || isEmpty(array)) {
-            return null;
-        }
-
-        return array[index];
-    }
-
-    /**
-     * 从已有的list中抽取出一个没有重复元素的新的List
-     */
-    public static <E> List<E> getDistinctList(Collection<E> list) {
-        ArrayList<E> newList = new ArrayList<>();
-
-        if (isEmpty(list)) {
-            return newList;
-        }
-
-        for (E e : list) {
-            if (newList.contains(e)) {
-                continue;
-            }
-
-            newList.add(e);
-        }
-
-        return newList;
-    }
-
-    /**
-     * 移动列表只的元素,示例：
      * items = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
      * move(items, 0, 2)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
      * move(items, 0, 9)->{2, 0, 3, 4, 5, 6, 7, 8, 9, 1}
@@ -322,11 +500,11 @@ public class CollectionUtil {
      * move(items, 4, 4)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
      */
     public static <T> void move(List<T> items, int fromIndex, int toIndex) {
-        if (!isValidIndex(items, fromIndex)) {
+        if (isOutOfIndex(items, fromIndex)) {
             throw new IllegalArgumentException("illegal index:" + fromIndex + ", size:" + items.size());
         }
 
-        if (!isValidIndex(items, toIndex)) {
+        if (isOutOfIndex(items, toIndex)) {
             throw new IllegalArgumentException("illegal index:" + toIndex + ", size:" + items.size());
         }
 
@@ -345,100 +523,103 @@ public class CollectionUtil {
         }
     }
 
-    /**
-     * 合并两个List
-     */
-    public static <T> List<T> merge(Collection<T> list1, Collection<T> list2) {
-        ArrayList<T> list = new ArrayList<>();
+    public static <T> void removeDuplicates(Collection<T> collection) {
+        if (isEmpty(collection)) {
+            return;
+        }
+        Set<T> set = new HashSet<>();
 
-        if (list1 != null) {
-            for (T t : list1) {
-                if (t == null) {
-                    continue;
-                }
-                list.add(t);
+        Iterator<T> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (t == null) {
+                iterator.remove();
             }
+            if (set.contains(t)) {
+                iterator.remove();
+                continue;
+            }
+            set.add(t);
+        }
+    }
+
+    public static <T, K> void removeDuplicates(Collection<T> collection, Extractor<T, K> extractor) {
+        if (isEmpty(collection)) {
+            return;
+        }
+        HashSet<K> set = new HashSet<>();
+
+        Iterator<T> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (t == null) {
+                iterator.remove();
+            }
+            K k = extractor.extract(t);
+            if (k == null) {
+                iterator.remove();
+            }
+            if (set.contains(k)) {
+                iterator.remove();
+                continue;
+            }
+            set.add(k);
+        }
+    }
+
+
+    public static <T> ArrayList<T> createNoDuplicateList(Collection<T> collection) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
         }
 
-        if (list2 != null) {
-            for (T t : list2) {
-                if (t == null) {
-                    continue;
-                }
+        HashSet<T> set = new HashSet<>();
 
-                if (list.contains(t)) {
-                    continue;
-                }
-
-                list.add(t);
+        for (T t : collection) {
+            if (t == null) {
+                continue;
             }
+            if (set.contains(t)) {
+                continue;
+            }
+            set.add(t);
+            list.add(t);
         }
 
         return list;
     }
 
-    /**
-     * 按照指定的条件，从数组中寻找满足条件的元素的下标，找不到则返回-1
-     */
-    public static <T, C> int getIndex(T[] source, C condition, TargetJudge<T, C> judge) {
-        return getIndex(source, 0, condition, judge);
-    }
-
-    /**
-     * 按照指定的条件，从指定的起始位置开始从数组中寻找满足条件的元素的下标，找不到则返回-1
-     */
-    public static <T, C> int getIndex(T[] source, int firstIndex, C condition, TargetJudge<T, C> judge) {
-        if (isEmpty(source) || firstIndex >= source.length || condition == null) {
-            return -1;
+    public static <T, K> ArrayList<T> createNoDuplicateList(Collection<T> collection, Extractor<T, K> extractor) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
         }
 
-        for (int i = firstIndex; i < source.length; i++) {
-            if (source[i] == null) {
+        HashSet<K> set = new HashSet<>();
+
+        for (T t : collection) {
+            if (t == null) {
                 continue;
             }
 
-            if (judge.isFound(source[i], condition)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-
-    /**
-     * 按照指定的条件，从列表中寻找满足条件的元素的下标，找不到则返回-1
-     */
-    public static <T, C> int getIndex(List<T> source, C condition, TargetJudge<T, C> judge) {
-        return getIndex(source, 0, condition, judge);
-    }
-
-    /**
-     * 按照指定的条件，从指定的起始位置开始从列表中寻找满足条件的元素的下标，找不到则返回-1
-     */
-    public static <T, C> int getIndex(List<T> source, int firstIndex, C condition, TargetJudge<T, C> judge) {
-        if (isEmpty(source) || firstIndex >= source.size() || condition == null) {
-            return -1;
-        }
-
-        for (int i = firstIndex; i < source.size(); i++) {
-            if (source.get(i) == null) {
+            K key = extractor.extract(t);
+            if (key == null) {
                 continue;
             }
 
-            if (judge.isFound(source.get(i), condition)) {
-                return i;
+            if (set.contains(key)) {
+                continue;
             }
-        }
 
-        return -1;
+            set.add(key);
+            list.add(t);
+        }
+        set.clear();
+        return list;
     }
 
-    /**
-     * 判断两个集合所包含的元素是否一样
-     * A包含B B包含A 则 A==B
-     */
-    public static <T> boolean contentEquals(Set<T> set1, Set<T> set2) {
+    public static <T> boolean equals(Set<T> set1, Set<T> set2) {
         if (set1 == set2) {
             return true;
         }
@@ -450,7 +631,6 @@ public class CollectionUtil {
             return false;
         }
 
-        //
         for (T t : set1) {
             if (t == null) {
                 continue;
@@ -474,112 +654,187 @@ public class CollectionUtil {
         return true;
     }
 
-    public static boolean hasCommonElem(Collection<?> collection1, Collection<?> collection2) {
-        if (isEmpty(collection1) || isEmpty(collection2)) {
-            return false;
+    public static <T> ArrayList<T> merge(Collection<T>... collections) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collections)) {
+            return list;
         }
-        HashSet<?> set1 = new HashSet<>(collection1);
-        HashSet<?> set2 = new HashSet<>(collection2);
+        HashSet<T> set = new HashSet<>();
 
-        set1.retainAll(set2);
-        return set1.size() > 0;
-    }
-
-    /**
-     * 判断遍历到的元素是否匹配条件的接口
-     */
-    public interface TargetJudge<E, C> {
-        /**
-         * 该元素是否与指定的条件匹配
-         *
-         * @param elem      元素
-         * @param condition 条件
-         * @return 是否匹配
-         */
-        boolean isFound(E elem, C condition);
-    }
-
-    /**
-     * 过滤list中的重复元素，并且保持原有的顺序不变
-     */
-    public static <T, K> List<T> distinct(Iterable<T> iterable, KeyGetter<T, K> keyGetter) {
-
-        List<T> distinct = new ArrayList<>();
-
-        if (iterable == null) {
-            return distinct;
-        }
-
-        Set<K> set = new HashSet<>();
-        int index = 0;
-
-        for (T t : iterable) {
-            K key = keyGetter.getKey(index, t);
-            if (key != null && !set.contains(key)) {
-                set.add(key);
-                distinct.add(t);
+        for (Collection<T> c : collections) {
+            if (c == null) {
+                continue;
             }
-            index++;
+            for (T t : c) {
+                if (t == null) {
+                    continue;
+                }
+                if (set.contains(t)) {
+                    continue;
+                }
+                list.add(t);
+                set.add(t);
+            }
         }
-
-        return distinct;
+        return list;
     }
 
-    /**
-     * 从大集合中获取包含指定主键的子集
-     */
-    public static <T, K> List<T> subCollectionInclude(List<T> list, Collection<K> collection, KeyGetter<T, K> keyGetter) {
-        List<T> subList = new ArrayList<>();
-        if (isEmpty(list)) {
-            return subList;
-        }
-        int index = 0;
+    public static <T, K> ArrayList<T> merge(Extractor<T, K> extractor, Collection<T>... collections) {
+        return merge(collections, extractor);
+    }
 
-        for (T t : list) {
+    public static <T, K> ArrayList<T> merge(Collection<T>[] collections, Extractor<T, K> extractor) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collections)) {
+            return list;
+        }
+        HashSet<K> set = new HashSet<>();
+
+        for (Collection<T> c : collections) {
+            if (c == null) {
+                continue;
+            }
+            for (T t : c) {
+                if (t == null) {
+                    continue;
+                }
+                K k = extractor.extract(t);
+                if (k == null) {
+                    continue;
+                }
+                if (set.contains(k)) {
+                    continue;
+                }
+                list.add(t);
+                set.add(k);
+            }
+        }
+        return list;
+    }
+
+    public static <T> ArrayList<T> subcollectionInclude(Collection<T> collection, Collection<T> target) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
+        }
+        if (isEmpty(target)) {
+            return list;
+        }
+
+        HashSet<T> set;
+        if (target instanceof HashSet) {
+            set = (HashSet<T>) target;
+        } else {
+            set = new HashSet<>(target);
+        }
+
+        for (T t : collection) {
             if (t == null) {
                 continue;
             }
-
-            K key = keyGetter.getKey(index, t);
-            if (key == null) {
-                continue;
-            }
-            if (collection.contains(key)) {
-                subList.add(t);
+            if (set.contains(t)) {
+                list.add(t);
             }
         }
 
-        return subList;
+        return list;
     }
 
-    /**
-     * 从大集合中获取不包含指定主键的子集
-     */
-    public static <T, K> List<T> subCollectionExclude(List<T> list, Collection<K> collection, KeyGetter<T, K> keyGetter) {
-        List<T> subList = new ArrayList<>();
-        if (isEmpty(list)) {
-            return subList;
+    public static <T, K> ArrayList<T> subcollectionInclude(Collection<T> collection, Collection<K> target, Extractor<T, K> extractor) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
         }
-        int index = 0;
-        for (T t : list) {
+        if (isEmpty(target)) {
+            return list;
+        }
+
+        HashSet<K> set;
+        if (target instanceof HashSet) {
+            set = (HashSet<K>) target;
+        } else {
+            set = new HashSet<>(target);
+        }
+
+        for (T t : collection) {
             if (t == null) {
                 continue;
             }
-
-            K key = keyGetter.getKey(index, t);
-            if (key != null && !collection.contains(key)) {
-                subList.add(t);
+            K k = extractor.extract(t);
+            if (k == null) {
+                continue;
             }
-            index++;
+            if (set.contains(k)) {
+                list.add(t);
+            }
         }
 
-        return subList;
+        return list;
     }
 
-    /**
-     * 对集合中的每个元素遍历并进行操作
-     */
-    public static <T> void handle(Collection<T> collection, Operation<T> operation) {
+    public static <T> ArrayList<T> subcollectionExclude(Collection<T> collection, Collection<T> target) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
+        }
+        if (isEmpty(target)) {
+            list.addAll(collection);
+            return list;
+        }
+
+        HashSet<T> set;
+        if (target instanceof HashSet) {
+            set = (HashSet<T>) target;
+        } else {
+            set = new HashSet<>(target);
+        }
+
+        for (T t : collection) {
+            if (t == null) {
+                continue;
+            }
+            if (!set.contains(t)) {
+                list.add(t);
+            }
+        }
+
+        return list;
+    }
+
+    public static <T, K> ArrayList<T> subCollectionExclude(Collection<T> collection, Collection<K> target, Extractor<T, K> extractor) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
+        }
+        if (isEmpty(target)) {
+            list.addAll(collection);
+            return list;
+        }
+
+        HashSet<K> set;
+        if (target instanceof HashSet) {
+            set = (HashSet<K>) target;
+        } else {
+            set = new HashSet<>(target);
+        }
+
+        for (T t : collection) {
+            if (t == null) {
+                continue;
+            }
+            K k = extractor.extract(t);
+            if (k == null) {
+                continue;
+            }
+            if (!set.contains(k)) {
+                list.add(t);
+            }
+        }
+
+        return list;
+    }
+
+    public static <T> void traversal(Collection<T> collection, Processor<T> processor) {
         if (isEmpty(collection)) {
             return;
         }
@@ -591,228 +846,184 @@ public class CollectionUtil {
                 continue;
             }
 
-            operation.operate(index, t);
+            processor.process(index, t);
         }
     }
 
-    /**
-     * 对列表中的每个元素遍历并进行操作
-     */
-    public static <T> void traversal(Iterable<T> iterable, Operation<T> operation) {
-        if (iterable == null) {
+    public static <T> void traversal(List<T> list, Processor<T> processor) {
+        if (isEmpty(list)) {
             return;
         }
 
-        int index = 0;
-        for (T t : iterable) {
-            if (t != null) {
-                operation.operate(index, t);
+        for (int index = 0, size = list.size(); index < size; index++) {
+            T t = list.get(index);
+            if (t == null) {
+                continue;
             }
-            index++;
+
+            processor.process(index, t);
         }
     }
 
-    /**
-     * 从集合中抽取指定的Key的集合
-     */
-    public static <T, K> Set<K> getKeySet(Iterable<T> iterable, KeyGetter<T, K> keyGetter) {
-        HashSet<K> keySet = new HashSet<>();
+    public static <T, K> HashSet<K> extractSet(Collection<T> collection, Extractor<T, K> extractor) {
+        HashSet<K> set = new HashSet<>();
 
-        if (iterable == null) {
-            return keySet;
+        if (isEmpty(collection)) {
+            return set;
         }
 
-        Iterator<T> iterator = iterable.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (t != null) {
-                K key = keyGetter.getKey(index, t);
-                if (key == null) {
-                    continue;
-                }
-                keySet.add(key);
+        for (T t : collection) {
+            if (t == null) {
+                continue;
             }
-            index++;
-        }
 
-        return keySet;
-    }
-
-    /**
-     * 从集合中抽取指定的Key的集合
-     */
-    public static <T, K> ArrayList<K> getKeyList(Iterable<T> iterable, KeyGetter<T, K> keyGetter) {
-        ArrayList<K> keyList = new ArrayList<>();
-
-        if (iterable == null) {
-            return keyList;
-        }
-
-        Iterator<T> iterator = iterable.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (t != null) {
-                K key = keyGetter.getKey(index, t);
-                if (key != null) {
-                    keyList.add(key);
-                }
+            K key = extractor.extract(t);
+            if (key == null) {
+                continue;
             }
-            index++;
+
+            set.add(key);
         }
 
-        return keyList;
+        return set;
     }
 
-    public interface Operation<T> {
-        /**
-         * 遍历操作
-         *
-         * @param index 下标
-         * @param t     对象
-         */
-        void operate(int index, T t);
-    }
+    public static <T, K> ArrayList<K> extractList(Collection<T> collection, Extractor<T, K> extractor) {
+        ArrayList<K> list = new ArrayList<>();
 
-    public interface KeyGetter<T, K> {
-        /**
-         * 获取Key
-         *
-         * @param index 下标
-         * @param t     对象
-         * @return Key
-         */
-        K getKey(int index, T t);
-    }
-
-    /**
-     * 对集合进行统计，取出满足筛选条件的子集
-     */
-    public static <T> List<T> subCollection(Iterable<T> iterable, Filter<T> filter) {
-        List<T> list = new ArrayList<>();
-
-        if (iterable == null) {
+        if (isEmpty(collection)) {
             return list;
         }
 
-        Iterator<T> iterator = iterable.iterator();
-        int index = 0;
+        for (T t : collection) {
+            if (t == null) {
+                continue;
+            }
 
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (filter.isFit(index, t)) {
+            K key = extractor.extract(t);
+            if (key == null) {
+                continue;
+            }
+
+            list.add(key);
+        }
+
+        return list;
+    }
+
+    public static <T> ArrayList<T> selectList(Collection<T> collection, Filter<T> filter) {
+        ArrayList<T> list = new ArrayList<>();
+
+        if (isEmpty(collection)) {
+            return list;
+        }
+
+        for (T t : collection) {
+            if (t == null) {
+                continue;
+            }
+
+            if (filter.isSelected(t)) {
                 list.add(t);
             }
-            index++;
         }
+
         return list;
     }
 
-    public interface Filter<T> {
-        /**
-         * 匹配器
-         *
-         * @param index 下标
-         * @param t     元素
-         * @return 是否匹配
-         */
-        boolean isFit(int index, T t);
-    }
+    public static <T> HashSet<T> selectSet(Collection<T> collection, Filter<T> filter) {
+        HashSet<T> set = new HashSet<>();
 
-    /**
-     * 查找器接口
-     *
-     * @param <T> 元素类型
-     */
-    public interface Finder<T> {
-        /**
-         * 查找器
-         *
-         * @param index 下标
-         * @param t     元素
-         * @return 是否找到
-         */
-        boolean isFound(int index, T t);
-    }
-
-    public static <T> T find(Iterable<T> iterable, Finder<T> finder) {
-        if (iterable == null) {
-            return null;
+        if (isEmpty(collection)) {
+            return set;
         }
 
-        Iterator<T> iterator = iterable.iterator();
-        int index = 0;
-
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (finder.isFound(index, t)) {
-                return t;
+        for (T t : collection) {
+            if (t == null) {
+                continue;
             }
-            index++;
-        }
 
-        return null;
-    }
-
-    public static <T> T find(T[] array, Finder<T> finder) {
-        if (isEmpty(array)) {
-            return null;
-        }
-
-        for (int i = 0, size = array.length; i < size; i++) {
-            T t = array[i];
-            if (finder.isFound(i, t)) {
-                return t;
+            if (filter.isSelected(t)) {
+                set.add(t);
             }
         }
 
-        return null;
+        return set;
     }
 
+    public static <T, K> T find(Collection<T> collection, K key, Matcher2<T, K> matcher) {
+        return find(collection, 0, key, matcher);
+    }
 
-    public static <T> int indexOf(Iterable<T> iterable, Finder<T> finder) {
-        if (iterable == null) {
-            return -1;
+    public static <T, K> T find(Collection<T> collection, int startIndex, K key, Matcher2<T, K> matcher) {
+        if (isEmpty(collection)) {
+            return null;
+        }
+        if (isOutOfIndex(collection, startIndex)) {
+            return null;
+        }
+        if (key == null) {
+            return null;
         }
 
-        int index = 0;
-        for (T t : iterable) {
-            if (t != null) {
-                if (finder.isFound(index, t)) {
-                    return index;
+        if (collection instanceof List) {
+            List<T> list = (List<T>) collection;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                T t = list.get(i);
+                if (t == null) {
+                    continue;
+                }
+
+                if (matcher.isMatch(t, key)) {
+                    return t;
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : collection) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (t == null) {
+                    continue;
+                }
+
+                if (matcher.isMatch(t, key)) {
+                    return t;
                 }
             }
         }
 
-        return -1;
+        return null;
     }
 
-    public static <T> List<T> findAll(Iterable<T> iterable, Finder<T> finder) {
+    public static <T, K> List<T> findAll(Collection<T> collection, K key, Matcher2<T, K> matcher) {
         List<T> list = new ArrayList<>();
 
-        if (iterable == null) {
+        if (isEmpty(collection)) {
             return list;
         }
 
-        int index = 0;
-        for (T t : iterable) {
-            if (t != null) {
-                if (finder.isFound(index, t)) {
-                    list.add(t);
-                }
+        if (key == null) {
+            return list;
+        }
+
+        for (T t : collection) {
+            if (t == null) {
+                continue;
             }
 
-            index++;
+            if (matcher.isMatch(t, key)) {
+                list.add(t);
+            }
         }
 
         return list;
     }
 
     /**
-     * 获取最大最小长度对
+     *
      */
     public static <T> Pair getSizePair(T[][] arrays) {
         if (arrays == null) {
@@ -825,9 +1036,6 @@ public class CollectionUtil {
 
 
         for (T[] array : arrays) {
-            if (array == null) {
-                continue;
-            }
             if (initialized) {
                 max = Math.max(array.length, max);
                 min = Math.min(array.length, min);
@@ -846,55 +1054,19 @@ public class CollectionUtil {
     }
 
     /**
-     * 获取最小的长度
+     *
      */
     public static <T> int getMinSize(T[][] arrays) {
         return getSizePair(arrays).getMin();
     }
 
     /**
-     * 获取最大的长度
      */
     public static <T> int getMaxSize(T[][] arrays) {
         return getSizePair(arrays).getMax();
     }
 
-    public static class Pair {
-        private int max;
-        private int min;
-
-        public Pair(int max, int min) {
-            this.max = max;
-            this.min = min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
-
-        @Override
-        public String toString() {
-            return "Pair{" +
-                    "max=" + max +
-                    ", min=" + min +
-                    '}';
-        }
-    }
-
     /**
-     * 获取
      */
     public static <T> T getLastCommonElement(T[][] arrays) {
         if (arrays == null) {
@@ -929,16 +1101,6 @@ public class CollectionUtil {
         return commonElement;
     }
 
-    public interface CloneFactory<T> {
-        /**
-         * 复制
-         *
-         * @param t 元素
-         * @return 复制的对象
-         */
-        T clone(T t);
-    }
-
     public static <T> List<T> clone(List<T> src, CloneFactory<T> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("factory can not be null");
@@ -946,7 +1108,7 @@ public class CollectionUtil {
 
         List<T> cloneList = new ArrayList<>();
 
-        if (isEmpty(src)) {
+        if (src == null || src.isEmpty()) {
             return cloneList;
         }
 
@@ -965,196 +1127,41 @@ public class CollectionUtil {
         return cloneList;
     }
 
-    public static int compare(boolean x, boolean y) {
-        return (x == y) ? 0 : (x ? 1 : -1);
+    public interface CloneFactory<T> {
+        T clone(T t);
     }
 
-    public static int compare(byte x, byte y) {
-        return x - y;
-    }
+    public static class Pair {
+        private int max;
+        private int min;
 
-    public static int compare(char x, char y) {
-        return x - y;
-    }
-
-    public static int compare(int x, int y) {
-        return (x < y) ? -1 : ((x == y) ? 0 : 1);
-    }
-
-    public static int compare(long x, long y) {
-        return (x < y) ? -1 : ((x == y) ? 0 : 1);
-    }
-
-    public static int compare(float f1, float f2) {
-        if (f1 < f2) {
-            return -1;
+        public Pair(int max, int min) {
+            this.max = max;
+            this.min = min;
         }
 
-        if (f1 > f2) {
-            return 1;
+        public int getMax() {
+            return max;
         }
 
-
-        int thisBits = Float.floatToIntBits(f1);
-        int anotherBits = Float.floatToIntBits(f2);
-
-        return (thisBits == anotherBits ? 0 : (thisBits < anotherBits ? -1 : 1));
-    }
-
-    public static int compare(double d1, double d2) {
-        if (d1 < d2) {
-            return -1;
+        public void setMax(int max) {
+            this.max = max;
         }
 
-        if (d1 > d2) {
-            return 1;
+        public int getMin() {
+            return min;
         }
 
-        long thisBits = Double.doubleToLongBits(d1);
-        long anotherBits = Double.doubleToLongBits(d2);
-
-        return (thisBits == anotherBits ? 0 : (thisBits < anotherBits ? -1 : 1));
-    }
-
-    public static <K, V> List<Map.Entry<K, V>> getEntryList(Map<K, V> map) {
-        List<Map.Entry<K, V>> entries = new ArrayList<>();
-        if (isEmpty(map)) {
-            return entries;
-        }
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            if (entry == null) {
-                continue;
-            }
-            entries.add(entry);
+        public void setMin(int min) {
+            this.min = min;
         }
 
-        return entries;
-    }
-
-    /**
-     * 从一个列表数据转化为另一个列表数据
-     *
-     * @param srcList 源列表数据
-     * @return 转化结果列表数据
-     */
-    public static <T, E> List<E> convert(Iterable<T> srcList, Converter<T, E> converter) {
-        List<E> dstList = new ArrayList<>();
-        if (srcList == null) {
-            return dstList;
+        @Override
+        public String toString() {
+            return "Pair{" +
+                    "max=" + max +
+                    ", min=" + min +
+                    '}';
         }
-        int i = 0;
-        for (T t : srcList) {
-            dstList.add(converter.convert(i, t));
-            i++;
-        }
-
-        return dstList;
-    }
-
-    /**
-     * 从一个数组数据转化为另一个数组数据
-     *
-     * @param srcArray 源列表数据
-     * @param dstArray 转化结果列表数据
-     */
-    public static <T, E> void convert(T[] srcArray, E[] dstArray, Converter<T, E> converter) {
-        if (srcArray == null || dstArray == null) {
-            return;
-        }
-
-        for (int i = 0, size = Math.min(srcArray.length, dstArray.length); i < size; i++) {
-            T t = srcArray[i];
-            dstArray[i] = converter.convert(i, t);
-        }
-    }
-
-    public interface Converter<T, E> {
-        /**
-         * 转换器
-         *
-         * @param index 下标
-         * @param t     元素
-         * @return 转换结果
-         */
-        E convert(int index, T t);
-    }
-
-    /**
-     * 合并多个数组
-     */
-    @SafeVarargs
-    public static <T> T[] concat(T[] first, T[]... others) {
-        T[] result;
-        int otherSize = others.length;
-
-        if (otherSize > 0) {
-            int nLen = first.length;
-            int temLen = first.length;
-
-            for (T[] other : others) {
-                if (null == other) {
-                    continue;
-                }
-                nLen += other.length;
-            }
-
-            result = Arrays.copyOf(first, nLen);
-
-            for (T[] other : others) {
-                if (null == other || other.length == 0) {
-                    continue;
-                }
-                System.arraycopy(other, 0, result, temLen, other.length);
-                temLen += other.length;
-            }
-        } else {
-            result = first;
-        }
-
-        return result;
-    }
-
-    public static <T> boolean contains(T[] container, T[] elements) {
-        if (isEmpty(elements)) {
-            return true;
-        }
-        if (isEmpty(container)) {
-            return false;
-        }
-        for (int i = 0, elementSize = getSize(elements); i < elementSize; i++) {
-            T element = elements[i];
-            if (!contains(container, element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static <T> boolean contains(T[] container, T element) {
-        if (element == null) {
-            return true;
-        }
-        if (isEmpty(container)) {
-            return false;
-        }
-        for (int i = 0, size = getSize(container); i < size; i++) {
-            T t = container[i];
-            if (t == null) {
-                continue;
-            }
-            if (t.equals(element)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static <T> List<T> toList(T[] array) {
-        if (isEmpty(array)) {
-            return new ArrayList<>();
-        }
-
-        return Arrays.asList(array);
     }
 }

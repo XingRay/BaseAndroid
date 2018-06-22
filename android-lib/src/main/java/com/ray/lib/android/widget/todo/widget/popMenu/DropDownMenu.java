@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.ray.lib.android.R;
 import com.ray.lib.android.util.ViewUtil;
-import com.ray.lib.java.util.CollectionUtil;
+import com.ray.lib.java.util.collection.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
