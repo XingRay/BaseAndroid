@@ -1,6 +1,8 @@
 package com.ray.lib.java.util.collection;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -1101,34 +1103,19 @@ public class CollectionUtil {
         return commonElement;
     }
 
-    public static <T> List<T> clone(List<T> src, CloneFactory<T> factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("factory can not be null");
-        }
+    public static <T> ArrayList<T> clone(Collection<T> src, CloneFactory<T> factory) {
+        ArrayList<T> cloneList = new ArrayList<>();
 
-        List<T> cloneList = new ArrayList<>();
-
-        if (src == null || src.isEmpty()) {
+        if (isEmpty(src)) {
             return cloneList;
         }
 
         for (T t : src) {
-            if (t == null) {
-                continue;
-            }
-
             T clone = factory.clone(t);
-            if (clone == null) {
-                continue;
-            }
             cloneList.add(clone);
         }
 
         return cloneList;
-    }
-
-    public interface CloneFactory<T> {
-        T clone(T t);
     }
 
     public static class Pair {
@@ -1163,5 +1150,166 @@ public class CollectionUtil {
                     ", min=" + min +
                     '}';
         }
+    }
+
+
+    public static int compare(boolean x, boolean y) {
+        return Boolean.compare(x, y);
+    }
+
+    public static int compare(byte x, byte y) {
+        return Byte.compare(x, y);
+    }
+
+    public static int compare(char x, char y) {
+        return Character.compare(x, y);
+    }
+
+    public static int compare(int x, int y) {
+        return Integer.compare(x, y);
+    }
+
+    public static int compare(long x, long y) {
+        return Long.compare(x, y);
+    }
+
+    public static int compare(float x, float y) {
+        return Float.compare(x, y);
+    }
+
+    public static int compare(double x, double y) {
+        return Double.compare(x, y);
+    }
+
+    public static <K, V> ArrayList<Map.Entry<K, V>> getEntryList(Map<K, V> map) {
+        ArrayList<Map.Entry<K, V>> entryList = new ArrayList<>();
+        if (isEmpty(map)) {
+            return entryList;
+        }
+
+        Set<Map.Entry<K, V>> entrySet = map.entrySet();
+        if (!isEmpty(entrySet)) {
+            entryList.addAll(entrySet);
+        }
+        return entryList;
+    }
+
+    /**
+     * 从一个列表数据转化为另一个列表数据
+     *
+     * @param srcList 源列表数据
+     * @return 转化结果列表数据
+     */
+    public static <T, E> ArrayList<E> convert(Iterable<T> srcList, ListConverter<T, E> listConverter) {
+        ArrayList<E> dstList = new ArrayList<>();
+        if (srcList == null) {
+            return dstList;
+        }
+        int i = 0;
+        for (T t : srcList) {
+            dstList.add(listConverter.convert(i, t));
+            i++;
+        }
+
+        return dstList;
+    }
+
+    /**
+     * 从一个数组数据转化为另一个数组数据
+     *
+     * @param srcArray 源列表数据
+     * @param dstArray 转化结果列表数据
+     */
+    public static <T, E> void convert(T[] srcArray, E[] dstArray, ListConverter<T, E> listConverter) {
+        if (isEmpty(srcArray) || isEmpty(dstArray)) {
+            return;
+        }
+
+        for (int i = 0, size = Math.min(srcArray.length, dstArray.length); i < size; i++) {
+            T t = srcArray[i];
+            dstArray[i] = listConverter.convert(i, t);
+        }
+    }
+
+    /**
+     * 合并多个数组
+     */
+    @SafeVarargs
+    public static <T> T[] concat(T[] first, T[]... others) {
+        T[] result;
+        int otherSize = others.length;
+        if (otherSize == 0) {
+            return first;
+        }
+
+        int nLen = first.length;
+        int temLen = first.length;
+
+        for (T[] other : others) {
+            if (null == other) {
+                continue;
+            }
+            nLen += other.length;
+        }
+
+        result = Arrays.copyOf(first, nLen);
+
+        for (T[] other : others) {
+            if (null == other || other.length == 0) {
+                continue;
+            }
+            System.arraycopy(other, 0, result, temLen, other.length);
+            temLen += other.length;
+        }
+
+        return result;
+    }
+
+    public static <T> boolean contains(T[] container, T[] elements) {
+        if (isEmpty(elements)) {
+            return true;
+        }
+        if (isEmpty(container)) {
+            return false;
+        }
+        for (int i = 0, elementSize = getSize(elements); i < elementSize; i++) {
+            T element = elements[i];
+            if (!contains(container, element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static <T> boolean contains(T[] container, T element) {
+        if (element == null) {
+            return true;
+        }
+        if (isEmpty(container)) {
+            return false;
+        }
+        for (int i = 0, size = getSize(container); i < size; i++) {
+            T t = container[i];
+            if (t == null) {
+                continue;
+            }
+            if (t.equals(element)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static <T> List<T> toList(T[] array) {
+        if (isEmpty(array)) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.asList(array);
+    }
+
+    public static <T> T[] toArray(List<T> list, Class<T> cls) {
+        return (T[]) Array.newInstance(cls, getSize(list));
     }
 }
