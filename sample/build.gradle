@@ -27,13 +27,15 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    implementation project(':linkifytext')
+    implementation project(':android-lib')
+    implementation project(':viewcounter')
+    implementation project(':java-lib')
     testImplementation 'junit:junit:4.12'
     implementation('com.jakewharton:butterknife:8.5.1') {
         exclude group: 'com.android.support'
     }
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    implementation project(':android-lib')
-    implementation project(':common-listview')
     implementation('me.drakeet.multitype:multitype:3.0.1') {
         exclude group: 'com.android.support'
     }
@@ -49,8 +51,8 @@ dependencies {
     implementation('com.github.XingRay:activity-dialog:v0.0.1') {
         exclude group: 'com.android.support'
     }
-    implementation project(':linkifytext')
-    implementation project(':viewcounter')
     implementation 'com.github.bumptech.glide:glide:4.2.0'
     implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
 }

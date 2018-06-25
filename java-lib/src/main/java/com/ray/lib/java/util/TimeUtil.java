@@ -24,7 +24,7 @@ public class TimeUtil {
     /**
      */
     public static long getCurrentTimeStamp() {
-        return new Date().getTime();
+        return System.currentTimeMillis();
     }
 
     /**

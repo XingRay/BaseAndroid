@@ -21,6 +21,8 @@ import java.util.Set;
  */
 
 @SuppressWarnings({"WeakerAccess", "unused", "BooleanMethodIsAlwaysInverted", "unchecked"})
+// TODO: 2018/6/25 Collection -> Iterable
+// TODO: 2018/6/25 局部变量使用真实类型
 public class CollectionUtil {
 
     private CollectionUtil() {
@@ -1103,10 +1105,10 @@ public class CollectionUtil {
         return commonElement;
     }
 
-    public static <T> ArrayList<T> clone(Collection<T> src, CloneFactory<T> factory) {
+    public static <T> ArrayList<T> clone(Iterable<T> src, CloneFactory<T> factory) {
         ArrayList<T> cloneList = new ArrayList<>();
 
-        if (isEmpty(src)) {
+        if (src == null) {
             return cloneList;
         }
 
@@ -1194,12 +1196,6 @@ public class CollectionUtil {
         return entryList;
     }
 
-    /**
-     * 从一个列表数据转化为另一个列表数据
-     *
-     * @param srcList 源列表数据
-     * @return 转化结果列表数据
-     */
     public static <T, E> ArrayList<E> convert(Iterable<T> srcList, ListConverter<T, E> listConverter) {
         ArrayList<E> dstList = new ArrayList<>();
         if (srcList == null) {
@@ -1214,12 +1210,6 @@ public class CollectionUtil {
         return dstList;
     }
 
-    /**
-     * 从一个数组数据转化为另一个数组数据
-     *
-     * @param srcArray 源列表数据
-     * @param dstArray 转化结果列表数据
-     */
     public static <T, E> void convert(T[] srcArray, E[] dstArray, ListConverter<T, E> listConverter) {
         if (isEmpty(srcArray) || isEmpty(dstArray)) {
             return;
