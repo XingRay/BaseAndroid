@@ -1000,11 +1000,7 @@ public class CollectionUtil {
         return list;
     }
 
-    public static <T> Range getSizePair(T[][] arrays) {
-        if (arrays == null) {
-            throw new NullPointerException("arrays can not be null");
-        }
-
+    public static <T> Range getSizeRange(T[][] arrays) {
         boolean initialized = false;
         int min = 0;
         int max = 0;
@@ -1030,11 +1026,11 @@ public class CollectionUtil {
     }
 
     public static <T> int getMinSize(T[][] arrays) {
-        return getSizePair(arrays).getMin();
+        return getSizeRange(arrays).getMin();
     }
 
     public static <T> int getMaxSize(T[][] arrays) {
-        return getSizePair(arrays).getMax();
+        return getSizeRange(arrays).getMax();
     }
 
     public static <T> T findCommonElement(T[][] arrays) {
@@ -1138,41 +1134,6 @@ public class CollectionUtil {
 
         return cloneList;
     }
-
-    public static class Pair {
-        private int max;
-        private int min;
-
-        public Pair(int max, int min) {
-            this.max = max;
-            this.min = min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
-
-        @Override
-        public String toString() {
-            return "Pair{" +
-                    "max=" + max +
-                    ", min=" + min +
-                    '}';
-        }
-    }
-
 
     public static int compare(boolean x, boolean y) {
         return Boolean.compare(x, y);
