@@ -291,11 +291,11 @@ public class CollectionUtil {
         return map == null ? null : map.get(key);
     }
 
-    public static <T> int getIndexOf(T t, T[] array) {
-        return getIndexOf(t, array, 0);
+    public static int getIndexOf(boolean[] array, boolean t) {
+        return getIndexOf(array, t, 0);
     }
 
-    public static <T> int getIndexOf(T t, T[] array, int startIndex) {
+    public static int getIndexOf(boolean[] array, boolean t, int startIndex) {
         if (array == null) {
             return -1;
         }
@@ -309,7 +309,137 @@ public class CollectionUtil {
         return -1;
     }
 
-    public static <T> int getIndexOf(T t, T[] array, int startIndex, Matcher<T> matcher) {
+    public static int getIndexOf(byte[] array, byte t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(byte[] array, byte t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(char[] array, char t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(char[] array, char t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(int[] array, int t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(int[] array, int t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(float[] array, float t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(float[] array, float t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(double[] array, double t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(double[] array, double t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(long[] array, long t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static int getIndexOf(long[] array, long t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(T[] array, T t) {
+        return getIndexOf(array, t, 0);
+    }
+
+    public static <T> int getIndexOf(T[] array, T t, int startIndex) {
+        if (array == null) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (t == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(T[] array, T t, Matcher<T> matcher) {
+        return getIndexOf(array, t, 0, matcher);
+    }
+
+    public static <T> int getIndexOf(T[] array, T t, int startIndex, Matcher<T> matcher) {
         if (array == null) {
             return -1;
         }
@@ -317,132 +447,6 @@ public class CollectionUtil {
         for (int i = startIndex, size = array.length; i < size; i++) {
             T element = array[i];
             if (matcher.isMatch(t, element)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(boolean t, boolean[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(boolean t, boolean[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(byte t, byte[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(byte t, byte[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(char t, char[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(char t, char[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(int t, int[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(int t, int[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(float t, float[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(float t, float[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(double t, double[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(double t, double[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(long t, long[] array) {
-        return getIndexOf(t, array, 0);
-    }
-
-    public static int getIndexOf(long t, long[] array, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
                 return i;
             }
         }
@@ -1221,35 +1225,28 @@ public class CollectionUtil {
         }
     }
 
-    /**
-     * 合并多个数组
-     */
-    @SafeVarargs
-    public static <T> T[] concat(T[] first, T[]... others) {
-        T[] result;
-        int otherSize = others.length;
-        if (otherSize == 0) {
-            return first;
+    public static <T> T[] concat(Class<T> cls, T[]... arrays) {
+        int size = getSize(arrays);
+        if (size == 0) {
+            return (T[]) Array.newInstance(cls, 0);
         }
 
-        int nLen = first.length;
-        int temLen = first.length;
 
-        for (T[] other : others) {
-            if (null == other) {
-                continue;
-            }
-            nLen += other.length;
+        int length = 0;
+
+        for (T[] other : arrays) {
+            length += getSize(other);
         }
 
-        result = Arrays.copyOf(first, nLen);
+        T[] result = (T[]) Array.newInstance(cls, length);
+        int index = 0;
 
-        for (T[] other : others) {
-            if (null == other || other.length == 0) {
+        for (T[] array : arrays) {
+            if (isEmpty(array)) {
                 continue;
             }
-            System.arraycopy(other, 0, result, temLen, other.length);
-            temLen += other.length;
+            System.arraycopy(array, 0, result, index, array.length);
+            index += array.length;
         }
 
         return result;
@@ -1272,16 +1269,17 @@ public class CollectionUtil {
     }
 
     public static <T> boolean contains(T[] container, T element) {
-        if (element == null) {
-            return true;
-        }
         if (isEmpty(container)) {
             return false;
         }
         for (int i = 0, size = getSize(container); i < size; i++) {
             T t = container[i];
             if (t == null) {
-                continue;
+                if (element == null) {
+                    return true;
+                } else {
+                    continue;
+                }
             }
             if (t.equals(element)) {
                 return true;
@@ -1300,6 +1298,11 @@ public class CollectionUtil {
     }
 
     public static <T> T[] toArray(List<T> list, Class<T> cls) {
-        return (T[]) Array.newInstance(cls, getSize(list));
+        int size = getSize(list);
+        T[] array = (T[]) Array.newInstance(cls, size);
+        if (size == 0) {
+            return array;
+        }
+        return list.toArray(array);
     }
 }
