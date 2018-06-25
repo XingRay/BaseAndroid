@@ -10,8 +10,8 @@ import com.ray.baseandroid.R;
 import com.ray.baseandroid.intenttest.data.Follower;
 import com.ray.baseandroid.intenttest.data.Person;
 import com.ray.lib.android.base.page.BaseActivity;
-import com.ray.lib.java.util.CollectionUtil;
 import com.ray.lib.java.util.TextUtil;
+import com.ray.lib.java.util.collection.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;

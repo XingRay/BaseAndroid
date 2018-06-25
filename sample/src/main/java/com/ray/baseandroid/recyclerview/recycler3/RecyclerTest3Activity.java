@@ -7,12 +7,12 @@ import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.ray.baseandroid.R;
+import com.ray.baseandroid.commonlistview.WrapRecyclerView;
 import com.ray.baseandroid.recyclerview.Person;
 import com.ray.baseandroid.recyclerview.PersonAdapter;
 import com.ray.baseandroid.recyclerview.PersonHelper;
 import com.ray.baseandroid.recyclerview.recycler2.LoadMoreFooterView;
 import com.ray.baseandroid.recyclerview.recycler2.RefreshHeaderView;
-import com.ray.commonlistview.WrapRecyclerView;
 import com.ray.lib.android.base.page.BaseActivity;
 import com.ray.lib.android.manager.ThreadPool;
 

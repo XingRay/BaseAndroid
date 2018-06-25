@@ -10,6 +10,11 @@ import android.view.View;
 import com.ray.baseandroid.R;
 import com.ray.baseandroid.alarm.AlarmSetActivity;
 import com.ray.baseandroid.anr.AnrActivity;
+import com.ray.baseandroid.commonlistview.ViewHolder;
+import com.ray.baseandroid.commonlistview.WrapRecyclerView;
+import com.ray.baseandroid.commonlistview.adapter.Adapter;
+import com.ray.baseandroid.commonlistview.decoration.DrawableDividerItemDecoration;
+import com.ray.baseandroid.commonlistview.listener.OnItemClickListener;
 import com.ray.baseandroid.counter.CounterActivity;
 import com.ray.baseandroid.customview.BezierCurveActivity;
 import com.ray.baseandroid.customview.CustomView2Activity;
@@ -31,11 +36,6 @@ import com.ray.baseandroid.spantest.SpannableTestActivity;
 import com.ray.baseandroid.sptest.SPTestActivity;
 import com.ray.baseandroid.text.TextActivity;
 import com.ray.baseandroid.webview.WebTestActivity;
-import com.ray.commonlistview.ViewHolder;
-import com.ray.commonlistview.WrapRecyclerView;
-import com.ray.commonlistview.adapter.Adapter;
-import com.ray.commonlistview.decoration.DrawableDividerItemDecoration;
-import com.ray.commonlistview.listener.OnItemClickListener;
 import com.ray.lib.android.base.page.BaseActivity;
 
 import java.util.ArrayList;
@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         context.startActivity(intent);
     }
 
+    @Override
     protected void initVariables() {
         mActivity = this;
         mContext = this.getApplicationContext();
@@ -89,6 +90,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         mFunctionAdapter = new FunctionAdapter(mContext, mFunctions, R.layout.list_item_main_page_item);
     }
 
+    @Override
     protected void initView() {
         setContentView(R.layout.activity_main);
 
@@ -100,6 +102,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         mFunctionAdapter.setOnItemClickListener(this);
     }
 
+    @Override
     protected void loadData() {
         mFunctions.addAll(functions);
         mFunctionAdapter.notifyDataSetChanged();
@@ -117,7 +120,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     }
 
     private static class FunctionAdapter extends Adapter<Function> {
-        public FunctionAdapter(Context context, List<Function> list, int layoutId) {
+        FunctionAdapter(Context context, List<Function> list, int layoutId) {
             super(context, list, layoutId);
         }
 

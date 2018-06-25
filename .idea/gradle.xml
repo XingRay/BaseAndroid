@@ -10,16 +10,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/android-lib" />
-            <option value="$PROJECT_DIR$/common-listview" />
             <option value="$PROJECT_DIR$/java-lib" />
-            <option value="$PROJECT_DIR$/json-lib" />
-            <option value="$PROJECT_DIR$/light-http" />
             <option value="$PROJECT_DIR$/linkifytext" />
-            <option value="$PROJECT_DIR$/period-service" />
             <option value="$PROJECT_DIR$/sample" />
             <option value="$PROJECT_DIR$/searchbar" />
-            <option value="$PROJECT_DIR$/switch-layout" />
-            <option value="$PROJECT_DIR$/taskmanager" />
             <option value="$PROJECT_DIR$/viewcounter" />
           </set>
         </option>
