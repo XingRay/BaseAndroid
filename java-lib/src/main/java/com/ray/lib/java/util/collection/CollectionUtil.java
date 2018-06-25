@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * @author : leixing
  * Date        : 2017-02-20
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : util for collection
@@ -457,10 +457,6 @@ public class CollectionUtil {
 
         for (int i = startIndex, size = elements.length; i < size; i++) {
             E element = elements[i];
-            if (element == null) {
-                continue;
-            }
-
             if (matcher.isMatch(element, target)) {
                 return i;
             }
@@ -480,10 +476,6 @@ public class CollectionUtil {
 
         for (int i = startIndex, size = elements.size(); i < size; i++) {
             E element = elements.get(i);
-            if (element == null) {
-                continue;
-            }
-
             if (matcher.isMatch(element, target)) {
                 return i;
             }
@@ -524,15 +516,19 @@ public class CollectionUtil {
     }
 
     public static <T> void removeDuplicates(Collection<T> collection) {
+        removeDuplicates(collection, false);
+    }
+
+    public static <T> void removeDuplicates(Collection<T> collection, boolean keepNull) {
         if (isEmpty(collection)) {
             return;
         }
-        Set<T> set = new HashSet<>();
+        HashSet<T> set = new HashSet<>();
 
         Iterator<T> iterator = collection.iterator();
         while (iterator.hasNext()) {
             T t = iterator.next();
-            if (t == null) {
+            if (t == null && !keepNull) {
                 iterator.remove();
             }
             if (set.contains(t)) {
@@ -544,6 +540,10 @@ public class CollectionUtil {
     }
 
     public static <T, K> void removeDuplicates(Collection<T> collection, Extractor<T, K> extractor) {
+        removeDuplicates(collection, false, extractor);
+    }
+
+    public static <T, K> void removeDuplicates(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
         if (isEmpty(collection)) {
             return;
         }
@@ -552,11 +552,8 @@ public class CollectionUtil {
         Iterator<T> iterator = collection.iterator();
         while (iterator.hasNext()) {
             T t = iterator.next();
-            if (t == null) {
-                iterator.remove();
-            }
             K k = extractor.extract(t);
-            if (k == null) {
+            if (k == null && !keepNull) {
                 iterator.remove();
             }
             if (set.contains(k)) {
@@ -569,6 +566,10 @@ public class CollectionUtil {
 
 
     public static <T> ArrayList<T> createNoDuplicateList(Collection<T> collection) {
+        return createNoDuplicateList(collection, false);
+    }
+
+    public static <T> ArrayList<T> createNoDuplicateList(Collection<T> collection, boolean keepNull) {
         ArrayList<T> list = new ArrayList<>();
         if (isEmpty(collection)) {
             return list;
@@ -577,7 +578,7 @@ public class CollectionUtil {
         HashSet<T> set = new HashSet<>();
 
         for (T t : collection) {
-            if (t == null) {
+            if (t == null && !keepNull) {
                 continue;
             }
             if (set.contains(t)) {
@@ -591,6 +592,10 @@ public class CollectionUtil {
     }
 
     public static <T, K> ArrayList<T> createNoDuplicateList(Collection<T> collection, Extractor<T, K> extractor) {
+        return createNoDuplicateList(collection, false, extractor);
+    }
+
+    public static <T, K> ArrayList<T> createNoDuplicateList(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
         ArrayList<T> list = new ArrayList<>();
         if (isEmpty(collection)) {
             return list;
@@ -599,12 +604,8 @@ public class CollectionUtil {
         HashSet<K> set = new HashSet<>();
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             K key = extractor.extract(t);
-            if (key == null) {
+            if (key == null && !keepNull) {
                 continue;
             }
 
@@ -655,6 +656,10 @@ public class CollectionUtil {
     }
 
     public static <T> ArrayList<T> merge(Collection<T>... collections) {
+        return merge(false, collections);
+    }
+
+    public static <T> ArrayList<T> merge(boolean keepNull, Collection<T>... collections) {
         ArrayList<T> list = new ArrayList<>();
         if (isEmpty(collections)) {
             return list;
@@ -666,7 +671,7 @@ public class CollectionUtil {
                 continue;
             }
             for (T t : c) {
-                if (t == null) {
+                if (t == null && !keepNull) {
                     continue;
                 }
                 if (set.contains(t)) {
@@ -680,10 +685,18 @@ public class CollectionUtil {
     }
 
     public static <T, K> ArrayList<T> merge(Extractor<T, K> extractor, Collection<T>... collections) {
-        return merge(collections, extractor);
+        return merge(extractor, false, collections);
+    }
+
+    public static <T, K> ArrayList<T> merge(Extractor<T, K> extractor, boolean keepNull, Collection<T>... collections) {
+        return merge(collections, keepNull, extractor);
     }
 
     public static <T, K> ArrayList<T> merge(Collection<T>[] collections, Extractor<T, K> extractor) {
+        return merge(collections, false, extractor);
+    }
+
+    public static <T, K> ArrayList<T> merge(Collection<T>[] collections, boolean keepNull, Extractor<T, K> extractor) {
         ArrayList<T> list = new ArrayList<>();
         if (isEmpty(collections)) {
             return list;
@@ -695,11 +708,8 @@ public class CollectionUtil {
                 continue;
             }
             for (T t : c) {
-                if (t == null) {
-                    continue;
-                }
                 K k = extractor.extract(t);
-                if (k == null) {
+                if (k == null && !keepNull) {
                     continue;
                 }
                 if (set.contains(k)) {
@@ -729,9 +739,6 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
             if (set.contains(t)) {
                 list.add(t);
             }
@@ -757,13 +764,7 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
             K k = extractor.extract(t);
-            if (k == null) {
-                continue;
-            }
             if (set.contains(k)) {
                 list.add(t);
             }
@@ -790,9 +791,6 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
             if (!set.contains(t)) {
                 list.add(t);
             }
@@ -819,13 +817,7 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
             K k = extractor.extract(t);
-            if (k == null) {
-                continue;
-            }
             if (!set.contains(k)) {
                 list.add(t);
             }
@@ -842,10 +834,6 @@ public class CollectionUtil {
         int index = -1;
         for (T t : collection) {
             index++;
-            if (t == null) {
-                continue;
-            }
-
             processor.process(index, t);
         }
     }
@@ -857,15 +845,15 @@ public class CollectionUtil {
 
         for (int index = 0, size = list.size(); index < size; index++) {
             T t = list.get(index);
-            if (t == null) {
-                continue;
-            }
-
             processor.process(index, t);
         }
     }
 
     public static <T, K> HashSet<K> extractSet(Collection<T> collection, Extractor<T, K> extractor) {
+        return extractSet(collection, false, extractor);
+    }
+
+    public static <T, K> HashSet<K> extractSet(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
         HashSet<K> set = new HashSet<>();
 
         if (isEmpty(collection)) {
@@ -873,12 +861,8 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             K key = extractor.extract(t);
-            if (key == null) {
+            if (key == null && !keepNull) {
                 continue;
             }
 
@@ -889,6 +873,10 @@ public class CollectionUtil {
     }
 
     public static <T, K> ArrayList<K> extractList(Collection<T> collection, Extractor<T, K> extractor) {
+        return extractList(collection, false, extractor);
+    }
+
+    public static <T, K> ArrayList<K> extractList(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
         ArrayList<K> list = new ArrayList<>();
 
         if (isEmpty(collection)) {
@@ -896,12 +884,8 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             K key = extractor.extract(t);
-            if (key == null) {
+            if (key == null && !keepNull) {
                 continue;
             }
 
@@ -919,10 +903,6 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             if (filter.isSelected(t)) {
                 list.add(t);
             }
@@ -939,16 +919,25 @@ public class CollectionUtil {
         }
 
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             if (filter.isSelected(t)) {
                 set.add(t);
             }
         }
 
         return set;
+    }
+
+    public static <T> void filter(Collection<T> collection, Filter<T> filter) {
+        if (isEmpty(collection)) {
+            return;
+        }
+        Iterator<T> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (!filter.isSelected(t)) {
+                iterator.remove();
+            }
+        }
     }
 
     public static <T, K> T find(Collection<T> collection, K key, Matcher2<T, K> matcher) {
@@ -962,18 +951,11 @@ public class CollectionUtil {
         if (isOutOfIndex(collection, startIndex)) {
             return null;
         }
-        if (key == null) {
-            return null;
-        }
 
         if (collection instanceof List) {
             List<T> list = (List<T>) collection;
             for (int i = startIndex, size = list.size(); i < size; i++) {
                 T t = list.get(i);
-                if (t == null) {
-                    continue;
-                }
-
                 if (matcher.isMatch(t, key)) {
                     return t;
                 }
@@ -985,10 +967,6 @@ public class CollectionUtil {
                 if (index < startIndex) {
                     continue;
                 }
-                if (t == null) {
-                    continue;
-                }
-
                 if (matcher.isMatch(t, key)) {
                     return t;
                 }
@@ -1005,15 +983,7 @@ public class CollectionUtil {
             return list;
         }
 
-        if (key == null) {
-            return list;
-        }
-
         for (T t : collection) {
-            if (t == null) {
-                continue;
-            }
-
             if (matcher.isMatch(t, key)) {
                 list.add(t);
             }
@@ -1022,10 +992,7 @@ public class CollectionUtil {
         return list;
     }
 
-    /**
-     *
-     */
-    public static <T> Pair getSizePair(T[][] arrays) {
+    public static <T> Range getSizePair(T[][] arrays) {
         if (arrays == null) {
             throw new NullPointerException("arrays can not be null");
         }
@@ -1036,12 +1003,13 @@ public class CollectionUtil {
 
 
         for (T[] array : arrays) {
+            int length = getSize(array);
             if (initialized) {
-                max = Math.max(array.length, max);
-                min = Math.min(array.length, min);
+                min = Math.min(length, min);
+                max = Math.max(length, max);
             } else {
-                max = array.length;
-                min = array.length;
+                min = length;
+                max = length;
                 initialized = true;
             }
         }
@@ -1050,55 +1018,102 @@ public class CollectionUtil {
             throw new IllegalStateException("no array found");
         }
 
-        return new Pair(max, min);
+        return new Range(min, max);
     }
 
-    /**
-     *
-     */
     public static <T> int getMinSize(T[][] arrays) {
         return getSizePair(arrays).getMin();
     }
 
-    /**
-     */
     public static <T> int getMaxSize(T[][] arrays) {
         return getSizePair(arrays).getMax();
     }
 
-    /**
-     */
-    public static <T> T getLastCommonElement(T[][] arrays) {
-        if (arrays == null) {
-            throw new IllegalArgumentException("can not get common element form null");
+    public static <T> T findCommonElement(T[][] arrays) {
+        return findCommonElement(arrays, 0);
+    }
+
+    public static <T> T findCommonElement(T[][] arrays, int startIndex) {
+        if (isEmpty(arrays)) {
+            return null;
         }
 
         int minSize = getMinSize(arrays);
-        T commonElement = null;
+        if (minSize == 0) {
+            return null;
+        }
 
-        for (int elementIndex = 0; elementIndex < minSize; elementIndex++) {
-            T tmpElement = null;
+        T common = null;
+
+        for (int index = startIndex; index < minSize; index++) {
+            T tmp = null;
+            boolean initialized = false;
+            boolean sameElements = false;
+
             for (T[] array : arrays) {
-                if (array == null) {
+                T t = array[index];
+                if (t == null) {
+                    return common;
+                }
+
+                if (!initialized) {
+                    tmp = t;
+                    initialized = true;
                     continue;
                 }
 
-                T t = array[elementIndex];
-                if (t == null) {
-                    return commonElement;
-                }
-
-                if (tmpElement == null) {
-                    tmpElement = t;
-                } else if (!tmpElement.equals(t)) {
-                    return commonElement;
+                if (!tmp.equals(t)) {
+                    return common;
                 }
             }
 
-            commonElement = tmpElement;
+            common = tmp;
         }
 
-        return commonElement;
+        return common;
+    }
+
+    public static <T> T findLastCommonElement(T[][] arrays) {
+        return findLastCommonElement(arrays, 0);
+    }
+
+    public static <T> T findLastCommonElement(T[][] arrays, int startIndex) {
+        if (isEmpty(arrays)) {
+            return null;
+        }
+
+        int minSize = getMinSize(arrays);
+        if (minSize == 0) {
+            return null;
+        }
+
+        T common = null;
+
+        for (int index = startIndex; index < minSize; index++) {
+            T tmp = null;
+            boolean initialized = false;
+
+            for (T[] array : arrays) {
+                T t = array[index];
+                if (t == null) {
+                    return common;
+                }
+
+                if (!initialized) {
+                    tmp = t;
+                    initialized = true;
+                    continue;
+                }
+
+                if (!tmp.equals(t)) {
+                    return common;
+                }
+            }
+
+            common = tmp;
+        }
+
+        return common;
     }
 
     public static <T> List<T> clone(List<T> src, CloneFactory<T> factory) {
@@ -1129,39 +1144,5 @@ public class CollectionUtil {
 
     public interface CloneFactory<T> {
         T clone(T t);
-    }
-
-    public static class Pair {
-        private int max;
-        private int min;
-
-        public Pair(int max, int min) {
-            this.max = max;
-            this.min = min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
-
-        @Override
-        public String toString() {
-            return "Pair{" +
-                    "max=" + max +
-                    ", min=" + min +
-                    '}';
-        }
     }
 }
