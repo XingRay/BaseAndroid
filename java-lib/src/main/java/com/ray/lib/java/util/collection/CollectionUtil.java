@@ -1,5 +1,6 @@
 package com.ray.lib.java.util.collection;
 
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.RandomAccess;
 import java.util.Set;
 
 /**
@@ -18,15 +20,22 @@ import java.util.Set;
  * Version     : 0.0.1
  * <p>
  * Description : util for collection
+ * <p>
+ * // TODO: 2018/6/25 Collection -> Iterable
+ * // TODO: 2018/6/25 局部变量使用真实类型
+ * // TODO: 2018/6/26 泛型界定
  */
 
 @SuppressWarnings({"WeakerAccess", "unused", "BooleanMethodIsAlwaysInverted", "unchecked"})
-// TODO: 2018/6/25 Collection -> Iterable
-// TODO: 2018/6/25 局部变量使用真实类型
 public class CollectionUtil {
 
     private CollectionUtil() {
         throw new UnsupportedOperationException();
+    }
+
+    public static boolean isEmpty(Iterable<?> iterable) {
+        return iterable == null || (iterable instanceof Collection && isEmpty((Collection) iterable))
+                || !iterable.iterator().hasNext();
     }
 
     public static boolean isEmpty(Collection<?> collection) {
@@ -69,6 +78,10 @@ public class CollectionUtil {
         return array == null || array.length == 0;
     }
 
+    public static boolean hasElement(Iterable<?> iterable) {
+        return iterable != null && iterable.iterator().hasNext();
+    }
+
     public static boolean hasElement(Collection<?> collection) {
         return collection != null && !collection.isEmpty();
     }
@@ -109,8 +122,18 @@ public class CollectionUtil {
         return array != null && array.length > 0;
     }
 
-    public static int getSize(Collection<?> collection) {
-        return collection == null ? 0 : collection.size();
+    public static <T> int getSize(Iterable<T> iterable) {
+        if (iterable == null) {
+            return 0;
+        }
+        if (iterable instanceof Collection) {
+            return ((Collection<T>) iterable).size();
+        }
+        int size = 0;
+        for (T e : iterable) {
+            size++;
+        }
+        return size;
     }
 
     public static int getSize(Map<?, ?> map) {
@@ -147,6 +170,10 @@ public class CollectionUtil {
 
     public static int getSize(double[] array) {
         return array == null ? 0 : array.length;
+    }
+
+    public static boolean isValidIndex(Iterable<?> iterable, int index) {
+        return index < getSize(iterable) && index >= 0;
     }
 
     public static boolean isValidIndex(Collection<?> collection, int index) {
@@ -187,6 +214,10 @@ public class CollectionUtil {
 
     public static boolean isValidIndex(long[] array, int index) {
         return index < getSize(array) && index >= 0;
+    }
+
+    public static boolean isOutOfIndex(Iterable<?> iterable, int index) {
+        return index < 0 || index >= getSize(iterable);
     }
 
     public static boolean isOutOfIndex(Collection<?> collection, int index) {
@@ -233,8 +264,24 @@ public class CollectionUtil {
         return !(map == null || map.isEmpty()) && map.get(key) != null;
     }
 
-    public static <T> boolean hasElementAt(List<T> list, int index) {
-        return isValidIndex(list, index) && list.get(index) != null;
+    public static <T> boolean hasElementAt(Iterable<T> iterable, int index) {
+        if (iterable == null) {
+            return false;
+        }
+
+        if (iterable instanceof List) {
+            return isValidIndex((List<T>) iterable, index)
+                    && ((List<T>) iterable).get(index) != null;
+        }
+
+        int i = 0;
+        for (T t : iterable) {
+            if (i == index) {
+                return t != null;
+            }
+            i++;
+        }
+        return false;
     }
 
     public static <T> boolean hasElementAt(T[] array, int index) {
@@ -269,19 +316,46 @@ public class CollectionUtil {
         return index < getSize(array) && index >= 0;
     }
 
-    public static <T> T safetyGet(List<T> list, int position) {
+    public static <T> T safetyGet(Iterable<T> iterable, int index) {
+        if (iterable == null) {
+            return null;
+        }
+        if (iterable instanceof Collection) {
+            return safetyGet((Collection<T>) iterable, index);
+        }
+        int i = 0;
+        for (T t : iterable) {
+            if (i == index) {
+                return t;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    public static <T> T safetyGet(Collection<T> collection, int index) {
+        if (isOutOfIndex(collection, index)) {
+            return null;
+        }
+        if (collection instanceof List) {
+            return safetyGet((List<T>) collection, index);
+        }
+        return (T) collection.toArray()[index];
+    }
+
+    public static <T> T safetyGet(List<T> list, int index) {
         T t = null;
-        if (isValidIndex(list, position)) {
-            t = list.get(position);
+        if (isValidIndex(list, index)) {
+            t = list.get(index);
         }
 
         return t;
     }
 
-    public static <T> T safetyGet(T[] array, int position) {
+    public static <T> T safetyGet(T[] array, int index) {
         T t = null;
-        if (isValidIndex(array, position)) {
-            t = array[position];
+        if (isValidIndex(array, index)) {
+            t = array[index];
         }
 
         return t;
@@ -291,341 +365,15 @@ public class CollectionUtil {
         return map == null ? null : map.get(key);
     }
 
-    public static int getIndexOf(boolean[] array, boolean t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(boolean[] array, boolean t, int startIndex) {
-        if (array == null) {
-            return -1;
+    private static <T> boolean equals(T t1, T t2) {
+        if (t1 == t2) {
+            return true;
         }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
+        if (t1 != null) {
+            return t1.equals(t2);
         }
-
-        return -1;
-    }
-
-    public static int getIndexOf(byte[] array, byte t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(byte[] array, byte t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(char[] array, char t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(char[] array, char t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(int[] array, int t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(int[] array, int t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(float[] array, float t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(float[] array, float t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(double[] array, double t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(double[] array, double t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static int getIndexOf(long[] array, long t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static int getIndexOf(long[] array, long t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static <T> int getIndexOf(T[] array, T t) {
-        return getIndexOf(array, t, 0);
-    }
-
-    public static <T> int getIndexOf(T[] array, T t, int startIndex) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            if (t == array[i]) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static <T> int getIndexOf(T[] array, T t, Matcher<T> matcher) {
-        return getIndexOf(array, t, 0, matcher);
-    }
-
-    public static <T> int getIndexOf(T[] array, T t, int startIndex, Matcher<T> matcher) {
-        if (array == null) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            T element = array[i];
-            if (matcher.isMatch(t, element)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static <E, T> int getIndexOf(E[] elements, T target, Matcher2<E, T> matcher) {
-        return getIndexOf(elements, 0, target, matcher);
-    }
-
-    public static <E, T> int getIndexOf(E[] elements, int startIndex, T target, Matcher2<E, T> matcher) {
-        if (isOutOfIndex(elements, startIndex)) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = elements.length; i < size; i++) {
-            E element = elements[i];
-            if (matcher.isMatch(element, target)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    public static <E, T> int getIndexOf(List<E> elements, T target, Matcher2<E, T> matcher) {
-        return getIndexOf(elements, 0, target, matcher);
-    }
-
-    public static <E, T> int getIndexOf(List<E> elements, int startIndex, T target, Matcher2<E, T> matcher) {
-        if (isOutOfIndex(elements, startIndex)) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = elements.size(); i < size; i++) {
-            E element = elements.get(i);
-            if (matcher.isMatch(element, target)) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
-    /**
-     * items = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-     * move(items, 0, 2)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
-     * move(items, 0, 9)->{2, 0, 3, 4, 5, 6, 7, 8, 9, 1}
-     * move(items, 9, 0)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
-     * move(items, 4, 4)->{1, 2, 0, 3, 4, 5, 6, 7, 8, 9}
-     */
-    public static <T> void move(List<T> items, int fromIndex, int toIndex) {
-        if (isOutOfIndex(items, fromIndex)) {
-            throw new IllegalArgumentException("illegal index:" + fromIndex + ", size:" + items.size());
-        }
-
-        if (isOutOfIndex(items, toIndex)) {
-            throw new IllegalArgumentException("illegal index:" + toIndex + ", size:" + items.size());
-        }
-
-        if (fromIndex == toIndex) {
-            return;
-        }
-
-        if (fromIndex > toIndex) {
-            for (int i = fromIndex; i > toIndex; i--) {
-                Collections.swap(items, i, i - 1);
-            }
-        } else {
-            for (int i = fromIndex; i < toIndex; i++) {
-                Collections.swap(items, i, i + 1);
-            }
-        }
-    }
-
-    public static <T> void removeDuplicates(Collection<T> collection) {
-        removeDuplicates(collection, false);
-    }
-
-    public static <T> void removeDuplicates(Collection<T> collection, boolean keepNull) {
-        if (isEmpty(collection)) {
-            return;
-        }
-        HashSet<T> set = new HashSet<>();
-
-        Iterator<T> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (t == null && !keepNull) {
-                iterator.remove();
-            }
-            if (set.contains(t)) {
-                iterator.remove();
-                continue;
-            }
-            set.add(t);
-        }
-    }
-
-    public static <T, K> void removeDuplicates(Collection<T> collection, Extractor<T, K> extractor) {
-        removeDuplicates(collection, false, extractor);
-    }
-
-    public static <T, K> void removeDuplicates(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
-        if (isEmpty(collection)) {
-            return;
-        }
-        HashSet<K> set = new HashSet<>();
-
-        Iterator<T> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            K k = extractor.extract(t);
-            if (k == null && !keepNull) {
-                iterator.remove();
-            }
-            if (set.contains(k)) {
-                iterator.remove();
-                continue;
-            }
-            set.add(k);
-        }
-    }
-
-
-    public static <T> ArrayList<T> createNoDuplicateList(Collection<T> collection) {
-        return createNoDuplicateList(collection, false);
-    }
-
-    public static <T> ArrayList<T> createNoDuplicateList(Collection<T> collection, boolean keepNull) {
-        ArrayList<T> list = new ArrayList<>();
-        if (isEmpty(collection)) {
-            return list;
-        }
-
-        HashSet<T> set = new HashSet<>();
-
-        for (T t : collection) {
-            if (t == null && !keepNull) {
-                continue;
-            }
-            if (set.contains(t)) {
-                continue;
-            }
-            set.add(t);
-            list.add(t);
-        }
-
-        return list;
-    }
-
-    public static <T, K> ArrayList<T> createNoDuplicateList(Collection<T> collection, Extractor<T, K> extractor) {
-        return createNoDuplicateList(collection, false, extractor);
-    }
-
-    public static <T, K> ArrayList<T> createNoDuplicateList(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
-        ArrayList<T> list = new ArrayList<>();
-        if (isEmpty(collection)) {
-            return list;
-        }
-
-        HashSet<K> set = new HashSet<>();
-
-        for (T t : collection) {
-            K key = extractor.extract(t);
-            if (key == null && !keepNull) {
-                continue;
-            }
-
-            if (set.contains(key)) {
-                continue;
-            }
-
-            set.add(key);
-            list.add(t);
-        }
-        set.clear();
-        return list;
+        //noinspection ConstantConditions
+        return t2.equals(t1);
     }
 
     public static <T> boolean equals(Set<T> set1, Set<T> set2) {
@@ -661,6 +409,1201 @@ public class CollectionUtil {
         }
 
         return true;
+    }
+
+    public static <K, V> boolean equals(Map<K, V> map1, Map<K, V> map2) {
+        if (map1 == map2) {
+            return true;
+        }
+        if (map1 == null || map2 == null) {
+            return false;
+        }
+        Set<K> keySet1 = map1.keySet();
+        Set<K> keySet2 = map2.keySet();
+        if (!equals(keySet1, keySet2)) {
+            return false;
+        }
+
+        for (K k : keySet1) {
+            if (!equals(map1.get(k), map2.get(k))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static <T> boolean equals(Iterable<T> list1, Iterable<T> list2) {
+        if (list1 == list2) {
+            return true;
+        }
+        if (list1 == null || list2 == null) {
+            return false;
+        }
+
+        if (list1 instanceof Collection && list2 instanceof Collection
+                && ((Collection) list1).size() != ((Collection) list2).size()) {
+            return false;
+        }
+
+        Iterator<T> iterator1 = list1.iterator();
+        Iterator<T> iterator2 = list2.iterator();
+        while (iterator1.hasNext() && iterator2.hasNext()) {
+            T t1 = iterator1.next();
+            T t2 = iterator2.next();
+            if (!equals(t1, t2)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static <T> boolean equals(T[] array1, T[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (!equals(array1[i], array2[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(boolean[] array1, boolean[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(byte[] array1, byte[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(char[] array1, char[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(int[] array1, int[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(long[] array1, long[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(float[] array1, float[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean equals(double[] array1, double[] array2) {
+        if (array1 == array2) {
+            return true;
+        }
+        if (array1 == null || array2 == null) {
+            return false;
+        }
+        if (array1.length != array2.length) {
+            return false;
+        }
+        for (int i = 0, size = array1.length; i < size; i++) {
+            if (array1[i] != array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static <T> void swap(List<T> list, int i, int j) {
+        list.set(i, list.set(j, list.get(i)));
+    }
+
+    public static <T> void swap(T[] array, int i, int j) {
+        T tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(boolean[] array, int i, int j) {
+        boolean tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(byte[] array, int i, int j) {
+        byte tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(char[] array, int i, int j) {
+        char tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(int[] array, int i, int j) {
+        int tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(long[] array, int i, int j) {
+        long tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(float[] array, int i, int j) {
+        float tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static <T> void swap(double[] array, int i, int j) {
+        double tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    public static int getIndexOf(boolean[] array, boolean target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(boolean[] array, boolean target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(byte[] array, byte target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(byte[] array, byte target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(char[] array, char target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(char[] array, char target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(int[] array, int target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(int[] array, int target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(float[] array, float target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(float[] array, float target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(double[] array, double target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(double[] array, double target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(long[] array, long target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static int getIndexOf(long[] array, long target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (target == array[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(T[] array, T target) {
+        return getIndexOf(array, target, 0);
+    }
+
+    public static <T> int getIndexOf(T[] array, T target, int startIndex) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (equals(target, array[i])) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
+    public static <T> int getIndexOf(Iterable<T> iterable, T target) {
+        return getIndexOf(iterable, target, 0);
+    }
+
+    public static <T> int getIndexOf(Iterable<T> iterable, T target, int startIndex) {
+        if (iterable == null) {
+            return -1;
+        }
+
+        if (iterable instanceof Collection) {
+            return getIndexOf((Collection<T>) iterable, target, startIndex);
+        }
+
+        int index = 0;
+        for (T t : iterable) {
+            if (index < startIndex) {
+                continue;
+            }
+            if (equals(target, t)) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(Collection<T> collection, T target) {
+        return getIndexOf(collection, target, 0);
+    }
+
+    public static <T> int getIndexOf(Collection<T> collection, T target, int startIndex) {
+        if (isOutOfIndex(collection, startIndex)) {
+            return -1;
+        }
+
+        if (collection instanceof List) {
+            return getIndexOf((List<T>) collection, target, startIndex);
+        }
+
+        int index = 0;
+        for (T t : collection) {
+            if (index < startIndex) {
+                continue;
+            }
+            if (equals(target, t)) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
+    }
+
+    public static <T> int getIndexOf(List<T> list, T target) {
+        return getIndexOf(list, target, 0);
+    }
+
+    public static <T> int getIndexOf(List<T> list, T target, int startIndex) {
+        if (isOutOfIndex(list, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = list.size(); i < size; i++) {
+            if (equals(target, list.get(i))) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int getIndexOf(boolean[] array, Matcher<Boolean> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(boolean[] array, int startIndex, Matcher<Boolean> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(byte[] array, Matcher<Byte> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(byte[] array, int startIndex, Matcher<Byte> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(char[] array, Matcher<Character> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(char[] array, int startIndex, Matcher<Character> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(int[] array, Matcher<Integer> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(int[] array, int startIndex, Matcher<Integer> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(long[] array, Matcher<Long> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(long[] array, int startIndex, Matcher<Long> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(float[] array, Matcher<Float> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(float[] array, int startIndex, Matcher<Float> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static int getIndexOf(double[] array, Matcher<Double> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static int getIndexOf(double[] array, int startIndex, Matcher<Double> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static <T> int getIndexOf(T[] array, Matcher<T> matcher) {
+        return getIndexOf(array, 0, matcher);
+    }
+
+    public static <T> int getIndexOf(T[] array, int startIndex, Matcher<T> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = 0, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static <T> int getIndexOf(Iterable<T> iterable, Matcher<T> matcher) {
+        return getIndexOf(iterable, 0, matcher);
+    }
+
+    public static <T> int getIndexOf(Iterable<T> iterable, int startIndex, Matcher<T> matcher) {
+        if (iterable == null) {
+            return -1;
+        }
+        if (iterable instanceof Collection) {
+            return getIndexOf((Collection) iterable, startIndex, matcher);
+        }
+        int index = 0;
+        for (T t : iterable) {
+            if (index < startIndex) {
+                continue;
+            }
+            if (matcher.isMatch(t)) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+
+    public static <T> int getIndexOf(Collection<T> collection, Matcher<T> matcher) {
+        return getIndexOf(collection, 0, matcher);
+    }
+
+    public static <T> int getIndexOf(Collection<T> collection, int startIndex, Matcher<T> matcher) {
+        if (isOutOfIndex(collection, startIndex)) {
+            return -1;
+        }
+        if (collection instanceof List) {
+            return getIndexOf((List) collection, startIndex, matcher);
+        }
+        int index = -1;
+        for (T t : collection) {
+            index++;
+            if (index < startIndex) {
+                continue;
+            }
+            if (matcher.isMatch(t)) {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    public static <T> int getIndexOf(List<T> list, Matcher<T> matcher) {
+        return getIndexOf(list, 0, matcher);
+    }
+
+    public static <T> int getIndexOf(List<T> list, int startIndex, Matcher<T> matcher) {
+        if (isOutOfIndex(list, startIndex)) {
+            return -1;
+        }
+        for (int i = startIndex, size = list.size(); i < size; i++) {
+            if (matcher.isMatch(list.get(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static <V> int getIndexOf(boolean[] array, V target, Matcher2<Boolean, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(boolean[] array, int startIndex, V target, Matcher2<Boolean, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(byte[] array, V target, Matcher2<Byte, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(byte[] array, int startIndex, V target, Matcher2<Byte, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(char[] array, V target, Matcher2<Character, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(char[] array, int startIndex, V target, Matcher2<Character, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(int[] array, V target, Matcher2<Integer, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(int[] array, int startIndex, V target, Matcher2<Integer, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(long[] array, V target, Matcher2<Long, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(long[] array, int startIndex, V target, Matcher2<Long, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(float[] array, V target, Matcher2<Float, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(float[] array, int startIndex, V target, Matcher2<Float, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <V> int getIndexOf(double[] array, V target, Matcher2<Double, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <V> int getIndexOf(double[] array, int startIndex, V target, Matcher2<Double, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T, V> int getIndexOf(T[] array, V target, Matcher2<T, V> matcher) {
+        return getIndexOf(array, 0, target, matcher);
+    }
+
+    public static <T, V> int getIndexOf(T[] array, int startIndex, V target, Matcher2<T, V> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            if (matcher.isMatch(array[i], target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static <T, V> int getIndexOf(Iterable<T> iterable, V target, Matcher2<T, V> matcher) {
+        return getIndexOf(iterable, 0, target, matcher);
+    }
+
+    public static <T, V> int getIndexOf(Iterable<T> iterable, int startIndex, V target, Matcher2<T, V> matcher) {
+        if (iterable == null) {
+            return -1;
+        }
+        if (iterable instanceof Collection) {
+            return getIndexOf((Collection<T>) iterable, startIndex, target, matcher);
+        }
+
+        int index = 0;
+        for (T t : iterable) {
+            if (index < startIndex) {
+                continue;
+            }
+            if (matcher.isMatch(t, target)) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
+    }
+
+    public static <T, V> int getIndexOf(Collection<T> collection, V target, Matcher2<T, V> matcher) {
+        return getIndexOf(collection, 0, target, matcher);
+    }
+
+    public static <T, V> int getIndexOf(Collection<T> collection, int startIndex, V target, Matcher2<T, V> matcher) {
+        if (isOutOfIndex(collection, startIndex)) {
+            return -1;
+        }
+        if (collection instanceof List) {
+            return getIndexOf((List<T>) collection, startIndex, target, matcher);
+        }
+
+        int index = 0;
+        for (T t : collection) {
+            if (index < startIndex) {
+                continue;
+            }
+            if (matcher.isMatch(t, target)) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
+    }
+
+    public static <T, V> int getIndexOf(List<T> list, V target, Matcher2<T, V> matcher) {
+        return getIndexOf(list, 0, target, matcher);
+    }
+
+    public static <T, V> int getIndexOf(List<T> list, int startIndex, V target, Matcher2<T, V> matcher) {
+        if (isOutOfIndex(list, startIndex)) {
+            return -1;
+        }
+
+        for (int i = startIndex, size = list.size(); i < size; i++) {
+            if (matcher.isMatch(list.get(i), target)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+
+    public static <T> void move(List<T> items, int fromIndex, int toIndex) {
+        if (isOutOfIndex(items, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(items, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            for (int i = fromIndex; i > toIndex; i--) {
+                Collections.swap(items, i, i - 1);
+            }
+        } else {
+            for (int i = fromIndex; i < toIndex; i++) {
+                Collections.swap(items, i, i + 1);
+            }
+        }
+    }
+
+    public static <T> void move(T[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            T temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            T temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(boolean[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            boolean temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            boolean temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(byte[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            byte temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            byte temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(char[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            char temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            char temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(int[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            int temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            int temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(long[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            long temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            long temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(float[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            float temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            float temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void move(double[] array, int fromIndex, int toIndex) {
+        if (isOutOfIndex(array, fromIndex)) {
+            return;
+        }
+
+        if (isOutOfIndex(array, toIndex)) {
+            return;
+        }
+
+        if (fromIndex == toIndex) {
+            return;
+        }
+
+        if (fromIndex > toIndex) {
+            double temp = array[fromIndex];
+            System.arraycopy(array, toIndex, array, toIndex + 1, fromIndex - toIndex);
+            array[toIndex] = temp;
+        } else {
+            double temp = array[fromIndex];
+            System.arraycopy(array, fromIndex + 1, array, fromIndex, toIndex - fromIndex);
+            array[toIndex] = temp;
+        }
+    }
+
+    public static <T> void distinct(Iterable<T> iterable) {
+        distinct(iterable, false);
+    }
+
+    public static <T> void distinct(Iterable<T> collection, boolean keepNull) {
+        if (isEmpty(collection)) {
+            return;
+        }
+        HashSet<T> set = new HashSet<>();
+
+        Iterator<T> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (t == null && !keepNull) {
+                iterator.remove();
+            }
+            if (set.contains(t)) {
+                iterator.remove();
+                continue;
+            }
+            set.add(t);
+        }
+    }
+
+    public static <T, K> void distinct(Collection<T> collection, Extractor<T, K> extractor) {
+        distinct(collection, false, extractor);
+    }
+
+    public static <T, K> void distinct(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
+        if (isEmpty(collection)) {
+            return;
+        }
+        HashSet<K> set = new HashSet<>();
+
+        Iterator<T> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            K k = extractor.extract(t);
+            if (k == null && !keepNull) {
+                iterator.remove();
+            }
+            if (set.contains(k)) {
+                iterator.remove();
+                continue;
+            }
+            set.add(k);
+        }
+    }
+
+
+    public static <T> ArrayList<T> createDistinctList(Collection<T> collection) {
+        return createDistinctList(collection, false);
+    }
+
+    public static <T> ArrayList<T> createDistinctList(Collection<T> collection, boolean keepNull) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
+        }
+
+        HashSet<T> set = new HashSet<>();
+
+        for (T t : collection) {
+            if (t == null && !keepNull) {
+                continue;
+            }
+            if (set.contains(t)) {
+                continue;
+            }
+            set.add(t);
+            list.add(t);
+        }
+
+        return list;
+    }
+
+    public static <T, K> ArrayList<T> createDistinctList(Collection<T> collection, Extractor<T, K> extractor) {
+        return createDistinctList(collection, false, extractor);
+    }
+
+    public static <T, K> ArrayList<T> createDistinctList(Collection<T> collection, boolean keepNull, Extractor<T, K> extractor) {
+        ArrayList<T> list = new ArrayList<>();
+        if (isEmpty(collection)) {
+            return list;
+        }
+
+        HashSet<K> set = new HashSet<>();
+
+        for (T t : collection) {
+            K key = extractor.extract(t);
+            if (key == null && !keepNull) {
+                continue;
+            }
+
+            if (set.contains(key)) {
+                continue;
+            }
+
+            set.add(key);
+            list.add(t);
+        }
+        set.clear();
+        return list;
     }
 
     public static <T> ArrayList<T> merge(Collection<T>... collections) {
@@ -850,10 +1793,10 @@ public class CollectionUtil {
         if (isEmpty(list)) {
             return;
         }
-
-        for (int index = 0, size = list.size(); index < size; index++) {
-            T t = list.get(index);
+        int index = 0;
+        for (T t : list) {
             processor.process(index, t);
+            index++;
         }
     }
 
@@ -948,20 +1891,17 @@ public class CollectionUtil {
         }
     }
 
-    public static <T, K> T find(Collection<T> collection, K key, Matcher2<T, K> matcher) {
+    public static <T, K> T find(Iterable<T> collection, K key, Matcher2<T, K> matcher) {
         return find(collection, 0, key, matcher);
     }
 
-    public static <T, K> T find(Collection<T> collection, int startIndex, K key, Matcher2<T, K> matcher) {
-        if (isEmpty(collection)) {
-            return null;
-        }
-        if (isOutOfIndex(collection, startIndex)) {
+    public static <T, K> T find(Iterable<T> iterable, int startIndex, K key, Matcher2<T, K> matcher) {
+        if (isOutOfIndex(iterable, startIndex)) {
             return null;
         }
 
-        if (collection instanceof List) {
-            List<T> list = (List<T>) collection;
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
             for (int i = startIndex, size = list.size(); i < size; i++) {
                 T t = list.get(i);
                 if (matcher.isMatch(t, key)) {
@@ -970,7 +1910,7 @@ public class CollectionUtil {
             }
         } else {
             int index = -1;
-            for (T t : collection) {
+            for (T t : iterable) {
                 index++;
                 if (index < startIndex) {
                     continue;
@@ -978,6 +1918,25 @@ public class CollectionUtil {
                 if (matcher.isMatch(t, key)) {
                     return t;
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public static <T, K> T find(T[] array, K key, Matcher2<T, K> matcher) {
+        return find(array, 0, key, matcher);
+    }
+
+    public static <T, K> T find(T[] array, int startIndex, K key, Matcher2<T, K> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return null;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T t = array[i];
+            if (matcher.isMatch(t, key)) {
+                return t;
             }
         }
 
@@ -1201,6 +2160,25 @@ public class CollectionUtil {
         }
     }
 
+    public static <T> T[] concat(T[]... arrays) {
+        Class<T> cls = (Class<T>) arrays[0][0].getClass();
+        if (isEmpty(arrays)) {
+            return null;
+        }
+
+        for (T[] array : arrays) {
+            if (isEmpty(array)) {
+                continue;
+            }
+            for (T t : array) {
+                if (t != null) {
+
+                }
+            }
+        }
+        return concat(cls, arrays);
+    }
+
     public static <T> T[] concat(Class<T> cls, T[]... arrays) {
         int size = getSize(arrays);
         if (size == 0) {
@@ -1265,12 +2243,27 @@ public class CollectionUtil {
         return false;
     }
 
-    public static <T> List<T> toList(T[] array) {
+    public static <T> List<T> toList(T... array) {
         if (isEmpty(array)) {
             return new ArrayList<>();
         }
 
         return Arrays.asList(array);
+    }
+
+    public static <T> T[] toArray(T... array) {
+        return array;
+    }
+
+    public static <T> T[] toArray(List<T> list) {
+
+        CollectionUtil.<T>filter(list, new Filter<T>() {
+            @Override
+            public boolean isSelected(T t) {
+                return false;
+            }
+        });
+        return toArray(list, (Class<T>) list.get(0).getClass());
     }
 
     public static <T> T[] toArray(List<T> list, Class<T> cls) {
