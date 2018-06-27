@@ -220,14 +220,6 @@ public class CollectionUtil {
         return index < 0 || index >= getSize(iterable);
     }
 
-    public static boolean isOutOfIndex(Collection<?> collection, int index) {
-        return index < 0 || index >= getSize(collection);
-    }
-
-    public static boolean isOutOfIndex(List<?> list, int index) {
-        return index < 0 || index >= getSize(list);
-    }
-
     public static <T> boolean isOutOfIndex(T[] array, int index) {
         return index < 0 || index >= getSize(array);
     }
@@ -365,7 +357,7 @@ public class CollectionUtil {
         return map == null ? null : map.get(key);
     }
 
-    private static <T> boolean equals(T t1, T t2) {
+    public static <T> boolean equals(T t1, T t2) {
         if (t1 == t2) {
             return true;
         }
@@ -807,63 +799,23 @@ public class CollectionUtil {
             return -1;
         }
 
-        if (iterable instanceof Collection) {
-            return getIndexOf((Collection<T>) iterable, target, startIndex);
-        }
-
-        int index = 0;
-        for (T t : iterable) {
-            if (index < startIndex) {
-                continue;
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                if (equals(target, list.get(i))) {
+                    return i;
+                }
             }
-            if (equals(target, t)) {
-                return index;
-            }
-            index++;
-        }
-
-        return -1;
-    }
-
-    public static <T> int getIndexOf(Collection<T> collection, T target) {
-        return getIndexOf(collection, target, 0);
-    }
-
-    public static <T> int getIndexOf(Collection<T> collection, T target, int startIndex) {
-        if (isOutOfIndex(collection, startIndex)) {
-            return -1;
-        }
-
-        if (collection instanceof List) {
-            return getIndexOf((List<T>) collection, target, startIndex);
-        }
-
-        int index = 0;
-        for (T t : collection) {
-            if (index < startIndex) {
-                continue;
-            }
-            if (equals(target, t)) {
-                return index;
-            }
-            index++;
-        }
-
-        return -1;
-    }
-
-    public static <T> int getIndexOf(List<T> list, T target) {
-        return getIndexOf(list, target, 0);
-    }
-
-    public static <T> int getIndexOf(List<T> list, T target, int startIndex) {
-        if (isOutOfIndex(list, startIndex)) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = list.size(); i < size; i++) {
-            if (equals(target, list.get(i))) {
-                return i;
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (equals(target, t)) {
+                    return index;
+                }
             }
         }
 
@@ -1011,62 +963,29 @@ public class CollectionUtil {
     }
 
     public static <T> int getIndexOf(Iterable<T> iterable, int startIndex, Matcher<T> matcher) {
-        if (iterable == null) {
+        if (isOutOfIndex(iterable, startIndex)) {
             return -1;
         }
-        if (iterable instanceof Collection) {
-            return getIndexOf((Collection) iterable, startIndex, matcher);
-        }
-        int index = 0;
-        for (T t : iterable) {
-            if (index < startIndex) {
-                continue;
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                if (matcher.isMatch(list.get(i))) {
+                    return i;
+                }
             }
-            if (matcher.isMatch(t)) {
-                return index;
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t)) {
+                    return index;
+                }
             }
-            index++;
         }
-        return -1;
-    }
 
-    public static <T> int getIndexOf(Collection<T> collection, Matcher<T> matcher) {
-        return getIndexOf(collection, 0, matcher);
-    }
-
-    public static <T> int getIndexOf(Collection<T> collection, int startIndex, Matcher<T> matcher) {
-        if (isOutOfIndex(collection, startIndex)) {
-            return -1;
-        }
-        if (collection instanceof List) {
-            return getIndexOf((List) collection, startIndex, matcher);
-        }
-        int index = -1;
-        for (T t : collection) {
-            index++;
-            if (index < startIndex) {
-                continue;
-            }
-            if (matcher.isMatch(t)) {
-                return index;
-            }
-        }
-        return -1;
-    }
-
-    public static <T> int getIndexOf(List<T> list, Matcher<T> matcher) {
-        return getIndexOf(list, 0, matcher);
-    }
-
-    public static <T> int getIndexOf(List<T> list, int startIndex, Matcher<T> matcher) {
-        if (isOutOfIndex(list, startIndex)) {
-            return -1;
-        }
-        for (int i = startIndex, size = list.size(); i < size; i++) {
-            if (matcher.isMatch(list.get(i))) {
-                return i;
-            }
-        }
         return -1;
     }
 
@@ -1219,78 +1138,312 @@ public class CollectionUtil {
     }
 
     public static <T, V> int getIndexOf(Iterable<T> iterable, int startIndex, V target, Matcher2<T, V> matcher) {
-        if (iterable == null) {
+        if (isOutOfIndex(iterable, startIndex)) {
             return -1;
         }
-        if (iterable instanceof Collection) {
-            return getIndexOf((Collection<T>) iterable, startIndex, target, matcher);
+
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int index = startIndex, size = list.size(); index < size; index++) {
+                if (matcher.isMatch(list.get(index), target)) {
+                    return index;
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t, target)) {
+                    return index;
+                }
+            }
         }
 
-        int index = 0;
-        for (T t : iterable) {
-            if (index < startIndex) {
+        return -1;
+    }
+
+    public static <T> T find(T[] array, Matcher<T> matcher) {
+        return find(array, 0, matcher);
+    }
+
+    public static <T> T find(T[] array, int startIndex, Matcher<T> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return null;
+        }
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T t = array[i];
+            if (matcher.isMatch(t)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public static <T> T find(Iterable<T> iterable, Matcher<T> matcher) {
+        return find(iterable, 0, matcher);
+    }
+
+    public static <T> T find(Iterable<T> iterable, int startIndex, Matcher<T> matcher) {
+        if (isOutOfIndex(iterable, startIndex)) {
+            return null;
+        }
+
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                T t = list.get(i);
+                if (matcher.isMatch(t)) {
+                    return t;
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t)) {
+                    return t;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static <T, K> T find(Iterable<T> iterable, K key, Matcher2<T, K> matcher) {
+        return find(iterable, 0, key, matcher);
+    }
+
+    public static <T, K> T find(Iterable<T> iterable, int startIndex, K key, Matcher2<T, K> matcher) {
+        if (isOutOfIndex(iterable, startIndex)) {
+            return null;
+        }
+
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                T t = list.get(i);
+                if (matcher.isMatch(t, key)) {
+                    return t;
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t, key)) {
+                    return t;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static <T, K> T find(T[] array, K key, Matcher2<T, K> matcher) {
+        return find(array, 0, key, matcher);
+    }
+
+    public static <T, K> T find(T[] array, int startIndex, K key, Matcher2<T, K> matcher) {
+        if (isOutOfIndex(array, startIndex)) {
+            return null;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T t = array[i];
+            if (matcher.isMatch(t, key)) {
+                return t;
+            }
+        }
+
+        return null;
+    }
+
+    public static <T> SearchResult<T> find(T[][] array2, Matcher<T> matcher) {
+        return find(array2, 0, 0, matcher);
+    }
+
+    public static <T> SearchResult<T> find(T[][] array2, int startIndex0, int startIndex1, Matcher<T> matcher) {
+        if (isOutOfIndex(array2, startIndex0)) {
+            return null;
+        }
+        for (int index0 = startIndex0, size0 = array2.length; index0 < size0; index0++) {
+            T[] array = array2[index0];
+            if (isOutOfIndex(array, startIndex1)) {
                 continue;
             }
-            if (matcher.isMatch(t, target)) {
-                return index;
+            for (int index1 = startIndex1, size1 = array.length; index1 < size1; index1++) {
+                T t = array[index1];
+                if (matcher.isMatch(t)) {
+                    return new SearchResult<>(t, index0, index1);
+                }
             }
-            index++;
         }
-
-        return -1;
+        return null;
     }
 
-    public static <T, V> int getIndexOf(Collection<T> collection, V target, Matcher2<T, V> matcher) {
-        return getIndexOf(collection, 0, target, matcher);
+    public static <T, K> SearchResult<T> find(T[][] array2, K key, Matcher2<T, K> matcher) {
+        return find(array2, 0, 0, key, matcher);
     }
 
-    public static <T, V> int getIndexOf(Collection<T> collection, int startIndex, V target, Matcher2<T, V> matcher) {
-        if (isOutOfIndex(collection, startIndex)) {
-            return -1;
+    public static <T, K> SearchResult<T> find(T[][] array2, int startIndex0, int startIndex1, K key, Matcher2<T, K> matcher) {
+        if (isOutOfIndex(array2, startIndex0)) {
+            return null;
         }
-        if (collection instanceof List) {
-            return getIndexOf((List<T>) collection, startIndex, target, matcher);
-        }
-
-        int index = 0;
-        for (T t : collection) {
-            if (index < startIndex) {
+        for (int index0 = startIndex0, size0 = array2.length; index0 < size0; index0++) {
+            T[] array = array2[index0];
+            if (isOutOfIndex(array, startIndex1)) {
                 continue;
             }
-            if (matcher.isMatch(t, target)) {
-                return index;
-            }
-            index++;
-        }
-
-        return -1;
-    }
-
-    public static <T, V> int getIndexOf(List<T> list, V target, Matcher2<T, V> matcher) {
-        return getIndexOf(list, 0, target, matcher);
-    }
-
-    public static <T, V> int getIndexOf(List<T> list, int startIndex, V target, Matcher2<T, V> matcher) {
-        if (isOutOfIndex(list, startIndex)) {
-            return -1;
-        }
-
-        for (int i = startIndex, size = list.size(); i < size; i++) {
-            if (matcher.isMatch(list.get(i), target)) {
-                return i;
+            for (int index1 = startIndex1, size1 = array.length; index1 < size1; index1++) {
+                T t = array[index1];
+                if (matcher.isMatch(t, key)) {
+                    return new SearchResult<>(t, index0, index1);
+                }
             }
         }
-
-        return -1;
+        return null;
     }
 
+    public static <T> ArrayList<T> findAll(T[] array, Matcher<T> matcher) {
+        return findAll(array, 0, matcher);
+    }
 
-    public static <T> void move(List<T> items, int fromIndex, int toIndex) {
-        if (isOutOfIndex(items, fromIndex)) {
+    public static <T> ArrayList<T> findAll(T[] array, int startIndex, Matcher<T> matcher) {
+        ArrayList<T> result = new ArrayList<>();
+
+        if (isOutOfIndex(array, startIndex)) {
+            return result;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T t = array[i];
+            if (matcher.isMatch(t)) {
+                result.add(t);
+            }
+        }
+
+        return result;
+    }
+
+    public static <T> ArrayList<T> findAll(Iterable<T> iterable, Matcher<T> matcher) {
+        return findAll(iterable, 0, matcher);
+    }
+
+    public static <T> ArrayList<T> findAll(Iterable<T> iterable, int startIndex, Matcher<T> matcher) {
+        ArrayList<T> result = new ArrayList<>();
+
+        if (isOutOfIndex(iterable, startIndex)) {
+            return result;
+        }
+
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                T t = list.get(i);
+                if (matcher.isMatch(t)) {
+                    result.add(t);
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t)) {
+                    result.add(t);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static <T, K> ArrayList<T> findAll(T[] array, K key, Matcher2<T, K> matcher) {
+        return findAll(array, 0, key, matcher);
+    }
+
+    public static <T, K> ArrayList<T> findAll(T[] array, int startIndex, K key, Matcher2<T, K> matcher) {
+        ArrayList<T> result = new ArrayList<>();
+
+        if (isOutOfIndex(array, startIndex)) {
+            return result;
+        }
+
+        for (int i = startIndex, size = array.length; i < size; i++) {
+            T t = array[i];
+            if (matcher.isMatch(t, key)) {
+                result.add(t);
+            }
+        }
+
+        return result;
+    }
+
+    public static <T, K> ArrayList<T> findAll(Iterable<T> iterable, K key, Matcher2<T, K> matcher) {
+        return findAll(iterable, 0, key, matcher);
+    }
+
+    public static <T, K> ArrayList<T> findAll(Iterable<T> iterable, int startIndex, K key, Matcher2<T, K> matcher) {
+        ArrayList<T> result = new ArrayList<>();
+
+        if (isOutOfIndex(iterable, startIndex)) {
+            return result;
+        }
+
+        if (iterable instanceof List && iterable instanceof RandomAccess) {
+            List<T> list = (List<T>) iterable;
+            for (int i = startIndex, size = list.size(); i < size; i++) {
+                T t = list.get(i);
+                if (matcher.isMatch(t, key)) {
+                    result.add(t);
+                }
+            }
+        } else {
+            int index = -1;
+            for (T t : iterable) {
+                index++;
+                if (index < startIndex) {
+                    continue;
+                }
+                if (matcher.isMatch(t, key)) {
+                    result.add(t);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static <T> void filter(Iterable<T> iterable, Matcher<T> matcher) {
+        if (isEmpty(iterable)) {
+            return;
+        }
+        Iterator<T> iterator = iterable.iterator();
+        while (iterator.hasNext()) {
+            T t = iterator.next();
+            if (!matcher.isMatch(t)) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public static <T> void move(List<T> list, int fromIndex, int toIndex) {
+        if (isOutOfIndex(list, fromIndex)) {
             return;
         }
 
-        if (isOutOfIndex(items, toIndex)) {
+        if (isOutOfIndex(list, toIndex)) {
             return;
         }
 
@@ -1300,11 +1453,11 @@ public class CollectionUtil {
 
         if (fromIndex > toIndex) {
             for (int i = fromIndex; i > toIndex; i--) {
-                Collections.swap(items, i, i - 1);
+                Collections.swap(list, i, i - 1);
             }
         } else {
             for (int i = fromIndex; i < toIndex; i++) {
-                Collections.swap(items, i, i + 1);
+                Collections.swap(list, i, i + 1);
             }
         }
     }
@@ -1793,10 +1946,10 @@ public class CollectionUtil {
         if (isEmpty(list)) {
             return;
         }
-        int index = 0;
+        int index = -1;
         for (T t : list) {
-            processor.process(index, t);
             index++;
+            processor.process(index, t);
         }
     }
 
@@ -1841,119 +1994,6 @@ public class CollectionUtil {
             }
 
             list.add(key);
-        }
-
-        return list;
-    }
-
-    public static <T> ArrayList<T> selectList(Collection<T> collection, Filter<T> filter) {
-        ArrayList<T> list = new ArrayList<>();
-
-        if (isEmpty(collection)) {
-            return list;
-        }
-
-        for (T t : collection) {
-            if (filter.isSelected(t)) {
-                list.add(t);
-            }
-        }
-
-        return list;
-    }
-
-    public static <T> HashSet<T> selectSet(Collection<T> collection, Filter<T> filter) {
-        HashSet<T> set = new HashSet<>();
-
-        if (isEmpty(collection)) {
-            return set;
-        }
-
-        for (T t : collection) {
-            if (filter.isSelected(t)) {
-                set.add(t);
-            }
-        }
-
-        return set;
-    }
-
-    public static <T> void filter(Collection<T> collection, Filter<T> filter) {
-        if (isEmpty(collection)) {
-            return;
-        }
-        Iterator<T> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            T t = iterator.next();
-            if (!filter.isSelected(t)) {
-                iterator.remove();
-            }
-        }
-    }
-
-    public static <T, K> T find(Iterable<T> collection, K key, Matcher2<T, K> matcher) {
-        return find(collection, 0, key, matcher);
-    }
-
-    public static <T, K> T find(Iterable<T> iterable, int startIndex, K key, Matcher2<T, K> matcher) {
-        if (isOutOfIndex(iterable, startIndex)) {
-            return null;
-        }
-
-        if (iterable instanceof List && iterable instanceof RandomAccess) {
-            List<T> list = (List<T>) iterable;
-            for (int i = startIndex, size = list.size(); i < size; i++) {
-                T t = list.get(i);
-                if (matcher.isMatch(t, key)) {
-                    return t;
-                }
-            }
-        } else {
-            int index = -1;
-            for (T t : iterable) {
-                index++;
-                if (index < startIndex) {
-                    continue;
-                }
-                if (matcher.isMatch(t, key)) {
-                    return t;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static <T, K> T find(T[] array, K key, Matcher2<T, K> matcher) {
-        return find(array, 0, key, matcher);
-    }
-
-    public static <T, K> T find(T[] array, int startIndex, K key, Matcher2<T, K> matcher) {
-        if (isOutOfIndex(array, startIndex)) {
-            return null;
-        }
-
-        for (int i = startIndex, size = array.length; i < size; i++) {
-            T t = array[i];
-            if (matcher.isMatch(t, key)) {
-                return t;
-            }
-        }
-
-        return null;
-    }
-
-    public static <T, K> List<T> findAll(Collection<T> collection, K key, Matcher2<T, K> matcher) {
-        List<T> list = new ArrayList<>();
-
-        if (isEmpty(collection)) {
-            return list;
-        }
-
-        for (T t : collection) {
-            if (matcher.isMatch(t, key)) {
-                list.add(t);
-            }
         }
 
         return list;
@@ -2161,21 +2201,18 @@ public class CollectionUtil {
     }
 
     public static <T> T[] concat(T[]... arrays) {
-        Class<T> cls = (Class<T>) arrays[0][0].getClass();
-        if (isEmpty(arrays)) {
+        SearchResult<T> result = find(arrays, new Matcher<T>() {
+            @Override
+            public boolean isMatch(T t) {
+                return t != null;
+            }
+        });
+
+        if (result == null) {
             return null;
         }
+        Class<T> cls = (Class<T>) result.getResult().getClass();
 
-        for (T[] array : arrays) {
-            if (isEmpty(array)) {
-                continue;
-            }
-            for (T t : array) {
-                if (t != null) {
-
-                }
-            }
-        }
         return concat(cls, arrays);
     }
 
@@ -2243,7 +2280,7 @@ public class CollectionUtil {
         return false;
     }
 
-    public static <T> List<T> toList(T... array) {
+    public static <T> List<T> listOf(T... array) {
         if (isEmpty(array)) {
             return new ArrayList<>();
         }
@@ -2251,27 +2288,44 @@ public class CollectionUtil {
         return Arrays.asList(array);
     }
 
-    public static <T> T[] toArray(T... array) {
+    public static <T> T[] arrayOf(T... array) {
         return array;
     }
 
-    public static <T> T[] toArray(List<T> list) {
-
-        CollectionUtil.<T>filter(list, new Filter<T>() {
-            @Override
-            public boolean isSelected(T t) {
-                return false;
-            }
-        });
-        return toArray(list, (Class<T>) list.get(0).getClass());
+    public static <T> List<T> toList(T[] array) {
+        return array == null ? new ArrayList<T>() : Arrays.asList(array);
     }
 
-    public static <T> T[] toArray(List<T> list, Class<T> cls) {
-        int size = getSize(list);
+    public static <T> T[] toArray(Iterable<T> iterable) {
+        T t = find(iterable, new Matcher<T>() {
+            @Override
+            public boolean isMatch(T t) {
+                return t != null;
+            }
+        });
+        if (t == null) {
+            return null;
+        }
+        return toArray(iterable, (Class<T>) t.getClass());
+    }
+
+    public static <T> T[] toArray(Iterable<T> iterable, Class<T> cls) {
+        int size = getSize(iterable);
         T[] array = (T[]) Array.newInstance(cls, size);
         if (size == 0) {
             return array;
         }
-        return list.toArray(array);
+
+        if (iterable instanceof List) {
+            return ((List<T>) iterable).toArray(array);
+        }
+
+        int index = -1;
+        for (T t : iterable) {
+            index++;
+            array[index] = t;
+        }
+
+        return array;
     }
 }
