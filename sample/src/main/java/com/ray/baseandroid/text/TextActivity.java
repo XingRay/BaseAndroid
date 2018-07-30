@@ -12,8 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Author      : leixing
- * Date        : 2017-08-07
+ * @author      : leixing
+ * @date        : 2017-08-07
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

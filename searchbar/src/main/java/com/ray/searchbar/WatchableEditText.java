@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 
 /**
- * Author      : leixing
- * Date        : 2017-08-01
+ * @author      : leixing
+ * @date        : 2017-08-01
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

@@ -7,8 +7,8 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-26
+ * @author      : leixing
+ * @date        : 2017-04-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

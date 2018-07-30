@@ -1,15 +1,15 @@
-package com.ray.lib.android.base.page.mvp;
+package com.ray.lib.android.base.page;
 
 /**
- * Author      : leixing
- * Date        : 2017-05-26
+ * @author : leixing
+ * @date : 2017-05-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : interface of view life cycle
  */
 
-public interface IViewLifeCycle {
+public interface LifeCycleObserver {
     void onCreate();
 
     void onStart();

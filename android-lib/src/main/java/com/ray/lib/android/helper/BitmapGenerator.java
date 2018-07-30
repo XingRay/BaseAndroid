@@ -10,8 +10,8 @@ import android.text.TextPaint;
 import com.ray.lib.android.util.ViewUtil;
 
 /**
- * Author      : leixing
- * Date        : 2017-01-18
+ * @author      : leixing
+ * @date        : 2017-01-18
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

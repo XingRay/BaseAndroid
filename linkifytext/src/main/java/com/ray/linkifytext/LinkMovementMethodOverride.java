@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * Author      : leixing
- * Date        : 2017-08-09
+ * @author      : leixing
+ * @date        : 2017-08-09
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

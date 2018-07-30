@@ -1,8 +1,8 @@
 package com.ray.lib.android.detector.keyboard;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-27
+ * @author      : leixing
+ * @date        : 2017-04-27
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

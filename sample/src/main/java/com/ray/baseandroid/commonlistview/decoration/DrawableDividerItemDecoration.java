@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-06
+ * @author      : leixing
+ * @date        : 2017-04-06
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

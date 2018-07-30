@@ -9,19 +9,24 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 /**
- * Author      : leixing
- * Date        : 2017-04-14
+ * @author : leixing
+ * @date : 2017-04-14
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : activity的基类
  */
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements LifeCycleProvider {
 
     protected Activity mActivity;
     protected Context mContext;
+
+    private List<LifeCycleObserver> mLifeCycleObservers;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,13 +41,73 @@ public abstract class BaseActivity extends FragmentActivity {
         initVariables();
         initView();
         loadData();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onCreate();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onStart();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onResume();
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onPause();
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onStop();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mLifeCycleObservers != null) {
+            for (LifeCycleObserver observer : mLifeCycleObservers) {
+                observer.onDestroy();
+            }
+        }
     }
 
     /**
      * 根据调用activity的intent所携带的参数，判断activity是否可以显示
      *
      * @param intent 启动activity的参数
-     *
      * @return activity是否可以显示
      */
     protected boolean isParamsValid(Intent intent) {
@@ -69,7 +134,6 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * @param id  资源id
      * @param <T> 控件的类型参数
-     *
      * @return 控件对象
      */
     @SuppressWarnings("unchecked")
@@ -85,5 +149,21 @@ public abstract class BaseActivity extends FragmentActivity {
 
     protected void showToast(CharSequence text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addLifeCycleObserver(LifeCycleObserver observer) {
+        if (mLifeCycleObservers == null) {
+            mLifeCycleObservers = new CopyOnWriteArrayList<>();
+        }
+        mLifeCycleObservers.add(observer);
+    }
+
+    @Override
+    public void removeLifeCycleObserver(LifeCycleObserver observer) {
+        if (mLifeCycleObservers == null) {
+            return;
+        }
+        mLifeCycleObservers.remove(observer);
     }
 }

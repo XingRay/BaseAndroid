@@ -10,8 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Author      : leixing
- * Date        : 2017/6/19 21:49
+ * @author      : leixing
+ * @date        : 2017/6/19 21:49
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

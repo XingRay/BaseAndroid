@@ -10,8 +10,8 @@ import com.ray.baseandroid.commonlistview.adapter.WrapRecyclerAdapter;
 
 
 /**
- * Author      : leixing
- * Date        : 2017-04-10
+ * @author      : leixing
+ * @date        : 2017-04-10
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

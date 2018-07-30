@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-26
+ * @author      : leixing
+ * @date        : 2017-04-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

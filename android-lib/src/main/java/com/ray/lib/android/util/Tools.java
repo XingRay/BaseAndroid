@@ -52,8 +52,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-26
+ * @author      : leixing
+ * @date        : 2017-04-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

@@ -1,12 +1,12 @@
 package com.ray.baseandroid.mvp;
 
-import com.ray.lib.android.base.page.mvp.BasePresenter;
-import com.ray.lib.android.manager.ThreadPool;
+import com.ray.lib.android.base.page.BasePresenter;
+import com.ray.lib.android.manager.TaskExecutor;
 import com.ray.lib.android.util.TraceUtil;
 
 /**
- * Author      : leixing
- * Date        : 2017-05-25
+ * @author : leixing
+ * @date : 2017-05-25
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
@@ -19,39 +19,9 @@ public class MVPTestPresenter extends BasePresenter<MVPTestContract.View> implem
     }
 
     @Override
-    protected void onCreate() {
-        TraceUtil.log();
-    }
-
-    @Override
-    protected void onStart() {
-        TraceUtil.log();
-    }
-
-    @Override
-    protected void onResume() {
-        TraceUtil.log();
-    }
-
-    @Override
-    protected void onPause() {
-        TraceUtil.log();
-    }
-
-    @Override
-    protected void onStop() {
-        TraceUtil.log();
-    }
-
-    @Override
-    protected void onDestroy() {
-        TraceUtil.log();
-    }
-
-    @Override
     public void loadData() {
         TraceUtil.log();
-        ThreadPool.getDefault().submit(new Runnable() {
+        TaskExecutor.io(new Runnable() {
             @Override
             public void run() {
                 try {

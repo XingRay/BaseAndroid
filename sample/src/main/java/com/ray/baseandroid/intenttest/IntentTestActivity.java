@@ -21,8 +21,8 @@ import butterknife.OnClick;
 import static com.ray.baseandroid.intenttest.IntentSearchActivity.RESULT_SEARCH;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-14
+ * @author      : leixing
+ * @date        : 2017-04-14
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

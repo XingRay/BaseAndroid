@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 
 
 /**
- * Author      : leixing
- * Date        : 2017-08-14
+ * @author      : leixing
+ * @date        : 2017-08-14
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

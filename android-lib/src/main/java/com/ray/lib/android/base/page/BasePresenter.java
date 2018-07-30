@@ -1,4 +1,4 @@
-package com.ray.lib.android.base.page.mvp;
+package com.ray.lib.android.base.page;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
- * Author      : leixing
- * Date        : 2017-04-14
+ * @author : leixing
+ * @date : 2017-04-14
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
@@ -33,9 +33,49 @@ public abstract class BasePresenter<VIEW> {
     public BasePresenter(VIEW view) {
         setView(view);
         mUIHandler = new Handler(Looper.getMainLooper());
-        if (view instanceof IViewDelegatable) {
-            ((IViewDelegatable) view).setViewDelegate(new ViewDelegate(this));
+
+        if (view instanceof LifeCycleProvider) {
+            addLifeCycleObserver((LifeCycleProvider) view);
         }
+
+    }
+
+    private void addLifeCycleObserver(final LifeCycleProvider lifeCycleProvider) {
+        lifeCycleProvider.addLifeCycleObserver(new LifeCycleObserver() {
+            @Override
+            public void onCreate() {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onResume() {
+
+            }
+
+            @Override
+            public void onPause() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onDestroy() {
+                destroyed = true;
+                if (!keepActivityAlways()) {
+                    activity = null;
+                }
+                lifeCycleProvider.removeLifeCycleObserver(this);
+            }
+        });
     }
 
     /**
@@ -88,7 +128,8 @@ public abstract class BasePresenter<VIEW> {
      *                             为{@code true}时，当视图销毁后（activity、fragment调用onDestroy），命令将被丢弃
      *                             为{@code false}时，不论视图是否销毁，都将在UI线程运行命令
      */
-    final protected void runOnUiThread(Runnable command, boolean justRunWhenViewValid) {
+    @SuppressWarnings("WeakerAccess")
+    final protected void runOnUiThread(Runnable command, @SuppressWarnings("SameParameterValue") boolean justRunWhenViewValid) {
         if (justRunWhenViewValid && !isViewValid()) {
             return;
         }
@@ -130,40 +171,6 @@ public abstract class BasePresenter<VIEW> {
         proxyView = (VIEW) Proxy.newProxyInstance(this.getClass().getClassLoader(), targetView.getClass().getInterfaces(), proxyViewHandler);
     }
 
-    protected void onCreate() {
-
-    }
-
-    protected void onStart() {
-
-    }
-
-    protected void onResume() {
-
-    }
-
-    protected void onPause() {
-
-    }
-
-    protected void onStop() {
-
-    }
-
-    protected void onDestroy() {
-
-    }
-
-    void onDestroyView() {
-        destroyed = true;
-    }
-
-    void unbindView() {
-        if (!keepActivityAlways()) {
-            activity = null;
-        }
-    }
-
     /**
      * 代理视图对象的方法调用处理器
      */
@@ -191,47 +198,6 @@ public abstract class BasePresenter<VIEW> {
                 }
             }
             return null;
-        }
-    }
-
-    private static class ViewDelegate implements IViewLifeCycle {
-
-        private final BasePresenter mPresenter;
-
-        private ViewDelegate(BasePresenter presenter) {
-            mPresenter = presenter;
-        }
-
-        @Override
-        public void onCreate() {
-            mPresenter.onCreate();
-        }
-
-        @Override
-        public void onStart() {
-            mPresenter.onStart();
-        }
-
-        @Override
-        public void onResume() {
-            mPresenter.onResume();
-        }
-
-        @Override
-        public void onPause() {
-            mPresenter.onPause();
-        }
-
-        @Override
-        public void onStop() {
-            mPresenter.onStop();
-        }
-
-        @Override
-        public void onDestroy() {
-            mPresenter.onDestroy();
-            mPresenter.onDestroyView();
-            mPresenter.unbindView();
         }
     }
 }

@@ -9,8 +9,8 @@ import com.ray.lib.android.util.TraceUtil;
 import com.ray.lib.java.util.RandomUtil;
 
 /**
- * Author      : leixing
- * Date        : 2017-06-02
+ * @author      : leixing
+ * @date        : 2017-06-02
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

@@ -3,7 +3,8 @@ package com.ray.baseandroid.mvp;
 import android.widget.TextView;
 
 import com.ray.baseandroid.R;
-import com.ray.lib.android.base.page.mvp.BaseMvpActivity;
+import com.ray.lib.android.base.page.BaseActivity;
+import com.ray.lib.android.base.page.LifeCycleObserver;
 import com.ray.lib.android.util.TraceUtil;
 
 import butterknife.BindView;
@@ -11,26 +12,55 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Author      : leixing
- * Date        : 2017-05-25
+ * @author : leixing
+ * @date : 2017-05-25
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx
  */
 
-public class MVPTestActivity extends BaseMvpActivity<MVPTestContract.Presenter> implements MVPTestContract.View {
+public class MVPTestActivity extends BaseActivity implements MVPTestContract.View {
     @BindView(R.id.tv_content)
     TextView tvContent;
-
-    @Override
-    protected MVPTestContract.Presenter newPresenter() {
-        return new MVPTestPresenter(this);
-    }
+    private MVPTestPresenter mPresenter;
 
     @Override
     protected void initVariables() {
+        mPresenter = new MVPTestPresenter(this);
 
+        addLifeCycleObserver(new LifeCycleObserver() {
+            @Override
+            public void onCreate() {
+                TraceUtil.log();
+            }
+
+            @Override
+            public void onStart() {
+                TraceUtil.log();
+            }
+
+            @Override
+            public void onResume() {
+                TraceUtil.log();
+            }
+
+            @Override
+            public void onPause() {
+                TraceUtil.log();
+            }
+
+            @Override
+            public void onStop() {
+                TraceUtil.log();
+            }
+
+            @Override
+            public void onDestroy() {
+                TraceUtil.log();
+                removeLifeCycleObserver(this);
+            }
+        });
     }
 
     @Override

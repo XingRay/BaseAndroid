@@ -11,8 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Author      : leixing
- * Date        : 2017-07-21
+ * @author      : leixing
+ * @date        : 2017-07-21
  * Email       : leixing1012@gmail.com
  * Version     : 0.0.1
  * <p>

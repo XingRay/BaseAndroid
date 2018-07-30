@@ -8,8 +8,8 @@ import android.support.annotation.UiThread;
 import java.lang.ref.WeakReference;
 
 /**
- * Author      : leixing
- * Date        : 2017-08-16
+ * @author      : leixing
+ * @date        : 2017-08-16
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
