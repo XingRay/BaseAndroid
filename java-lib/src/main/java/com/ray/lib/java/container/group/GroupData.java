@@ -1,4 +1,4 @@
-package com.ray.lib.java.collection.group;
+package com.ray.lib.java.container.group;
 
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by leixing
  * on 2016-10-25.
- * Email : leixing1012@gmail.cn
+ * Email : leixing1012@qq.com
  */
 
 public abstract class GroupData<Tag, Item, Data extends GroupData.IData<Tag, Item>, Team extends ITeam<Tag, Item>> {

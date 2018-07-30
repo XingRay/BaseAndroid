@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by leixing
  * on 2016-11-04.
- * Email : leixing1012@gmail.cn
+ * Email : leixing1012@qq.com
  */
 
 public abstract class ItemEditableLinearLayout<Item> extends LinearLayout implements View.OnClickListener {

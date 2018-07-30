@@ -14,7 +14,7 @@ import java.lang.reflect.Proxy;
 /**
  * Author      : leixing
  * Date        : 2017-04-14
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : MVP架构的Presenter的基类，使用JDK的动态代理，代理视图对象的方法调用
@@ -89,7 +89,9 @@ public abstract class BasePresenter<VIEW> {
      *                             为{@code false}时，不论视图是否销毁，都将在UI线程运行命令
      */
     final protected void runOnUiThread(Runnable command, boolean justRunWhenViewValid) {
-        if (justRunWhenViewValid && !isViewValid()) return;
+        if (justRunWhenViewValid && !isViewValid()) {
+            return;
+        }
         mUIHandler.post(command);
     }
 

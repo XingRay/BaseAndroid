@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * Author      : leixing
  * Date        : 2016-12-29
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

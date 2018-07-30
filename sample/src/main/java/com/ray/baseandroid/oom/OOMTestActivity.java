@@ -12,7 +12,7 @@ import com.ray.lib.android.base.page.BaseActivity;
 /**
  * Author      : leixing
  * Date        : 2017-04-19
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

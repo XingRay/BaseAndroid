@@ -17,7 +17,7 @@ import com.ray.baseandroid.R;
 /**
  * Author      : leixing
  * Date        : 17-7-2 下午12:14
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * ×
  * Description : xxx

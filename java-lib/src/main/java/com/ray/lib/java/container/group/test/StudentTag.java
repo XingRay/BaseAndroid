@@ -1,4 +1,4 @@
-package com.ray.lib.java.collection.group.test;
+package com.ray.lib.java.container.group.test;
 
 /**
  * Created by leixi on 2016/11/5.

@@ -8,7 +8,7 @@ import com.ray.lib.android.base.page.BaseFragment;
 /**
  * Author      : leixing
  * Date        : 2017-04-20
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : MVP架构Fragment基类

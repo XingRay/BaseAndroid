@@ -11,7 +11,7 @@ import com.ray.lib.android.R;
 /**
  * Author      : leixing
  * Date        :  2016-11-17
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

@@ -1,4 +1,4 @@
-package com.ray.lib.java.collection.group;
+package com.ray.lib.java.container.group;
 
 import java.util.ArrayList;
 import java.util.List;

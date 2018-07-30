@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Author      : leixing
  * Date        : 2017-04-06
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : RecyclerView适配器

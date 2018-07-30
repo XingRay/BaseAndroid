@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * Author      : leixing
  * Date        : 2017/6/18 0:27
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * Description : xxx
  */

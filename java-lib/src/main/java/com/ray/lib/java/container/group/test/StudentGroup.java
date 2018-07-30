@@ -1,7 +1,7 @@
-package com.ray.lib.java.collection.group.test;
+package com.ray.lib.java.container.group.test;
 
-import com.ray.lib.java.collection.group.GroupData;
-import com.ray.lib.java.collection.group.Team;
+import com.ray.lib.java.container.group.GroupData;
+import com.ray.lib.java.container.group.Team;
 
 import java.util.Comparator;
 

@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 /**
  * Author      : leixing
  * Date        : 2017-06-05
- * Email       : leixing1012@gmail.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx
