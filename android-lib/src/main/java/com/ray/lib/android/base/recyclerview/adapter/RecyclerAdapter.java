@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.ray.lib.android.base.recyclerview.Util;
 
 import java.util.ArrayList;
@@ -14,37 +15,37 @@ import java.util.ListIterator;
 
 /**
  * @author : leixing
- * email : leixing@baidu.com
+ * email : leixing1012@qq.com
  * @date : 2018/8/2 14:15
  * <p>
  * description : xxx
  */
-@SuppressWarnings("WeakerAccess")
-public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
+@SuppressWarnings({"WeakerAccess", "unused"})
+public class RecyclerAdapter<T, VH extends BaseViewHolder<T>> extends RecyclerView.Adapter<VH> {
 
     private final List<T> mItems;
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener<T> mOnItemClickListener;
     private final LayoutInflater mInflater;
     private int mItemLayoutId;
-    private BaseViewHolderFactory mFactory;
+    private BaseViewHolderFactory<VH> mFactory;
     private BaseMultiTypeSupport mMultiTypeSupport;
 
-    public BaseAdapter(Context context) {
+    public RecyclerAdapter(Context context) {
         mItems = new ArrayList<>();
         mInflater = LayoutInflater.from(context);
     }
 
-    public BaseAdapter itemLayoutId(int itemLayoutId) {
+    public RecyclerAdapter<T, VH>  itemLayoutId(int itemLayoutId) {
         mItemLayoutId = itemLayoutId;
         return this;
     }
 
-    public BaseAdapter viewHolderFactory(BaseViewHolderFactory factory) {
+    public RecyclerAdapter<T, VH> viewHolderFactory(BaseViewHolderFactory<VH> factory) {
         mFactory = factory;
         return this;
     }
 
-    public BaseAdapter multiTypeSupport(BaseMultiTypeSupport support) {
+    public RecyclerAdapter<T, VH> multiTypeSupport(BaseMultiTypeSupport support) {
         mMultiTypeSupport = support;
         return this;
     }
@@ -122,7 +123,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
     }
 
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(final ViewGroup parent, int viewType) {
         int layoutId;
         if (mMultiTypeSupport != null) {
             layoutId = mMultiTypeSupport.getLayoutId(viewType);
@@ -130,7 +131,19 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
             layoutId = mItemLayoutId;
         }
         View itemView = mInflater.inflate(layoutId, parent, false);
-        return mFactory.createViewHolder(itemView, viewType);
+        final VH viewHolder = mFactory.createViewHolder(itemView, viewType);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    int position = viewHolder.getAdapterPosition();
+                    mOnItemClickListener.onItemClick(parent, position, mItems.get(position));
+                }
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -153,7 +166,7 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder> extends Recycler
         return mItems.size();
     }
 
-    public void setItemClickListener(OnItemClickListener listener) {
+    public void setItemClickListener(OnItemClickListener<T> listener) {
         mOnItemClickListener = listener;
     }
 }

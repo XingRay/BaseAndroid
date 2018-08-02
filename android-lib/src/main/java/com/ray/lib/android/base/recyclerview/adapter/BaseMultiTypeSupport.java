@@ -1,8 +1,10 @@
 package com.ray.lib.android.base.recyclerview.adapter;
 
-import java.util.List; /**
+import java.util.List;
+
+/**
  * @author : leixing
- * email : leixing@baidu.com
+ * email : leixing1012@qq.com
  * @date : 2018/8/2 14:26
  * <p>
  * description : xxx

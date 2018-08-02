@@ -7,17 +7,19 @@ import java.util.List;
 
 /**
  * @author : leixing
- * email : leixing@baidu.com
+ * email : leixing1012@qq.com
  * @date : 2018/8/2 14:37
  * <p>
  * description : xxx
  */
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     public BaseViewHolder(View itemView) {
         super(itemView);
     }
 
-    public abstract void onRefreshItemView(List<Object> payloads);
+    protected void onRefreshItemView(List<Object> payloads) {
 
-    public abstract <T> void onBindItemView(T t, int position);
+    }
+
+    protected abstract void onBindItemView(T t, int position);
 }
