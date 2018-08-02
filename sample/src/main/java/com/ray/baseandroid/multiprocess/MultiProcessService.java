@@ -59,17 +59,17 @@ public class MultiProcessService extends Service {
 
     IMultiProcessService.Stub mSub = new IMultiProcessService.Stub() {
         @Override
-        public void setName(String name) throws RemoteException {
+        public void setName(String name) {
             MultiProcessCache.getInstance().setName(name);
         }
 
         @Override
-        public void setUid(String uid) throws RemoteException {
+        public void setUid(String uid) {
             MultiProcessCache.getInstance().setUid(uid);
         }
 
         @Override
-        public void setData(String data) throws RemoteException {
+        public void setData(String data) {
             MultiProcessCache.getInstance().setData(data);
         }
     };

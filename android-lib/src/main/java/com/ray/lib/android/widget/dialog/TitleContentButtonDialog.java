@@ -21,17 +21,17 @@ public class TitleContentButtonDialog extends Dialog {
         setContentView(R.layout.dialog_title_content_button);
         setCancelable(true);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle = findViewById(R.id.tv_title);
         if (tvTitle != null) {
             tvTitle.setText(title);
         }
 
-        tvContent = (TextView) findViewById(R.id.tv_content);
+        tvContent = findViewById(R.id.tv_content);
         if (tvContent != null) {
             tvContent.setText(content);
         }
 
-        tvButton = (TextView) findViewById(R.id.tv_button);
+        tvButton = findViewById(R.id.tv_button);
         if (tvButton != null) {
             tvButton.setText(buttonText);
         }

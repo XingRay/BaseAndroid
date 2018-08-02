@@ -34,14 +34,14 @@ public class DateSelectorPopupWindow extends PopupWindow implements View.OnClick
         popup.setFocusable(true);
         popup.setAnimationStyle(R.style.window_from_bottom);
 
-        dpDatePicker = (DatePicker) contentView.findViewById(R.id.dp_date_picker);
+        dpDatePicker = contentView.findViewById(R.id.dp_date_picker);
         dpDatePicker.setCalendarViewShown(false);
         dpDatePicker.updateDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-        tvLeftText = (TextView) contentView.findViewById(R.id.tv_left_text);
+        tvLeftText = contentView.findViewById(R.id.tv_left_text);
         tvLeftText.setOnClickListener(this);
 
-        tvRightText = (TextView) contentView.findViewById(R.id.tv_right_text);
+        tvRightText = contentView.findViewById(R.id.tv_right_text);
         tvRightText.setOnClickListener(this);
     }
 

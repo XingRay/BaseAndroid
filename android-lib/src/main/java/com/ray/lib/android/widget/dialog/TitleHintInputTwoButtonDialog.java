@@ -42,12 +42,12 @@ public class TitleHintInputTwoButtonDialog extends Dialog {
         setContentView(R.layout.dialog_title_hint_input_two_button);
         setCancelable(true);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvHintText = (TextView) findViewById(R.id.tv_hint_text);
-        etInput = (EditText) findViewById(R.id.et_input);
+        tvTitle = findViewById(R.id.tv_title);
+        tvHintText = findViewById(R.id.tv_hint_text);
+        etInput = findViewById(R.id.et_input);
         inputUnderLine = findViewById(R.id.v_input_under_line);
-        tvLeftButton = (TextView) findViewById(R.id.tv_left_button);
-        tvRightButton = (TextView) findViewById(R.id.tv_right_button);
+        tvLeftButton = findViewById(R.id.tv_left_button);
+        tvRightButton = findViewById(R.id.tv_right_button);
 
         tvTitle.setText(title);
         tvHintText.setHint(hint);

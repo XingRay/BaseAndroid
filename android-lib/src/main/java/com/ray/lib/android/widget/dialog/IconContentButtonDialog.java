@@ -33,9 +33,9 @@ public class IconContentButtonDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.dialog_icon_content_button);
-        ivImg = (ImageView) findViewById(R.id.iv_img);
-        tvContent = (TextView) findViewById(R.id.tv_content);
-        tvButton = (TextView) findViewById(R.id.tv_button);
+        ivImg = findViewById(R.id.iv_img);
+        tvContent = findViewById(R.id.tv_content);
+        tvButton = findViewById(R.id.tv_button);
 
         tvButton.setOnClickListener(new View.OnClickListener() {
             @Override

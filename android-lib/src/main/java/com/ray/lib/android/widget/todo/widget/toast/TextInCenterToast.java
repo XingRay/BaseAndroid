@@ -38,7 +38,7 @@ public class TextInCenterToast extends Toast {
         super(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_toast_text_in_center_toast, null);
-        tvText = (TextView) view.findViewById(R.id.tv_text);
+        tvText = view.findViewById(R.id.tv_text);
         Looper mainLooper = Looper.getMainLooper();
         mHandler = new Handler(mainLooper);
 

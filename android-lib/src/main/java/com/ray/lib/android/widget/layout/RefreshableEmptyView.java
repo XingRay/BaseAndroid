@@ -60,11 +60,11 @@ public class RefreshableEmptyView extends FrameLayout {
     }
 
     private void findViews() {
-        llContent = (LinearLayout) findViewById(R.id.ll_content);
-        tvContent = (TextView) findViewById(R.id.tv_content);
-        ivIcon = (ImageView) findViewById(R.id.iv_icon);
-        tvRefresh = (TextView) findViewById(R.id.tv_refresh_text);
-        pbProgress = (ProgressBar) findViewById(R.id.pb_progress);
+        llContent = findViewById(R.id.ll_content);
+        tvContent = findViewById(R.id.tv_content);
+        ivIcon = findViewById(R.id.iv_icon);
+        tvRefresh = findViewById(R.id.tv_refresh_text);
+        pbProgress = findViewById(R.id.pb_progress);
     }
 
     private void setListener() {

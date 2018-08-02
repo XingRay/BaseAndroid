@@ -36,11 +36,11 @@ public class IconTitleContentTwoButtonDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.dialog_icon_title_content_two_button);
-        ivIcon = (ImageView) findViewById(R.id.iv_icon);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvContent = (TextView) findViewById(R.id.tv_content);
-        tvLeft = (TextView) findViewById(R.id.tv_left);
-        tvRight = (TextView) findViewById(R.id.tv_right);
+        ivIcon = findViewById(R.id.iv_icon);
+        tvTitle = findViewById(R.id.tv_title);
+        tvContent = findViewById(R.id.tv_content);
+        tvLeft = findViewById(R.id.tv_left);
+        tvRight = findViewById(R.id.tv_right);
 
         tvLeft.setOnClickListener(new View.OnClickListener() {
             @Override

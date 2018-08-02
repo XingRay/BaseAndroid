@@ -69,16 +69,10 @@ public class VerticalDividerItemDecoration extends FlexibleDividerDecoration {
             if (manager.getOrientation() == GridLayoutManager.VERTICAL) // 垂直布局
             {
                 if (manager.getReverseLayout()) {
-                    if (lookup.getSpanGroupIndex(position, spanCount) ==
-                            lookup.getSpanGroupIndex(parent.getAdapter().getItemCount() - 1, spanCount)) // 第一行
-                    {
-                        return true;
-                    }
+                    return lookup.getSpanGroupIndex(position, spanCount) ==
+                            lookup.getSpanGroupIndex(parent.getAdapter().getItemCount() - 1, spanCount);
                 } else {
-                    if (lookup.getSpanGroupIndex(position, spanCount) == 0) // 第一行
-                    {
-                        return true;
-                    }
+                    return lookup.getSpanGroupIndex(position, spanCount) == 0;
                 }
             } else // 水平布局
             {
@@ -113,10 +107,7 @@ public class VerticalDividerItemDecoration extends FlexibleDividerDecoration {
             {
                 return params.getSpanIndex() == 0;
             }
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return true;
-        }
-        return false;
+        } else return layoutManager instanceof LinearLayoutManager;
     }
 
     private boolean alignBottomEdge(RecyclerView parent, int position) {
@@ -139,9 +130,7 @@ public class VerticalDividerItemDecoration extends FlexibleDividerDecoration {
                             break;
                         }
                     }
-                    if (position >= lastRowFirstPosition) {
-                        return true;
-                    }
+                    return position >= lastRowFirstPosition;
                 }
             } else // 水平布局
             {
@@ -176,10 +165,7 @@ public class VerticalDividerItemDecoration extends FlexibleDividerDecoration {
             {
                 return spanIndex == spanCount - 1;
             }
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return true;
-        }
-        return false;
+        } else return layoutManager instanceof LinearLayoutManager;
     }
 
     @Override

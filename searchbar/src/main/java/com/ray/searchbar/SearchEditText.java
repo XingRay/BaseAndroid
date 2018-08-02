@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -107,8 +106,8 @@ public class SearchEditText extends MethodEditText {
                     }
                     return;
                 }
-                SearchTrigger trigger = getTrigger(method);
 
+                SearchTrigger trigger = getTrigger(method);
                 if (mAutoSearchEnable && isTriggerEnable(trigger)) {
                     sendSearchMessage(keyword, trigger, mSearchDelayMillis);
                 }
@@ -134,13 +133,6 @@ public class SearchEditText extends MethodEditText {
     public boolean isTriggerEnable(SearchTrigger method) {
         Boolean enable = mTriggerEnableMap.get(method);
         return enable == null ? false : enable;
-    }
-
-    public void popupSoftInput() {
-        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputManager != null) {
-            inputManager.showSoftInput(this, 0);
-        }
     }
 
     private void sendSearchMessage(String keyword, SearchTrigger trigger, long delayMills) {

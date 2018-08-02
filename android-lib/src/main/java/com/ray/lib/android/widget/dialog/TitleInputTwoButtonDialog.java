@@ -31,10 +31,10 @@ public class TitleInputTwoButtonDialog extends Dialog {
         setContentView(R.layout.dialog_title_input_two_button);
         setCancelable(true);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        etInputText = (EditText) findViewById(R.id.et_input_text);
-        tvLeftButton = (TextView) findViewById(R.id.tv_left_button);
-        tvRightButton = (TextView) findViewById(R.id.tv_right_button);
+        tvTitle = findViewById(R.id.tv_title);
+        etInputText = findViewById(R.id.et_input_text);
+        tvLeftButton = findViewById(R.id.tv_left_button);
+        tvRightButton = findViewById(R.id.tv_right_button);
 
         tvTitle.setText(title);
         tvLeftButton.setText(leftButtonText);

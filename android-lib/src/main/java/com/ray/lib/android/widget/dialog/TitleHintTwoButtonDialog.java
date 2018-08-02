@@ -38,10 +38,10 @@ public class TitleHintTwoButtonDialog extends Dialog {
         setContentView(R.layout.dialog_title_hint_two_button);
         setCancelable(true);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvHintText = (TextView) findViewById(R.id.tv_hint_text);
-        tvLeftButton = (TextView) findViewById(R.id.tv_left_button);
-        tvRightButton = (TextView) findViewById(R.id.tv_right_button);
+        tvTitle = findViewById(R.id.tv_title);
+        tvHintText = findViewById(R.id.tv_hint_text);
+        tvLeftButton = findViewById(R.id.tv_left_button);
+        tvRightButton = findViewById(R.id.tv_right_button);
 
         tvTitle.setText(title);
         tvHintText.setHint(hint);

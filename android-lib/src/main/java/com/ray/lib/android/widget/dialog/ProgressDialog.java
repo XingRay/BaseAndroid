@@ -27,7 +27,7 @@ public class ProgressDialog extends Dialog {
         setContentView(R.layout.dialog_progress);
         setCancelable(true);
 
-        tvMessage = (TextView) findViewById(R.id.tv_message);
+        tvMessage = findViewById(R.id.tv_message);
         setMessage(msg);
     }
 

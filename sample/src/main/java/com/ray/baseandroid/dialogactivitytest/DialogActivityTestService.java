@@ -70,7 +70,7 @@ public class DialogActivityTestService extends Service {
                         TextView tvMsg = ViewUtil.findView(rootView, R.id.tv_msg);
                         tvMsg.setText("test01 in service");
 
-                        TextView tvConfirm = (TextView) rootView.findViewById(R.id.tv_confirm);
+                        TextView tvConfirm = rootView.findViewById(R.id.tv_confirm);
                         tvConfirm.setText("ok");
 
                         tvConfirm.setOnClickListener(new View.OnClickListener() {

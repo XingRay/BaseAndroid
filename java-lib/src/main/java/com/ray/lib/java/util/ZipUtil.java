@@ -40,7 +40,7 @@ public class ZipUtil {
         zipout.close();
     }
 
-    public static void upZipFile(File zipFile, String folderPath) throws ZipException, IOException {
+    public static void upZipFile(File zipFile, String folderPath) throws IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();

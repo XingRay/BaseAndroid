@@ -32,17 +32,17 @@ public class TitleHintAlertDialog extends Dialog {
         this.setContentView(R.layout.dialog_title_hint_alert);
         this.setCancelable(true);
 
-        tvTitle = (TextView) this.findViewById(R.id.tv_title);
+        tvTitle = this.findViewById(R.id.tv_title);
         if (tvTitle != null) {
             tvTitle.setText(title);
         }
 
-        tvHintText = (TextView) this.findViewById(R.id.tv_hint_text);
+        tvHintText = this.findViewById(R.id.tv_hint_text);
         if (tvHintText != null) {
             tvHintText.setText(hint);
         }
 
-        tvButton = (TextView) this.findViewById(R.id.tv_button);
+        tvButton = this.findViewById(R.id.tv_button);
         if (tvButton != null) {
             tvButton.setText(buttonText);
         }

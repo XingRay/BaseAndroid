@@ -44,10 +44,10 @@ public class TitleRadioButtonDialog extends Dialog {
         this.setContentView(R.layout.dialog_title_radio_button);
         this.setCancelable(true);
 
-        tvTitle = (TextView) this.findViewById(R.id.tv_title);
+        tvTitle = this.findViewById(R.id.tv_title);
         tvTitle.setText(title);
 
-        rbHint = (RadioButton) this.findViewById(R.id.rb_hint);
+        rbHint = this.findViewById(R.id.rb_hint);
         rbHint.setText(radioText);
         rbHint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class TitleRadioButtonDialog extends Dialog {
             }
         });
 
-        TextView tvButton = (TextView) this.findViewById(R.id.tv_button);
+        TextView tvButton = this.findViewById(R.id.tv_button);
         tvButton.setText(buttonText);
         tvButton.setOnClickListener(new View.OnClickListener() {
             @Override

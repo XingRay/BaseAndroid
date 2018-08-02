@@ -74,10 +74,10 @@ public class WorkTitleView extends RelativeLayout {
     }
 
     private void findViews() {
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvType = (TextView) findViewById(R.id.tv_type);
-        tvNameContent = (TextView) findViewById(R.id.tv_name_content);
-        tvTime = (TextView) findViewById(R.id.tv_time);
+        tvTitle = findViewById(R.id.tv_title);
+        tvType = findViewById(R.id.tv_type);
+        tvNameContent = findViewById(R.id.tv_name_content);
+        tvTime = findViewById(R.id.tv_time);
     }
 
     private void applyAttributes(Context context, AttributeSet attrs) {

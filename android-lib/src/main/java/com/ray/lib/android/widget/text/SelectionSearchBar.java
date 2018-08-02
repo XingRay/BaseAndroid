@@ -44,9 +44,9 @@ public class SelectionSearchBar extends RelativeLayout {
 
         View.inflate(context, R.layout.layout_selection_serach_bar, this);
 
-        tvSelection = (TextView) findViewById(R.id.tv_selection);
-        etKeyword = (SearchEditText) findViewById(R.id.et_keyword);
-        ivClear = (ImageView) findViewById(R.id.iv_clear);
+        tvSelection = findViewById(R.id.tv_selection);
+        etKeyword = findViewById(R.id.et_keyword);
+        ivClear = findViewById(R.id.iv_clear);
 
         etKeyword.addTextChangedListener(new TextWatcher() {
             @Override

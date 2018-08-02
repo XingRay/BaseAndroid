@@ -156,7 +156,7 @@ public class ViewUtil {
     }
 
     public static void setText(View rootView, int id, CharSequence content) {
-        TextView textView = (TextView) rootView.findViewById(id);
+        TextView textView = rootView.findViewById(id);
         textView.setText(content);
     }
 
@@ -165,7 +165,7 @@ public class ViewUtil {
     }
 
     public static void setImgRes(View rootView, int id, int imgResId) {
-        ImageView imageView = (ImageView) rootView.findViewById(id);
+        ImageView imageView = rootView.findViewById(id);
         imageView.setImageResource(imgResId);
     }
 

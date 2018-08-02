@@ -21,7 +21,7 @@ public class TwoMenuCancelDialog extends Dialog {
         setContentView(R.layout.dialog_two_menu_cancel_dialog);
         setCancelable(true);
 
-        tvMenu1 = (TextView) findViewById(R.id.tv_menu1);
+        tvMenu1 = findViewById(R.id.tv_menu1);
         if (tvMenu1 != null) {
             tvMenu1.setText(menu1);
             tvMenu1.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +35,7 @@ public class TwoMenuCancelDialog extends Dialog {
             });
         }
 
-        tvMenu2 = (TextView) findViewById(R.id.tv_menu2);
+        tvMenu2 = findViewById(R.id.tv_menu2);
         if (tvMenu2 != null) {
             tvMenu2.setText(menu2);
             tvMenu2.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class TwoMenuCancelDialog extends Dialog {
             });
         }
 
-        tvMenu3 = (TextView) findViewById(R.id.tv_menu3);
+        tvMenu3 = findViewById(R.id.tv_menu3);
         if (tvMenu3 != null) {
             tvMenu3.setText(menu3);
             tvMenu3.setOnClickListener(new View.OnClickListener() {

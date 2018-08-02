@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     protected void initView() {
         setContentView(R.layout.activity_main);
 
-        rvList = (WrapRecyclerView) findViewById(R.id.rv_list);
+        rvList = findViewById(R.id.rv_list);
         rvList.setAdapter(mFunctionAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
         rvList.addItemDecoration(new DrawableDividerItemDecoration(mContext.getResources().getDrawable(R.drawable.drawable_line)));

@@ -41,7 +41,7 @@ public class OOMTestActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initView() {
         setContentView(R.layout.activity_oom_test);
-        tvNum = (TextView) findViewById(R.id.tv_num);
+        tvNum = findViewById(R.id.tv_num);
         tvNum.setText("" + num);
         tvNum.setOnClickListener(this);
     }

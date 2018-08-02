@@ -37,8 +37,8 @@ public class NotifyBannerView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         View.inflate(context, R.layout.view_notify_banner_view, this);
 
-        ivClose = (ImageView) findViewById(R.id.iv_close);
-        mtvText = (MarqueeTextView) findViewById(R.id.mtv_text);
+        ivClose = findViewById(R.id.iv_close);
+        mtvText = findViewById(R.id.mtv_text);
 
         ivClose.setOnClickListener(new OnClickListener() {
             @Override

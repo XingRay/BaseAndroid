@@ -70,18 +70,13 @@ public class HorizontalDividerItemDecoration extends FlexibleDividerDecoration {
             int spanCount = manager.getSpanCount();
             if (manager.getOrientation() == GridLayoutManager.VERTICAL) // 垂直布局
             {
-                if (lookup.getSpanIndex(position, spanCount) == 0) // 第一列
-                {
-                    return true;
-                }
+                return lookup.getSpanIndex(position, spanCount) == 0;
             } else // 水平布局
             {
                 if (manager.getReverseLayout()) {
                     return lookup.getSpanGroupIndex(position, spanCount) == lookup.getSpanGroupIndex(parent.getAdapter().getItemCount() - 1, spanCount);
                 } else {
-                    if (lookup.getSpanGroupIndex(position, spanCount) == 0) {
-                        return true;
-                    }
+                    return lookup.getSpanGroupIndex(position, spanCount) == 0;
                 }
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -112,10 +107,7 @@ public class HorizontalDividerItemDecoration extends FlexibleDividerDecoration {
                     return position < spanCount;
                 }
             }
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return true;
-        }
-        return false;
+        } else return layoutManager instanceof LinearLayoutManager;
     }
 
     private boolean alignRightEdge(RecyclerView parent, int position) {
@@ -128,9 +120,7 @@ public class HorizontalDividerItemDecoration extends FlexibleDividerDecoration {
             int itemCount = parent.getAdapter().getItemCount();
             if (manager.getOrientation() == GridLayoutManager.VERTICAL) // 垂直布局
             {
-                if (positionTotalSpanSize(manager, position) == spanCount) {
-                    return true;
-                }
+                return positionTotalSpanSize(manager, position) == spanCount;
             } else // 水平布局
             {
                 if (manager.getReverseLayout()) {
@@ -143,9 +133,7 @@ public class HorizontalDividerItemDecoration extends FlexibleDividerDecoration {
                             break;
                         }
                     }
-                    if (position >= lastRowFirstPosition) {
-                        return true;
-                    }
+                    return position >= lastRowFirstPosition;
                 }
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -177,10 +165,7 @@ public class HorizontalDividerItemDecoration extends FlexibleDividerDecoration {
                     return !hasRight;
                 }
             }
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return true;
-        }
-        return false;
+        } else return layoutManager instanceof LinearLayoutManager;
     }
 
     @Override
