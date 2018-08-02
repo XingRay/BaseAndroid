@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.IBinder;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 
@@ -153,5 +156,23 @@ public class AppUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    public static void hideSoftInput(Context context, IBinder windowToken) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(windowToken, 0);
+    }
+
+    /**
+     * 显示软键盘
+     * imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+     * boolean isOpen=imm.isActive();//isOpen若返回true，则表示输入法打开
+     */
+    public static void showSoftInput(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 }
