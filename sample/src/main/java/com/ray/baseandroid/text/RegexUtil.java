@@ -3,8 +3,8 @@ package com.ray.baseandroid.text;
 import java.util.regex.Pattern;
 
 /**
- * @author      : leixing
- * @date        : 2017-08-08
+ * @@author      : leixing
+ * @@date        : 2017-08-08
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

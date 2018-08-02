@@ -12,8 +12,8 @@ import android.view.View;
 import com.ray.lib.android.util.ViewUtil;
 
 /**
- * @author      : leixing
- * @date        : 2016-12-22
+ * @@author      : leixing
+ * @@date        : 2016-12-22
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

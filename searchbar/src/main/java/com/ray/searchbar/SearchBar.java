@@ -13,14 +13,15 @@ import android.widget.RelativeLayout;
 
 
 /**
- * @author      : leixing
- * @date        : 2017-08-14
+ * @author : leixing
+ * @date : 2017-08-14
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>
  * Description : search bar for search keyword
  */
 
+@SuppressWarnings("unused")
 public class SearchBar extends RelativeLayout {
 
     private SearchEditText etKeyword;
@@ -39,8 +40,8 @@ public class SearchBar extends RelativeLayout {
 
         View.inflate(context, R.layout.layout_serach_bar, this);
 
-        etKeyword = (SearchEditText) findViewById(R.id.et_keyword);
-        ivClear = (ImageView) findViewById(R.id.iv_clear);
+        etKeyword = findViewById(R.id.et_keyword);
+        ivClear = findViewById(R.id.iv_clear);
 
         etKeyword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,7 +89,7 @@ public class SearchBar extends RelativeLayout {
         etKeyword.setAutoSearchEnable(enable);
     }
 
-    public void setOnSearchListener(SearchEditText.OnSearchListener listener) {
+    public void setOnSearchListener(OnSearchListener listener) {
         etKeyword.setOnSearchListener(listener);
     }
 

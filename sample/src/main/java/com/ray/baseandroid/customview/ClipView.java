@@ -15,8 +15,8 @@ import android.view.View;
 import com.ray.baseandroid.R;
 
 /**
- * @author      : leixing
- * @date        : 17-7-2 下午12:14
+ * @@author      : leixing
+ * @@date        : 17-7-2 下午12:14
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * ×

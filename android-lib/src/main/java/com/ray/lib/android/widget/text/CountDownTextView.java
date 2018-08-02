@@ -11,8 +11,8 @@ import android.util.AttributeSet;
 import java.util.Timer;
 
 /**
- * @author      : leixing
- * @date        : 2017-08-03
+ * @@author      : leixing
+ * @@date        : 2017-08-03
  * Email       : leixing@hecom.cn
  * Version     : 0.0.1
  * <p>

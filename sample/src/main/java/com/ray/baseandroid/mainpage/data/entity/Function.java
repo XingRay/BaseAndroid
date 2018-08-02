@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 /**
- * @author      : leixing
- * @date        : 2017-04-14
+ * @@author      : leixing
+ * @@date        : 2017-04-14
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

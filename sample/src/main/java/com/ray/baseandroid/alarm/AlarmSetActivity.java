@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author      : leixing
- * @date        : 2017-06-05
+ * @@author      : leixing
+ * @@date        : 2017-06-05
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

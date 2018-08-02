@@ -7,8 +7,8 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 /**
- * @author      : leixing
- * @date        : 2017-04-05
+ * @@author      : leixing
+ * @@date        : 2017-04-05
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

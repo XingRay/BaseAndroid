@@ -12,9 +12,9 @@ import com.ray.lib.android.R;
 
 
 /**
- * @author      : leixing
- * @date        : 2017-07-12
- * Email       : leixing1012@gmail.com
+ * @@author      : leixing
+ * @@date        : 2017-07-12
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

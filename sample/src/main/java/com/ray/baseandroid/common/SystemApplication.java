@@ -6,8 +6,8 @@ import android.content.Context;
 import com.ray.lib.android.util.TraceUtil;
 
 /**
- * @author      : leixing
- * @date        : 2017-05-22
+ * @@author      : leixing
+ * @@date        : 2017-05-22
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

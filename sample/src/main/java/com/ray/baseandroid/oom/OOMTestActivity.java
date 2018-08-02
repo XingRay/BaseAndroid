@@ -10,8 +10,8 @@ import com.ray.lib.android.base.page.BaseActivity;
 
 
 /**
- * @author      : leixing
- * @date        : 2017-04-19
+ * @@author      : leixing
+ * @@date        : 2017-04-19
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

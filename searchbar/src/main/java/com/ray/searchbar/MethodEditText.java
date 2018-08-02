@@ -9,38 +9,39 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 
 /**
- * @author      : leixing
- * @date        : 2017-08-01
- * Email       : leixing@hecom.cn
+ * @author : leixing
+ * @date : 2017-08-01
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
- * Description : an watchable EditText can listen text changed and recognize if it is form user's
+ * Description : an method EditText can listen text changed and recognize if it is trigger by user's
  * operation or {@link android.widget.EditText#setText(CharSequence)}
  */
 
-public class WatchableEditText extends AppCompatEditText {
+@SuppressWarnings("unused")
+public class MethodEditText extends AppCompatEditText {
     private ArrayList<Watcher> mWatchers;
-    private boolean mIsTextSetProgrammatically;
+    private Method mMethod;
 
-    public WatchableEditText(Context context) {
+    public MethodEditText(Context context) {
         this(context, null);
     }
 
-    public WatchableEditText(Context context, AttributeSet attrs) {
+    public MethodEditText(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public WatchableEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MethodEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mIsTextSetProgrammatically = false;
+        mMethod = Method.USER_INPUT;
         setFocusableInTouchMode(true);
         setTextWatcher();
     }
 
     /**
-     * add watcher for listen text change event
+     * add watcher for text change event
      *
-     * @param watcher
+     * @param watcher watcher for text change event
      */
     public void addWatcher(Watcher watcher) {
         if (mWatchers == null) {
@@ -52,7 +53,7 @@ public class WatchableEditText extends AppCompatEditText {
     /**
      * remove watcher when watcher is no more need
      *
-     * @param watcher
+     * @param watcher watcher for text change event
      */
     public void removeWatcher(Watcher watcher) {
         if (mWatchers != null) {
@@ -88,7 +89,7 @@ public class WatchableEditText extends AppCompatEditText {
             final ArrayList<Watcher> list = mWatchers;
             final int size = list.size();
             for (int i = 0; i < size; i++) {
-                list.get(i).beforeTextChanged(s, start, count, after, mIsTextSetProgrammatically);
+                list.get(i).beforeTextChanged(s, start, count, after, mMethod);
             }
         }
     }
@@ -98,7 +99,7 @@ public class WatchableEditText extends AppCompatEditText {
             final ArrayList<Watcher> list = mWatchers;
             final int size = list.size();
             for (int i = 0; i < size; i++) {
-                list.get(i).onTextChanged(s, start, before, count, mIsTextSetProgrammatically);
+                list.get(i).onTextChanged(s, start, before, count, mMethod);
             }
         }
     }
@@ -108,16 +109,16 @@ public class WatchableEditText extends AppCompatEditText {
             final ArrayList<Watcher> list = mWatchers;
             final int size = list.size();
             for (int i = 0; i < size; i++) {
-                list.get(i).afterTextChanged(s, mIsTextSetProgrammatically);
+                list.get(i).afterTextChanged(s, mMethod);
             }
         }
 
-        mIsTextSetProgrammatically = false;
+        mMethod = Method.USER_INPUT;
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        mIsTextSetProgrammatically = true;
+        mMethod = Method.SET_TEXT;
         super.setText(text, type);
     }
 
@@ -126,11 +127,24 @@ public class WatchableEditText extends AppCompatEditText {
      * {@code isProgrammatically} in every callback indicate if change of text is from user's
      * operation or invoke method {@link android.widget.EditText#setText(CharSequence)}
      */
+    @SuppressWarnings("WeakerAccess")
     public interface Watcher {
-        void beforeTextChanged(CharSequence s, int start, int count, int after, boolean isProgrammatically);
+        void beforeTextChanged(CharSequence s, int start, int count, int after, Method method);
 
-        void onTextChanged(CharSequence s, int start, int before, int count, boolean isProgrammatically);
+        void onTextChanged(CharSequence s, int start, int before, int count, Method method);
 
-        void afterTextChanged(Editable s, boolean isProgrammatically);
+        void afterTextChanged(Editable s, Method method);
+    }
+
+    public enum Method {
+        /**
+         * 用户手动输入文本触发回调
+         */
+        USER_INPUT,
+
+        /**
+         * 程序调用{@link android.widget.TextView#setText(CharSequence)}触发回调
+         */
+        SET_TEXT
     }
 }

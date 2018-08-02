@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author      : leixing
- * @date        : 2017-04-21
+ * @@author      : leixing
+ * @@date        : 2017-04-21
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

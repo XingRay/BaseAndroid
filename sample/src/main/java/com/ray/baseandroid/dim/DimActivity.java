@@ -10,8 +10,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * @author      : leixing
- * @date        : 2017-04-21
+ * @@author      : leixing
+ * @@date        : 2017-04-21
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
