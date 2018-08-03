@@ -21,7 +21,6 @@ import com.ray.lib.android.R;
 public class MarqueeTextView extends View implements Marquee {
     private static final int MARQUEE_MSG = 200;
 
-    //  -------  attributes  ----------//
     private float restartDistance = 50.0f;
     private int marqueeIntervalMills = 30;
     private int restartDelayMills = 2000;

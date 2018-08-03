@@ -24,12 +24,16 @@ public class FlowLayout extends ViewGroup {
     private static final int LEFT = -1;
     private static final int CENTER = 0;
     private static final int RIGHT = 1;
+    private static final int DEFAULT_LINE_SPACING = 0;
 
-    protected List<List<View>> mAllViews = new ArrayList<List<View>>();
-    protected List<Integer> mLineHeight = new ArrayList<Integer>();
-    protected List<Integer> mLineWidth = new ArrayList<Integer>();
-    private int mGravity;
+    private List<List<View>> mAllViews = new ArrayList<>();
+    private List<Integer> mLineHeight = new ArrayList<>();
+    private List<Integer> mLineWidth = new ArrayList<>();
     private List<View> lineViews = new ArrayList<>();
+
+    private int mGravity;
+    private int mLineSpacing = 0;
+    private int mViewSpacing = 0;
 
     public FlowLayout(Context context) {
         this(context, null);
@@ -41,14 +45,25 @@ public class FlowLayout extends ViewGroup {
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        applyAttributes(context, attrs);
+    }
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
-        mGravity = ta.getInt(R.styleable.FlowLayout_tag_gravity, LEFT);
+    private void applyAttributes(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.FlowLayout);
+        if (typedArray == null) {
+            return;
+        }
+
+        mLineSpacing = typedArray.getDimensionPixelSize(R.styleable.FlowLayout_line_spacing, DEFAULT_LINE_SPACING);
+        mViewSpacing = typedArray.getDimensionPixelSize(R.styleable.FlowLayout_view_spacing, 0);
+        mGravity = typedArray.getInt(R.styleable.FlowLayout_tag_gravity, LEFT);
+
         int layoutDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
         if (layoutDirection == LayoutDirection.RTL && mGravity != CENTER) {
             mGravity = mGravity == LEFT ? RIGHT : LEFT;
         }
-        ta.recycle();
+
+        typedArray.recycle();
     }
 
     @Override
@@ -62,16 +77,20 @@ public class FlowLayout extends ViewGroup {
         int contentWidth = 0;
         int contentHeight = 0;
 
-        int lineWidth = 0;
+        int usedLineWidth = 0;
         int lineHeight = 0;
 
         int childCount = getChildCount();
+        int innerWidth = sizeWidth - getPaddingLeft() - getPaddingRight();
+
+        boolean isFirstViewOfLine = true;
+        boolean isFirstLine = true;
 
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             if (child.getVisibility() == View.GONE) {
                 if (i == childCount - 1) {
-                    contentWidth = Math.max(lineWidth, contentWidth);
+                    contentWidth = Math.max(usedLineWidth, contentWidth);
                     contentHeight += lineHeight;
                 }
                 continue;
@@ -79,23 +98,28 @@ public class FlowLayout extends ViewGroup {
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
-            int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
-            int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin + (isFirstViewOfLine ? 0 : mViewSpacing);
+            int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin + (isFirstLine ? 0 : mLineSpacing);
 
-            if (lineWidth + childWidth <= sizeWidth - getPaddingLeft() - getPaddingRight()) {
+            int requireWidth = usedLineWidth + childWidth;
+
+            if (requireWidth <= innerWidth) {
                 //不足一行
-                lineWidth += childWidth;
+                isFirstViewOfLine = false;
+                usedLineWidth += childWidth;
                 lineHeight = Math.max(lineHeight, childHeight);
             } else {
                 //超过一行
-                contentWidth = Math.max(contentWidth, lineWidth);
-                lineWidth = childWidth;
+                isFirstViewOfLine = true;
+                isFirstLine = false;
+                contentWidth = Math.max(contentWidth, usedLineWidth);
+                usedLineWidth = childWidth;
                 contentHeight += lineHeight;
                 lineHeight = childHeight;
             }
 
             if (i == childCount - 1) {
-                contentWidth = Math.max(lineWidth, contentWidth);
+                contentWidth = Math.max(usedLineWidth, contentWidth);
                 contentHeight += lineHeight;
             }
         }
@@ -114,13 +138,15 @@ public class FlowLayout extends ViewGroup {
         mLineWidth.clear();
         lineViews.clear();
 
-        int lineWidth = 0;
+        int usedLineWidth = 0;
         int lineHeight = 0;
         int width = getWidth();
         int childCount = getChildCount();
         int paddingLeft = getPaddingLeft();
         int paddingRight = getPaddingRight();
         int paddingTop = getPaddingTop();
+        boolean isFirstViewOfLine = true;
+        boolean isFirstLine = true;
 
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
@@ -128,22 +154,25 @@ public class FlowLayout extends ViewGroup {
                 continue;
             }
 
-            int childWidth = child.getMeasuredWidth();
-            int childHeight = child.getMeasuredHeight();
+            int childWidth = child.getMeasuredWidth() + (isFirstViewOfLine ? 0 : mViewSpacing);
+            int childHeight = child.getMeasuredHeight() + (isFirstLine ? 0 : mLineSpacing);
             MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
-            if (childWidth + lineWidth + lp.leftMargin + lp.rightMargin <= width - paddingLeft - paddingRight) {
+            if (childWidth + usedLineWidth + lp.leftMargin + lp.rightMargin + mViewSpacing <= width - paddingLeft - paddingRight) {
                 //不足一行
-                lineWidth += childWidth + lp.leftMargin + lp.rightMargin;
+                isFirstViewOfLine = false;
+                usedLineWidth += childWidth + lp.leftMargin + lp.rightMargin;
                 lineHeight = Math.max(lineHeight, childHeight + lp.topMargin + lp.bottomMargin);
                 lineViews.add(child);
             } else {
                 //超过一行
+                isFirstLine = false;
+                isFirstViewOfLine = true;
                 mLineHeight.add(lineHeight);
-                mLineWidth.add(lineWidth);
+                mLineWidth.add(usedLineWidth);
                 mAllViews.add(lineViews);
 //                lineWidth = childWidth + lp.leftMargin + lp.rightMargin;
-                lineWidth = 0;
+                usedLineWidth = 0;
                 lineHeight = childHeight + lp.topMargin + lp.bottomMargin;
                 lineViews = new ArrayList<View>();
 //                lineViews.add(child);
@@ -151,7 +180,7 @@ public class FlowLayout extends ViewGroup {
         }
 
         mLineHeight.add(lineHeight);
-        mLineWidth.add(lineWidth);
+        mLineWidth.add(usedLineWidth);
         mAllViews.add(lineViews);
 
         int lineNum = mAllViews.size();
@@ -159,6 +188,7 @@ public class FlowLayout extends ViewGroup {
         for (int i = 0; i < lineNum; i++) {
             lineViews = mAllViews.get(i);
             lineHeight = mLineHeight.get(i);
+            int lineSpacing = i == 0 ? 0 : mLineSpacing;
 
             // set gravity
             int currentLineWidth = this.mLineWidth.get(i);
@@ -186,14 +216,15 @@ public class FlowLayout extends ViewGroup {
 
                 MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
-                int left = paddingLeft + lp.leftMargin;
-                int top = paddingTop + lp.topMargin;
+                int viewSpacing = j == 0 ? 0 : mViewSpacing;
+                int left = paddingLeft + lp.leftMargin + viewSpacing;
+                int top = paddingTop + lp.topMargin + lineSpacing;
                 int right = left + child.getMeasuredWidth();
                 int bottom = top + child.getMeasuredHeight();
 
                 child.layout(left, top, right, bottom);
 
-                paddingLeft += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+                paddingLeft += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin + viewSpacing;
             }
             paddingTop += lineHeight;
         }

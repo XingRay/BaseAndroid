@@ -6,5 +6,7 @@
             <enum name="center" value="0" />
             <enum name="right" value="1" />
         </attr>
+        <attr name="line_spacing" format="dimension|reference" />
+        <attr name="view_spacing" format="dimension|reference" />
     </declare-styleable>
 </resources>
