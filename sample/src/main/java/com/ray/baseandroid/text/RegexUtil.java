@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * @author      : leixing
  * @date        : 2017-08-08
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

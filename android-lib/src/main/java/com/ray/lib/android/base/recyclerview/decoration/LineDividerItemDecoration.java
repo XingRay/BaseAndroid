@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * @author      : leixing
  * @date        : 2017-04-06
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : 线条分割线

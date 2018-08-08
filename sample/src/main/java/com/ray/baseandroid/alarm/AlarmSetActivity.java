@@ -7,13 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.ray.baseandroid.R;
 import com.ray.lib.android.base.page.BaseActivity;
 import com.ray.lib.android.util.TraceUtil;
-import com.ray.lib.java.util.TimeUtil;
+import com.ray.lib.java.util.time.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

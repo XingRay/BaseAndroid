@@ -4,7 +4,7 @@ package com.ray.lib.android.base.recyclerview.decoration;
  * @author : leixing
  * @date : 2018-01-22
  * <p>
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

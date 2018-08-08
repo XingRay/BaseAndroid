@@ -581,11 +581,6 @@ public class Tools {
         return strDir;
     }
 
-    public static void main(String[] args) {
-        String str = "test";
-        System.out.println(isEmail(str));
-    }
-
     /**
      * 发起自定义notification
      *

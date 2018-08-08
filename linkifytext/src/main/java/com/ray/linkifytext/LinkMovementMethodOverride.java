@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * @author      : leixing
  * @date        : 2017-08-09
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : 解决点击spannable时TextView会自动滚动的问题

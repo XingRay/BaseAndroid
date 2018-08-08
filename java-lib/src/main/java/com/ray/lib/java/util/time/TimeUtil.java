@@ -1,4 +1,4 @@
-package com.ray.lib.java.util;
+package com.ray.lib.java.util.time;
 
 
 import java.text.ParseException;
@@ -313,15 +313,6 @@ public class TimeUtil {
     /**
      * 毫秒时间戳单位转换（单位：unit）
      *
-     * @param milliseconds 毫秒时间戳
-     * @param unit         <ul>
-     *                     <li>{@link TimeUnit#MSEC}: 毫秒</li>
-     *                     <li>{@link TimeUnit#SEC }: 秒</li>
-     *                     <li>{@link TimeUnit#MIN }: 分</li>
-     *                     <li>{@link TimeUnit#HOUR}: 小时</li>
-     *                     <li>{@link TimeUnit#DAY }: 天</li>
-     *                     </ul>
-     * @return unit时间戳
      */
     private static long milliseconds2Unit(long milliseconds, TimeUnit unit) {
 //        switch (unit) {

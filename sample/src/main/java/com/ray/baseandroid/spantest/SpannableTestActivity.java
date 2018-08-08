@@ -14,7 +14,7 @@ import butterknife.OnClick;
 /**
  * @author      : leixing
  * @date        : 2017-09-06
- * Email       : leixing@hecom.cn
+ * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx

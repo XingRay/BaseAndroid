@@ -1,5 +1,7 @@
 package com.ray.lib.java.util;
 
+import com.ray.lib.java.util.time.TimeUtil;
+
 import java.util.Random;
 
 /**
