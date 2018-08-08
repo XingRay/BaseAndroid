@@ -9,8 +9,8 @@ import com.ray.lib.android.R;
 
 
 /**
- * @@author      : leixing
- * @@date        :  2016-11-17
+ * @author      : leixing
+ * @date        :  2016-11-17
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

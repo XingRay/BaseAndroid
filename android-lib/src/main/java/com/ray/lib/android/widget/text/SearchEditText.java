@@ -17,8 +17,8 @@ import java.lang.ref.WeakReference;
 
 
 /**
- * @@author      : leixing
- * @@date        : 2017-07-11
+ * @author      : leixing
+ * @date        : 2017-07-11
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

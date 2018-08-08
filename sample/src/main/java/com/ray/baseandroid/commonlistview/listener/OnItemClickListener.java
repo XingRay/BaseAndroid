@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-04-07
+ * @author      : leixing
+ * @date        : 2017-04-07
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

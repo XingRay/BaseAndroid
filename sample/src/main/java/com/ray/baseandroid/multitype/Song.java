@@ -1,8 +1,8 @@
 package com.ray.baseandroid.multitype;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-05-23
+ * @author      : leixing
+ * @date        : 2017-05-23
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

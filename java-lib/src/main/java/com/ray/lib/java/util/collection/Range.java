@@ -3,7 +3,7 @@ package com.ray.lib.java.util.collection;
 /**
  * @author : leixing
  * <p>
- * @@date        : 2018/6/23
+ * @date        : 2018/6/23
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * Description : 范围

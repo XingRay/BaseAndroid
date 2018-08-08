@@ -7,8 +7,8 @@ import android.graphics.Matrix;
 import android.widget.ImageView;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-04-26
+ * @author      : leixing
+ * @date        : 2017-04-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

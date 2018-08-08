@@ -10,8 +10,8 @@ import com.aspsine.irecyclerview.RefreshTrigger;
 import com.ray.baseandroid.R;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-06-26
+ * @author      : leixing
+ * @date        : 2017-06-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

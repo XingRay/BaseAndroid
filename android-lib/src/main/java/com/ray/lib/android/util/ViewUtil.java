@@ -24,8 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-04-26
+ * @author      : leixing
+ * @date        : 2017-04-26
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
@@ -51,16 +51,6 @@ public class ViewUtil {
             view.setVisibility(visibility);
         }
     }
-
-//    public static int dp2px(Context context, float dipValue) {
-//        final float scale = context.getResources().getDisplayMetrics().density;
-//        return (int) (dipValue * scale + 0.5f);
-//    }
-//
-//    public static int px2dp(Context context, float pxValue) {
-//        final float scale = context.getResources().getDisplayMetrics().density;
-//        return (int) (pxValue / scale + 0.5f);
-//    }
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)

@@ -1,8 +1,8 @@
 package com.ray.lib.android.base.page;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-05-31
+ * @author      : leixing
+ * @date        : 2017-05-31
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

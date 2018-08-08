@@ -92,11 +92,4 @@ public class DESUtil {
         // 执行解密操作
         return new String(cipher.doFinal(Base64.decode(data)));
     }
-
-    public static void main(String[] args) throws Exception {
-        String source = "wanghaitao123";
-        String key = "hecomhongquanguanli_834218_6.0";
-        String encryptData = encrypt(source, key);
-        String decryptData = decrypt(encryptData, key);
-    }
 }

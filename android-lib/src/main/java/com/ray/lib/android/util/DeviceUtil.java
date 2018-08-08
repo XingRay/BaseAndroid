@@ -4,8 +4,8 @@ import android.content.Context;
 import android.media.AudioManager;
 
 /**
- * @@author      : leixing
- * @@date        : 2017-02-17
+ * @author      : leixing
+ * @date        : 2017-02-17
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>

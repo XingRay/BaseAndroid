@@ -3,8 +3,8 @@ package com.ray.lib.java.util;
 import java.util.Random;
 
 /**
- * @@author      : leixing
- * @@date        : 2016-12-27
+ * @author      : leixing
+ * @date        : 2016-12-27
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
