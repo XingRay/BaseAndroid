@@ -1,5 +1,7 @@
 package com.ray.lib.java.util;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by leixing on 2016/12/17 01:58.
  * Email: leixing1012@qq.com
@@ -39,6 +41,45 @@ public class RegexUtil {
     /**
      */
     public static final String REGEX_IP = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
+
+    /**
+     * 移动电话
+     */
+    public static Pattern MOBILE_PHONE_PATTERN = Pattern.compile(
+            "(?<![0-9])"
+                    + "((0|\\+86|0086)\\s?)?"
+                    + "1[3|4|5|7|8|][0-9]-?[0-9]{4}-?[0-9]{4}"
+                    + "(?![0-9])");
+
+    /**
+     * 固定电话
+     */
+    public static Pattern FIXED_PHONE_PATTERN = Pattern.compile(
+            "(?<![0-9])"
+                    + "(\\(?0[0-9]{2,3}\\)?-?)?"
+                    + "[0-9]{7,8}"
+                    + "(?![0-9])");
+
+    /**
+     * http(s) URL
+     */
+    public static Pattern HTTP_PATTERN = Pattern.compile(
+            "http(s)?://" + "[-0-9a-zA-Z.]+"
+                    + "(:\\d+)?"
+                    + "("
+                    + "/[-\\w$.+!*'(),%;:@&=]*"
+                    + "(/[-\\w$.+!*'(),%;:@&=]*)*"
+                    + "(\\?[-\\w$.+!*'(),%;:@&=]*)?"
+                    + ")?");
+
+    /**
+     * 邮箱
+     */
+    public static Pattern GENERAL_EMAIL_PATTERN = Pattern.compile(
+            "[0-9a-zA-Z][-._0-9a-zA-Z]{0,63}"
+                    + "@"
+                    + "([0-9a-zA-Z][-0-9a-zA-Z]{0,62}\\.)+"
+                    + "[a-zA-Z]{2,3}");
 
     private RegexUtil() {
         throw new UnsupportedOperationException();

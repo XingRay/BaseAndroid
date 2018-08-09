@@ -117,10 +117,6 @@
 
         <activity android:name="com.ray.baseandroid.anr.AnrActivity"/>
 
-        <activity
-            android:name="com.ray.baseandroid.text.TextActivity"
-            android:windowSoftInputMode="adjustResize"/>
-
         <activity android:name="com.ray.baseandroid.counter.CounterActivity"/>
 
         <activity android:name=".spantest.SpannableTestActivity"/>

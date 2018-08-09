@@ -10,12 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/android-lib" />
-            <option value="$PROJECT_DIR$/flowlayout" />
             <option value="$PROJECT_DIR$/java-lib" />
-            <option value="$PROJECT_DIR$/linkifytext" />
             <option value="$PROJECT_DIR$/sample" />
-            <option value="$PROJECT_DIR$/searchbar" />
-            <option value="$PROJECT_DIR$/viewcounter" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
