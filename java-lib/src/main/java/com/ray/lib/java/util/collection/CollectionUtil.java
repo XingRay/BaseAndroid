@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  * @author : leixing
- * @date        : 2017-02-20
+ * @date : 2017-02-20
  * Email       : leixing1012@qq.com
  * Version     : 0.0.1
  * <p>
@@ -2327,5 +2327,58 @@ public class CollectionUtil {
         }
 
         return array;
+    }
+
+    public static <T> List expandDimension(List<T> list, int... sizes) {
+        List result = new ArrayList<>();
+        if (isEmpty(list)) {
+            //noinspection unchecked
+            return result;
+        }
+        int[] capacities = new int[sizes.length + 1];
+        capacities[sizes.length] = 1;
+        for (int i = sizes.length - 1; i >= 0; i--) {
+            capacities[i] = capacities[i + 1] * sizes[i];
+        }
+
+        int[] indexArray = new int[sizes.length + 1];
+        int index;
+        for (int i = 0, size = list.size(); i < size; i++) {
+            index = i;
+            T t = list.get(i);
+
+            for (int j = 0; j < indexArray.length; j++) {
+                indexArray[j] = index / capacities[j];
+                index = index % capacities[j];
+            }
+
+            List parent = result;
+            for (int j = 0; j < indexArray.length - 1; j++) {
+                index = indexArray[j];
+                Object child = safetyGet(parent, index);
+                if (child == null) {
+                    child = new ArrayList();
+                    //noinspection unchecked
+                    parent.add(child);
+                }
+                parent = (List) child;
+            }
+            //noinspection unchecked
+            parent.add(t);
+        }
+
+        return result;
+    }
+
+    public static long continuallyMultiply(int[] num) {
+        return continuallyMultiply(num, 0, num.length - 1);
+    }
+
+    public static long continuallyMultiply(int[] num, int fromIndex, int toIndex) {
+        long result = 1;
+        for (int i = fromIndex; i <= toIndex; i++) {
+            result *= num[i];
+        }
+        return result;
     }
 }

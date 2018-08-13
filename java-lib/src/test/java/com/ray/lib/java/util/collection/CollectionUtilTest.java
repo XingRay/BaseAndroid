@@ -131,4 +131,15 @@ public class CollectionUtilTest {
         assert CollectionUtil.equals(list1, list2);
         assert !CollectionUtil.equals(list1, list3);
     }
+
+    @Test
+    public void expandDimension() {
+        final List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            list.add(i);
+        }
+
+        List expandDimension = CollectionUtil.expandDimension(list, 2, 3);
+        System.out.print(expandDimension);
+    }
 }
