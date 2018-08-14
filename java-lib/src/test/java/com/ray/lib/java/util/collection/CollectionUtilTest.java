@@ -133,13 +133,25 @@ public class CollectionUtilTest {
     }
 
     @Test
-    public void expandDimension() {
+    public void toMultiDimension() {
         final List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add(i);
         }
 
-        List expandDimension = CollectionUtil.expandDimension(list, 2, 3);
-        System.out.print(expandDimension);
+        List multiDimension = CollectionUtil.toMultiDimension(list, 2, 3);
+        System.out.print(multiDimension);
+    }
+
+    @Test
+    public void fromMultiDimension() {
+        final List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            list.add(i);
+        }
+
+        List multiDimension = CollectionUtil.toMultiDimension(list, 2, 3);
+        List resultList = CollectionUtil.fromMultiDimension(multiDimension, 3);
+        System.out.print(resultList);
     }
 }

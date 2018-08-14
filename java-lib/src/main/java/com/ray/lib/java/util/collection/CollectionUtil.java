@@ -2329,10 +2329,9 @@ public class CollectionUtil {
         return array;
     }
 
-    public static <T> List expandDimension(List<T> list, int... sizes) {
-        List result = new ArrayList<>();
+    public static <T> List toMultiDimension(Iterable<T> list, int... sizes) {
+        List<T> result = new ArrayList<>();
         if (isEmpty(list)) {
-            //noinspection unchecked
             return result;
         }
         int[] capacities = new int[sizes.length + 1];
@@ -2343,9 +2342,11 @@ public class CollectionUtil {
 
         int[] indexArray = new int[sizes.length + 1];
         int index;
-        for (int i = 0, size = list.size(); i < size; i++) {
+        Iterator<T> iterator = list.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            T t = iterator.next();
             index = i;
-            T t = list.get(i);
 
             for (int j = 0; j < indexArray.length; j++) {
                 indexArray[j] = index / capacities[j];
@@ -2358,13 +2359,39 @@ public class CollectionUtil {
                 Object child = safetyGet(parent, index);
                 if (child == null) {
                     child = new ArrayList();
-                    //noinspection unchecked
                     parent.add(child);
                 }
                 parent = (List) child;
             }
-            //noinspection unchecked
             parent.add(t);
+            i++;
+        }
+
+        return result;
+    }
+
+    public static <T> List<T> fromMultiDimension(Iterable iterable, int dimension) {
+        List<T> result = new ArrayList<>();
+        if (isEmpty(iterable)) {
+            return result;
+        }
+
+        Iterable i = iterable;
+        for (int d = 0; d < dimension - 1; d++) {
+            ArrayList<Iterable> iterableList = new ArrayList<>();
+            for (Object o1 : i) {
+                Iterable iterable1 = (Iterable) o1;
+                if (d < dimension - 2) {
+                    for (Object o2 : iterable1) {
+                        iterableList.add((Iterable) o2);
+                    }
+                } else {
+                    for (Object o : iterable1) {
+                        result.add((T) o);
+                    }
+                }
+            }
+            i = iterableList;
         }
 
         return result;
