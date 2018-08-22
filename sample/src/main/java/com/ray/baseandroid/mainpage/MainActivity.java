@@ -62,7 +62,6 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
             new Function("recycler view 2", RecyclerTest2Activity.class),
             new Function("recycler view 3", RecyclerTest3Activity.class),
             new Function("anr test", AnrActivity.class),
-            new Function("text", TextActivity.class),
             new Function("counter", CounterActivity.class),
             new Function("span test", SpannableTestActivity.class),
             new Function("webview", WebTestActivity.class),

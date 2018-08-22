@@ -40,6 +40,8 @@ public class CollapsibleLinearLayout extends LinearLayout {
     private ValueAnimator mExpandAnimator;
     private ValueAnimator mCollapseAnimator;
     private ActionListener mActionListener;
+    private OnSizeChangeListener mOnSizeChangeListener;
+    private boolean mAutoExpand;
 
     public CollapsibleLinearLayout(Context context) {
         this(context, null);
@@ -62,8 +64,8 @@ public class CollapsibleLinearLayout extends LinearLayout {
         }
 
         mAnimationDuration = typedArray.getInt(R.styleable.CollapsibleLinearLayout_animation_duration, DEFAULT_ANIMATION_DURATION);
-        mCollapsedWidth = typedArray.getInt(R.styleable.CollapsibleLinearLayout_collapsed_width, DEFAULT_COLLAPSED_WIDTH);
-        mCollapsedHeight = typedArray.getInt(R.styleable.CollapsibleLinearLayout_collapsed_height, DEFAULT_COLLAPSED_HEIGHT);
+        mCollapsedWidth = typedArray.getInt(R.styleable.CollapsibleLinearLayout_collapse_width, DEFAULT_COLLAPSED_WIDTH);
+        mCollapsedHeight = typedArray.getInt(R.styleable.CollapsibleLinearLayout_collapse_height, DEFAULT_COLLAPSED_HEIGHT);
 
         boolean isCollapsed = typedArray.getBoolean(R.styleable.CollapsibleLinearLayout_is_collapsed, true);
         mStatus = isCollapsed ? Status.COLLAPSED : Status.EXPANDED;
@@ -75,6 +77,10 @@ public class CollapsibleLinearLayout extends LinearLayout {
         mActionListener = listener;
     }
 
+    public void setOnSizeChangedListener(OnSizeChangeListener listener) {
+        mOnSizeChangeListener = listener;
+    }
+
     public void setCollapse(boolean collapse) {
         mStatus = collapse ? Status.COLLAPSED : Status.EXPANDED;
         requestLayout();
@@ -84,7 +90,15 @@ public class CollapsibleLinearLayout extends LinearLayout {
         return mStatus == Status.COLLAPSED;
     }
 
+    public void setAutoExpand(boolean autoExpand) {
+        mAutoExpand = autoExpand;
+    }
+
     public void expand() {
+        expand(mAnimationDuration);
+    }
+
+    public void expand(long duration) {
         if (mStatus != Status.COLLAPSED) {
             return;
         }
@@ -101,11 +115,14 @@ public class CollapsibleLinearLayout extends LinearLayout {
 
         if (start == end) {
             mStatus = Status.EXPANDED;
+            if (mActionListener != null) {
+                mActionListener.onComplete(false);
+            }
             return;
         }
 
         if (mExpandAnimator == null) {
-            mExpandAnimator = ValueAnimator.ofInt(start, end).setDuration(mAnimationDuration);
+            mExpandAnimator = ValueAnimator.ofInt(start, end).setDuration(duration);
             mExpandAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -155,6 +172,10 @@ public class CollapsibleLinearLayout extends LinearLayout {
     }
 
     public void collapse() {
+        collapse(mAnimationDuration);
+    }
+
+    public void collapse(long duration) {
         if (mStatus != Status.EXPANDED) {
             return;
         }
@@ -171,11 +192,14 @@ public class CollapsibleLinearLayout extends LinearLayout {
 
         if (start == end) {
             mStatus = Status.COLLAPSED;
+            if (mActionListener != null) {
+                mActionListener.onComplete(true);
+            }
             return;
         }
 
         if (mCollapseAnimator == null) {
-            mCollapseAnimator = ValueAnimator.ofInt(start, end).setDuration(mAnimationDuration);
+            mCollapseAnimator = ValueAnimator.ofInt(start, end).setDuration(duration);
             mCollapseAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -258,18 +282,46 @@ public class CollapsibleLinearLayout extends LinearLayout {
     }
 
     private void onMeasureCollapsed() {
-        int width = 0;
-        int height = 0;
-
+        int width;
+        int height;
         if (getOrientation() == VERTICAL) {
             width = getMeasuredWidth();
-            height = Math.min(mCollapsedHeight, getMeasuredHeight());
+
+            if (mAutoExpand && getMeasuredHeight() < mCollapsedHeight) {
+                //auto expand
+                height = mMeasuredHeight;
+                mStatus = Status.EXPANDED;
+                if (mActionListener != null) {
+                    mActionListener.onComplete(false);
+                }
+            } else {
+                height = Math.min(mCollapsedHeight, getMeasuredHeight());
+            }
+
         } else {
-            width = Math.min(mCollapsedWidth, getMeasuredWidth());
             height = getMeasuredHeight();
+
+            if (mAutoExpand && getMeasuredWidth() < mCollapsedWidth) {
+                //auto expand
+                width = mMeasuredWidth;
+                mStatus = Status.EXPANDED;
+                if (mActionListener != null) {
+                    mActionListener.onComplete(false);
+                }
+            } else {
+                width = Math.min(mCollapsedWidth, getMeasuredWidth());
+            }
         }
 
         setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (mOnSizeChangeListener != null) {
+            mOnSizeChangeListener.onSizeChange(w, h, oldw, oldh, mCollapsedWidth, mCollapsedHeight);
+        }
     }
 
     /**
@@ -313,5 +365,9 @@ public class CollapsibleLinearLayout extends LinearLayout {
          *                    {@code false} - when finish expanding
          */
         void onComplete(boolean isCollapsed);
+    }
+
+    public interface OnSizeChangeListener {
+        void onSizeChange(int w, int h, int oldw, int oldh, int cw, int ch);
     }
 }
