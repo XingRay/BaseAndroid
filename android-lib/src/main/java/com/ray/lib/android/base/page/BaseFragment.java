@@ -1,5 +1,7 @@
-package com.ray.lib.android.base.page;
+package com.baidu.android.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.mobstat.StatService;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author : leixing
  * @date : 2017-04-20
- * Email       : leixing1012@qq.com
+ * Email       : leixing@baidu.com
  * Version     : 0.0.1
  * <p>
  * Description : xxx
@@ -25,12 +29,23 @@ public abstract class BaseFragment extends Fragment implements LifeCycleProvider
     @SuppressWarnings("FieldCanBeLocal")
     private View mRootView;
 
+    protected Activity mActivity;
+    protected Context mContext;
+
     private List<LifeCycleObserver> mLifeCycleObservers;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initVariables();
+
+        mActivity = getActivity();
+        mContext = getContext();
+
+        initVariables(getArguments());
+
+        if (savedInstanceState != null) {
+            restoreState(savedInstanceState);
+        }
 
         if (mLifeCycleObservers != null) {
             for (LifeCycleObserver observer : mLifeCycleObservers) {
@@ -66,6 +81,7 @@ public abstract class BaseFragment extends Fragment implements LifeCycleProvider
     @Override
     public void onResume() {
         super.onResume();
+        StatService.onPageStart(getContext(), getClass().getSimpleName());
 
         if (mLifeCycleObservers != null) {
             for (LifeCycleObserver observer : mLifeCycleObservers) {
@@ -77,6 +93,7 @@ public abstract class BaseFragment extends Fragment implements LifeCycleProvider
     @Override
     public void onPause() {
         super.onPause();
+        StatService.onPageEnd(getContext(), getClass().getSimpleName());
 
         if (mLifeCycleObservers != null) {
             for (LifeCycleObserver observer : mLifeCycleObservers) {
@@ -104,13 +121,39 @@ public abstract class BaseFragment extends Fragment implements LifeCycleProvider
             for (LifeCycleObserver observer : mLifeCycleObservers) {
                 observer.onDestroy();
             }
+            mLifeCycleObservers.clear();
         }
     }
 
-    protected abstract void initVariables();
+    /**
+     * 初始化变量
+     *
+     * @param arguments 外部传入的参数
+     */
+    protected abstract void initVariables(Bundle arguments);
 
+    /**
+     * 恢复保存的状态
+     *
+     * @param state 状态数据
+     */
+    @SuppressWarnings("unused")
+    protected void restoreState(Bundle state) {
+
+    }
+
+    /**
+     * 初始化视图
+     *
+     * @param inflater  inflater
+     * @param container container
+     * @return 加载的视图
+     */
     protected abstract View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
 
+    /**
+     * 加载数据
+     */
     protected abstract void loadData();
 
     @Override

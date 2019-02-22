@@ -1,4 +1,4 @@
-package com.ray.lib.android.base.page;
+package com.baidu.android.base;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -8,75 +8,38 @@ import android.support.v4.app.Fragment;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : leixing
  * @date : 2017-04-14
- * Email       : leixing1012@qq.com
+ * Email       : leixing@baidu.com
  * Version     : 0.0.1
  * <p>
  * Description : MVP架构的Presenter的基类，使用JDK的动态代理，代理视图对象的方法调用
  */
 
+@SuppressWarnings("unused")
 public abstract class BasePresenter<VIEW> {
 
-    private VIEW proxyView;
+    private VIEW mViewProxy;
     private boolean destroyed = false;
     private boolean isViewSet = false;
-    private ProxyViewHandler proxyViewHandler;
-
+    private ProxyViewHandler mProxyViewHandler;
     private Activity activity;
-    private Handler mUIHandler;
-
-    public BasePresenter(VIEW view) {
-        setView(view);
-        mUIHandler = new Handler(Looper.getMainLooper());
-
-        if (view instanceof LifeCycleProvider) {
-            addLifeCycleObserver((LifeCycleProvider) view);
-        }
-
-    }
-
-    private void addLifeCycleObserver(final LifeCycleProvider lifeCycleProvider) {
-        lifeCycleProvider.addLifeCycleObserver(new LifeCycleObserver() {
-            @Override
-            public void onCreate() {
-
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onResume() {
-
-            }
-
-            @Override
-            public void onPause() {
-
-            }
-
-            @Override
-            public void onStop() {
-
-            }
-
-            @Override
-            public void onDestroy() {
-                destroyed = true;
-                if (!keepActivityAlways()) {
-                    activity = null;
-                }
-                lifeCycleProvider.removeLifeCycleObserver(this);
-            }
-        });
-    }
+    private Handler mUIHandler = new Handler(Looper.getMainLooper());
+    private Map<LifeCycle, Map<TaskAddStrategy, VIEW>> mProxies;
+    private Class<?>[] mTargetViewInterfaces;
+    private WeakReference<VIEW> mTargetView;
+    private LifeCycle mLifeCycle = LifeCycle.INIT;
+    private List<Task> mTasks;
+    private VIEW mQueuedViewProxy;
 
     /**
      * 供子类继承是否在页面关闭时清除VIEW引用，
@@ -85,6 +48,7 @@ public abstract class BasePresenter<VIEW> {
      *
      * @return 是否要一直持有activity的引用
      */
+    @SuppressWarnings("WeakerAccess")
     protected boolean keepActivityAlways() {
         return false;
     }
@@ -105,7 +69,7 @@ public abstract class BasePresenter<VIEW> {
 
     final protected Activity getActivity() {
         if (activity == null && isViewSet) {
-            VIEW target = proxyViewHandler.getView();
+            VIEW target = mProxyViewHandler.getView();
             return checkActivity(target);
         }
         return activity;
@@ -142,7 +106,7 @@ public abstract class BasePresenter<VIEW> {
      * @return 视图是否有效
      */
     private boolean isViewValid() {
-        return isViewSet && !destroyed && (proxyViewHandler != null) && proxyViewHandler.isViewExists();
+        return isViewSet && !destroyed && (mProxyViewHandler != null) && mProxyViewHandler.isViewExists();
     }
 
     /**
@@ -151,7 +115,79 @@ public abstract class BasePresenter<VIEW> {
      * @return 代理的视图对象
      */
     final protected VIEW getView() {
-        return this.proxyView;
+        return mViewProxy;
+    }
+
+    final protected VIEW getQueuedViewRunLast() {
+        return getQueuedView(TaskAddStrategy.OVERRIDE, LifeCycle.RESUME);
+    }
+
+    final protected VIEW getQueuedViewRunOnce() {
+        return getQueuedView(TaskAddStrategy.ADD_IF_NOT_EXIST, LifeCycle.RESUME);
+    }
+
+    final protected VIEW getQueuedView() {
+        return getQueuedView(TaskAddStrategy.INSERT_TAIL, LifeCycle.RESUME);
+    }
+
+    final protected VIEW getQueuedView(TaskAddStrategy strategy, LifeCycle... lifeCycles) {
+//        if (mProxies == null) {
+//            mProxies = new HashMap<>(1);
+//        }
+//        Map<TaskAddStrategy, VIEW> map = mProxies.get(lifeCycle);
+//        if (map == null) {
+//            map = new HashMap<>(1);
+//            mProxies.put(lifeCycle, map);
+//        }
+//        VIEW viewProxy = map.get(strategy);
+        if (mQueuedViewProxy == null) {
+            mQueuedViewProxy = createViewProxy(lifeCycles, strategy);
+        }
+        return mQueuedViewProxy;
+//        if (viewProxy == null) {
+//            viewProxy = createViewProxy(lifeCycles, strategy);
+////            map.put(strategy, viewProxy);
+//        }
+    }
+
+    private VIEW createViewProxy(final LifeCycle[] lifeCycles, final TaskAddStrategy strategy) {
+        // noinspection unchecked
+        return (VIEW) Proxy.newProxyInstance(this.getClass().getClassLoader(), mTargetViewInterfaces, new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, final Method method, final Object[] args) throws Throwable {
+                final VIEW targetView = mTargetView.get();
+                if (targetView == null) {
+                    return null;
+                }
+                if (Util.contains(lifeCycles, mLifeCycle)) {
+                    method.invoke(targetView, args);
+                    return null;
+                }
+                String id = method.getDeclaringClass().getCanonicalName() + "#" + method.getName();
+                Task task = new Task(id, lifeCycles) {
+                    @Override
+                    public void run() {
+                        final VIEW targetView = mTargetView.get();
+                        if (targetView == null) {
+                            return;
+                        }
+                        try {
+                            method.invoke(targetView, args);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                if (mTasks == null) {
+                    mTasks = new ArrayList<>();
+                }
+                strategy.addTask(mTasks, task);
+
+                return null;
+            }
+        });
     }
 
     /**
@@ -159,16 +195,79 @@ public abstract class BasePresenter<VIEW> {
      * 注意：当页面关闭时会自动清除该VIEW的引用,
      * 如果没有设置  {@link #keepActivityAlways()} 为true, 会造成getActivity()==null
      *
-     * @param targetView 被代理的视图对象
+     * @param view 被代理的视图对象
      */
     @SuppressWarnings("unchecked")
-    private void setView(@NonNull VIEW targetView) {
+    public void setView(@NonNull VIEW view) {
         isViewSet = true;
+        mTargetViewInterfaces = view.getClass().getInterfaces();
         if (keepActivityAlways()) {
-            activity = checkActivity(targetView);
+            activity = checkActivity(view);
         }
-        proxyViewHandler = new ProxyViewHandler(targetView);
-        proxyView = (VIEW) Proxy.newProxyInstance(this.getClass().getClassLoader(), targetView.getClass().getInterfaces(), proxyViewHandler);
+        if (view instanceof LifeCycleProvider) {
+            addLifeCycleObserver((LifeCycleProvider) view);
+        }
+        mProxyViewHandler = new ProxyViewHandler(view);
+        mTargetView = new WeakReference<>(view);
+        mViewProxy = (VIEW) Proxy.newProxyInstance(this.getClass().getClassLoader(), view.getClass().getInterfaces(), mProxyViewHandler);
+    }
+
+    private void addLifeCycleObserver(final LifeCycleProvider lifeCycleProvider) {
+        lifeCycleProvider.addLifeCycleObserver(new LifeCycleObserver() {
+            @Override
+            public void onCreate() {
+                mLifeCycle = LifeCycle.CREATE;
+                executeTasks();
+            }
+
+            @Override
+            public void onStart() {
+                mLifeCycle = LifeCycle.START;
+                executeTasks();
+            }
+
+            @Override
+            public void onResume() {
+                mLifeCycle = LifeCycle.RESUME;
+                executeTasks();
+            }
+
+            @Override
+            public void onPause() {
+                mLifeCycle = LifeCycle.PAUSE;
+                executeTasks();
+            }
+
+            @Override
+            public void onStop() {
+                mLifeCycle = LifeCycle.STOP;
+                executeTasks();
+            }
+
+            @Override
+            public void onDestroy() {
+                mLifeCycle = LifeCycle.DESTROY;
+                executeTasks();
+                destroyed = true;
+                if (!keepActivityAlways()) {
+                    activity = null;
+                }
+            }
+        });
+    }
+
+    private void executeTasks() {
+        if (mTasks == null || mTasks.isEmpty()) {
+            return;
+        }
+        Iterator<Task> iterator = mTasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (Util.contains(task.getLifeCycles(), mLifeCycle)) {
+                task.run();
+                iterator.remove();
+            }
+        }
     }
 
     /**
