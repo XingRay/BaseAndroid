@@ -15,7 +15,7 @@ import java.util.List;
  * Description : xxx
  */
 
-public class MathHelper {
+public class MathUtil {
     /**
      * A value that is used a null value.
      */
@@ -26,7 +26,7 @@ public class MathHelper {
      */
     private static final NumberFormat FORMAT = NumberFormat.getNumberInstance();
 
-    private MathHelper() {
+    private MathUtil() {
         // empty constructor
     }
 
@@ -138,5 +138,17 @@ public class MathHelper {
         }
         rval *= Math.pow(10, exponent);
         return rval;
+    }
+
+    public static long continuallyMultiply(int[] num) {
+        return continuallyMultiply(num, 0, num.length - 1);
+    }
+
+    public static long continuallyMultiply(int[] num, int fromIndex, int toIndex) {
+        long result = 1;
+        for (int i = fromIndex; i <= toIndex; i++) {
+            result *= num[i];
+        }
+        return result;
     }
 }
